@@ -1,0 +1,7 @@
+html,
+body {
+  height: 100%; /* Får html og body til å ta full høyde av viewporten */
+  margin: 0; /* Fjerner standard margin */
+  padding: 0; /* Fjerner standard polstring */
+  background-color: #fff4f9; /* Lys rosa farge */
+}

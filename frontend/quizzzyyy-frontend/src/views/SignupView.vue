@@ -1,0 +1,11 @@
+<template>
+  <AuthForm title="Sign up" buttonType="signup" buttonText="Sign up" @submit="handleSignUp" />
+</template>
+
+<script setup>
+import AuthForm from '@/components/AuthForm.vue'
+
+const handleSignUp = (credentials) => {
+  // Handle sign up logic with credentials
+}
+</script>
