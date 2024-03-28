@@ -1,4 +1,5 @@
 <template>
+  <img src="@/assets/logo.svg" alt="Quizzzyyy Logo" />
   <AuthForm title="Log in" buttonType="login" buttonText="Log in" @submit="handleLogin" />
 </template>
 
