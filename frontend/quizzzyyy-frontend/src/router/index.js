@@ -4,6 +4,7 @@ import LoginView from '@/views/LoginView.vue'
 import SignupView from '@/views/SignupView.vue'
 import HomePageView from '@/views/HomePageView.vue'
 import UserPageView from '@/views/UserPageView.vue'
+import QuizCreationView from '@/views/QuizCreationView.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/user',
     name: 'UserPage',
     component: UserPageView
+  },
+  {
+    path: '/create-quiz',
+    name: 'CreateQuiz',
+    component: QuizCreationView
   }
   // ...andre ruter
 ]
