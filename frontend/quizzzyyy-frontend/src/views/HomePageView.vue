@@ -35,7 +35,7 @@ const createQuiz = () => {
   align-items: center; /* Senterer knappene horisontalt */
   width: 100%; /* Setter bredden på knappene til å passe containeren */
   gap: 30px; /* Gir litt plass mellom knappene */
-  margin-top: 70px; /* Eller bruk margin-top istedenfor padding-top om nødvendig */
+  margin-top: 150px; /* Eller bruk margin-top istedenfor padding-top om nødvendig */
   align-items: center;
 }
 </style>
