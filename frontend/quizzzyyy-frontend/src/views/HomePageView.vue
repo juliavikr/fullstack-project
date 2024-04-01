@@ -2,8 +2,8 @@
   <div class="home-container">
     <NavBar />
     <div class="action-buttons">
-      <BigButton text="PLAY!!" @click="playQuiz" />
-      <BigButton text="CREATE A NEW QUIZ" @click="createQuiz" />
+      <BigButton to="/">PLAY!!!</BigButton>
+      <BigButton to="/create-quiz">CREATE A NEW QUIZ</BigButton>
     </div>
   </div>
 </template>
@@ -11,14 +11,6 @@
 <script setup>
 import NavBar from '../components/NavBar.vue'
 import BigButton from '../components/BigButton.vue'
-
-const playQuiz = () => {
-  // Define logic for playing game
-}
-
-const createQuiz = () => {
-  // Define logic for creating a quiz
-}
 </script>
 
 <style scoped>
