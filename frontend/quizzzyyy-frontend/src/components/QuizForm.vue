@@ -1,80 +1,95 @@
 <template>
-  <div class="quiz-form">
-    <h1>Create a New Quiz</h1>
-    <div class="form-group">
-      <label for="quiz-title">Enter quiz title:</label>
-      <input type="text" id="quiz-title" placeholder="Quiz Title" />
+  <div class="quiz-creation-view">
+    <div class="input-fields">
+      <div class="form-group">
+        <label for="quiz-title">Enter quiz title:</label>
+        <input type="text" id="quiz-title" placeholder="Quiz Title" />
+      </div>
+      <div class="form-group">
+        <label for="quiz-category">Category:</label>
+        <select id="quiz-category">
+          <option>Select Category</option>
+          <!-- Alternativer her -->
+        </select>
+      </div>
+      <div class="difficulty-container">
+        <label for="difficulty-buttons">Difficulty:</label>
+        <div class="difficulty-buttons">
+          <SmallButton :is-active="difficulty === 'hard'" @click="setDifficulty('hard')"
+            >Hard</SmallButton
+          >
+          <SmallButton :is-active="difficulty === 'medium'" @click="setDifficulty('medium')"
+            >Medium</SmallButton
+          >
+          <SmallButton :is-active="difficulty === 'easy'" @click="setDifficulty('easy')"
+            >Easy</SmallButton
+          >
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="quiz-category">Category:</label>
-      <select id="quiz-category">
-        <option selected>Select Category</option>
-        <!-- Dynamisk liste over kategorier -->
-      </select>
-    </div>
-    <div class="form-group difficulty">
-      <label>Difficulty:</label>
-      <SmallButton label="Hard">Hard</SmallButton>
-      <SmallButton label="Medium">Medium</SmallButton>
-      <SmallButton label="Easy">Easy</SmallButton>
-    </div>
-    <QuestionBox />
-    <!-- Andre elementer... -->
   </div>
 </template>
 
 <script setup>
 import SmallButton from '@/components/SmallButton.vue'
-import QuestionBox from '@/components/QuestionBox.vue'
-// Fortsett med resten av scriptet ditt
+import { ref } from 'vue'
+
+const difficulty = ref('') // starter uten en valgt vanskelighetsgrad
+
+function setDifficulty(level) {
+  difficulty.value = level
+}
 </script>
 
 <style scoped>
-.quiz-form {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.quiz-form h1 {
-  color: #333;
-  text-align: center;
-  margin-bottom: 20px;
+.quiz-creation-view {
+  margin: auto;
+  padding: 2rem;
+  align-content: center;
+  align-items: center;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  align-items: center;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
 }
 
 .form-group input[type='text'],
 .form-group select {
-  width: 100%;
-  padding: 10px;
+  padding: 0.75rem;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-bottom: 5px; /* If you have an error message or additional text */
 }
 
-.difficulty label {
-  margin-bottom: 10px;
+.difficulty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
-.difficulty SmallButton {
-  margin-right: 5px;
+.difficulty-container label {
+  margin-bottom: 1rem;
 }
 
-/* Tilpass SmallButton stiler etter behov */
+.difficulty-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Gir litt plass mellom knappene */
+}
 
-/* Stil for QuestionBox etter behov */
+.add-question {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* Resten av dine SmallButton og MediumButton stiler */
+/* Tilpass etter behov basert på ditt designsystem eller eksisterende stilguide */
 </style>
