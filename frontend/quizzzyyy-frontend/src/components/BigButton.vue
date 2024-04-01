@@ -1,18 +1,27 @@
 <template>
-  <button @click="onClick">{{ text }}</button>
+  <button :class="`button ${type}`" @click="navigate">
+    <slot></slot>
+    <!-- Use slot for button text -->
+  </button>
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue'
+import { useRouter } from 'vue-router'
+import { defineProps } from 'vue'
 
-defineProps({
-  text: String
+// Definerer en prop for å motta rutebanen
+const props = defineProps({
+  to: String,
+  type: String
 })
 
-const emits = defineEmits(['click'])
+const router = useRouter()
 
-const onClick = () => {
-  emits('click')
+// Navigasjonsfunksjonen
+const navigate = () => {
+  if (props.to) {
+    router.push(props.to)
+  }
 }
 </script>
 
