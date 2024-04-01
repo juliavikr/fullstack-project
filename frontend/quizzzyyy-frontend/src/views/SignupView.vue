@@ -6,7 +6,7 @@
 <script setup>
 import AuthForm from '@/components/AuthForm.vue'
 
-const handleSignUp = (credentials) => {
+const handleSignUp = () => {
   // Handle sign up logic with credentials
 }
 </script>
