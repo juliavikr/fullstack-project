@@ -25,6 +25,7 @@
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-prettier": "^8.0.0",
     "@vue/test-utils": "^2.4.5",
+    "axios": "^1.6.8",
     "cypress": "^13.7.0",
     "eslint": "^8.49.0",
     "eslint-plugin-cypress": "^2.15.1",

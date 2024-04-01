@@ -18,7 +18,8 @@
 <script setup>
 import { ref } from 'vue'
 import MediumButton from '@/components/MediumButton.vue'
-import { defineProps, defineEmits } from 'vue'
+import { useRouter } from 'vue-router'
+import AuthService from '@/services/AuthService'
 
 const props = defineProps({
   title: String,
@@ -26,15 +27,32 @@ const props = defineProps({
   buttonText: String
 })
 
-const emits = defineEmits(['submit'])
-
 const username = ref('')
 const password = ref('')
+const router = useRouter()
 
-const onSubmit = () => {
-  emits('submit', { username: username.value, password: password.value })
+const onSubmit = async () => {
+  if (props.buttonType === 'login') {
+    try {
+      const response = await AuthService.logIn({ username: username.value, password: password.value })
+      // Her bør du lagre JWT token du får fra serveren, for eksempel i localStorage
+      localStorage.setItem('token', response.data.jwt)
+      await router.push('/home') // Naviger til hjemmesiden etter vellykket innlogging
+    } catch (error) {
+      alert('Feil ved innlogging') // Vis en feilmelding til brukeren
+    }
+  } else if (props.buttonType === 'signup') {
+    try {
+      const response = await AuthService.signUp({ username: username.value, password: password.value })
+      alert('Registrering vellykket') // Vis en suksessmelding
+      await router.push('/login') // Naviger til innloggingssiden
+    } catch (error) {
+      alert('Feil ved registrering') // Vis en feilmelding til brukeren
+    }
+  }
 }
 </script>
+
 
 <style scoped>
 .auth-form {
