@@ -1,35 +1,26 @@
 <template>
-  <button :class="`btn ${type}`" @click="navigate">
-    <slot></slot>
-    <!-- Use slot for button text -->
-  </button>
+  <button @click="onClick">{{ text }}</button>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-import { defineProps } from 'vue'
+import { defineProps, defineEmits } from 'vue'
 
-// Definerer en prop for å motta rutebanen
-const props = defineProps({
-  to: String,
-  type: String
+defineProps({
+  text: String
 })
 
-const router = useRouter()
+const emits = defineEmits(['click'])
 
-// Navigasjonsfunksjonen
-const navigate = () => {
-  if (props.to) {
-    router.push(props.to)
-  }
+const onClick = () => {
+  emits('click')
 }
 </script>
 
 <style scoped>
-.btn {
+button {
   padding: 10px 15px; /* Gir knappene størrelse og plass */
-  width: 250px; /* Standard bredde på knappene */
-  height: 60px; /* Standard høyde på knappene */
+  width: 500px; /* Standard bredde på knappene */
+  height: 100px; /* Standard høyde på knappene */
   font-size: 1rem; /* Passende skriftstørrelse */
   border: none; /* Ingen ramme */
   border-radius: 5px; /* Avrundede hjørner */
@@ -41,13 +32,13 @@ const navigate = () => {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.btn:hover {
-  background-color: #f268aa;
+button:hover {
+  background-color: #f362a8;
 }
 
 @media (max-width: 768px) {
-  .btn {
-    min-width: 100px; /* Mindre bredde på mobile enheter */
+  button {
+    width: 300px; /* Mindre bredde på mobile enheter */
     padding: 10px; /* Mindre polstring på mobile enheter */
     font-size: 0.875rem; /* Mindre skriftstørrelse på mobile enheter */
     margin: 10px 0; /* Litt større margin på mobile enheter */

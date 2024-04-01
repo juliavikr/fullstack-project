@@ -4,9 +4,14 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
 import AuthForm from '@/components/AuthForm.vue'
 
-const handleLogin = (credentials) => {
-  // Handle login logic with credentials
+const router = useRouter()
+
+const handleLogin = () => {
+  // Her vil du senere legge til autorisasjonslogikk.
+  // For nå, naviger direkte til hjemmesiden.
+  router.push('/home')
 }
 </script>
