@@ -1,21 +1,31 @@
 package no.ntnu.idatt2105.quizbank.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 /**
  * Class representing a user in the database
  */
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     // Auto-generate id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String username;
     private String password;
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+
+    }
+    public User() {
+
+    }
+
 
     public void setId(Long id) {
         this.id = id;

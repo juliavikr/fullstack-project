@@ -1,51 +1,76 @@
 package no.ntnu.idatt2105.quizbank.config;
 
+import no.ntnu.idatt2105.quizbank.security.JWTAuthorizationFilter;
+import no.ntnu.idatt2105.quizbank.service.CustomUserDetailsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
+/**
+ * this class configures the web security for the application and sets up the security filter chain
+ */
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig  {
+public class WebSecurityConfig {
+    private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests(authorizeRequests ->
-                authorizeRequests
-                        // Hovedsiden skal være tilgjengelig for alle
-                    .requestMatchers("/").permitAll()
-                        // alle andre endepunkter krever autentisering fra brukeren
-                    .anyRequest().authenticated()
+    private final PasswordEncoder passwordEncoder;
+    private final CustomUserDetailsService customUserDetailsService;
+
+    public WebSecurityConfig(CustomUserDetailsService customUserDetailsService , PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService1) {
+        this.passwordEncoder = passwordEncoder;
+        this.customUserDetailsService = customUserDetailsService1;
+        logger.info("CustomUserDetailsService and PasswordEncoder are injected successfully.");
+    }
+
+    /**
+     * Configures the security filter chain that decides which requests should be authenticated
+     * @param http the http security to configure
+     * @return the security filter chain
+     * @throws Exception if an error occurs during configuration
+     */
+ @Bean
+ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+     http
+         .csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/login","/api/user/login", "/api/register", "/h2-console/**").permitAll()
+                .anyRequest().authenticated()
             )
-                // bruker HTTP Basic-autentisering for alle endepunkter (sender brukernavn og passord i klartekst)
-                .httpBasic(withDefaults());
-        // konfiguurerer ytterligere sikkerhetsinnstillinger her
+             .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-    @Bean
-    /*
-     * Method for encoding passwords
+
+    /**
+     * Creates a new instance of JWTAuthorizationFilter to be used in the security filter chain
+     * @return a new instance of JWTAuthorizationFilter
      */
-     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-
-    @Bean
-    /*
-       Uses this method for requests that do not require to go through the security filter chain
+  @Bean
+  public JWTAuthorizationFilter jwtAuthorizationFilter() {
+        return new JWTAuthorizationFilter();
+  }
+    /**
+     * Creates a new instance of the AuthenticationManager to be used in the security filter chain
+     * @param authenticationConfiguration the authentication configuration to get the authentication manager from
+     * @return a new instance of AuthenticationManager
+     * @throws Exception if an error occurs during creation
      */
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/ignore1", "/ignore2");
+  @Bean
+  public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+      return authenticationConfiguration.getAuthenticationManager();
     }
-
 }

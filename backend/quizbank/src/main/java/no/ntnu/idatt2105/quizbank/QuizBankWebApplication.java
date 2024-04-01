@@ -9,5 +9,6 @@ public class QuizBankWebApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(QuizBankWebApplication.class, args);
 	}
-
 }
+
+
