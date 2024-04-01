@@ -1,13 +1,11 @@
 <template>
+  <NavBar />
   <div class="user-page-container">
-    <NavBar />
     <div class="user-info">
-      <div class="user-details">
-        <h2>Username: {{ username }}</h2>
-        <MediumButton type="primary" @click="showChangePassword = true">
-          Change password
-        </MediumButton>
-      </div>
+      <h2>Username: {{ username }}</h2>
+      <MediumButton type="primary" @click="showChangePassword = true">
+        Change password
+      </MediumButton>
     </div>
     <div v-if="showChangePassword" class="change-password-modal">
       <form @submit.prevent="changePassword">
@@ -44,6 +42,7 @@ const changePassword = () => {
   flex-direction: column;
   justify-content: flex-start; /* Start aligning content from the top */
   height: 100vh;
+  align-items: center;
 }
 
 .user-info,
@@ -53,23 +52,23 @@ const changePassword = () => {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px; /* avstand mellom elementene */
-  width: 300px; /* eller tilpasset bredden din */
+  display: flex;
+  flex-direction: column; /* Setter knappene under hverandre */
+  align-items: center; /* Senterer knappene horisontalt */
+  width: 300px; /* Setter bredden på knappene til å passe containeren */
+  gap: 30px; /* Gir litt plass mellom knappene */
+  margin-top: 70px; /* Eller bruk margin-top istedenfor padding-top om nødvendig */
+  justify-content: center;
 }
 
 .change-password-button,
 .submit-new-password {
-  background-color: #ff8bc3;
   color: white;
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
   margin-top: 10px; /* avstand fra tittel/tekstfelt */
   cursor: pointer;
-}
-
-.change-password-button:hover,
-.submit-new-password:hover {
-  background-color: #d76b9c; /* en mørkere nyanser av knappens farge */
 }
 
 .form-group {
@@ -86,5 +85,13 @@ input[type='password'] {
   margin-bottom: 10px; /* avstand fra neste element */
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+/* Tilpasse input-felter når de er i fokus */
+input[type='text']:focus,
+input[type='password']:focus {
+  outline: none;
+  border-color: #f472b6; /* Kanten farge for å matche knappen */
+  box-shadow: 0 0 0 2px rgba(244, 114, 182, 0.5); /* Legg til en subtil skygge rundt fokusert input */
 }
 </style>
