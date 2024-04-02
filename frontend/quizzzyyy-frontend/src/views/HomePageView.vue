@@ -2,7 +2,7 @@
   <div class="home-container">
     <NavBar />
     <div class="action-buttons">
-      <BigButton to="/">PLAY!!!</BigButton>
+      <BigButton to="/your-quizzes">PLAY!!!</BigButton>
       <BigButton to="/create-quiz">CREATE A NEW QUIZ</BigButton>
     </div>
   </div>
