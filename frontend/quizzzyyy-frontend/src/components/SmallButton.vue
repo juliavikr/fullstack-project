@@ -28,7 +28,7 @@ defineProps({
   text-decoration: none; /* Fjerner tekstdekorasjon som kan komme fra <a> elementer */
 }
 .small-button.active {
-  background-color: #f362a8; /* Mørkere rosa farge for aktive knapper */
+  border: 1px solid black; /* Mørkere rosa farge for aktive knapper */
 }
 
 .small-button:hover {
