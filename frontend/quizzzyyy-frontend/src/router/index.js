@@ -5,6 +5,8 @@ import SignupView from '@/views/SignupView.vue'
 import HomePageView from '@/views/HomePageView.vue'
 import UserPageView from '@/views/UserPageView.vue'
 import QuizCreationView from '@/views/QuizCreationView.vue'
+import LibraryView from '@/views/LibraryView.vue'
+import YourQuizzesView from '@/views/YourQuizzesView.vue'
 
 const routes = [
   {
@@ -36,6 +38,16 @@ const routes = [
     path: '/create-quiz',
     name: 'CreateQuiz',
     component: QuizCreationView
+  },
+  {
+    path: '/library',
+    name: 'Library',
+    component: LibraryView
+  },
+  {
+    path: '/your-quizzes',
+    name: 'YourQuizzes',
+    component: YourQuizzesView
   }
   // ...andre ruter
 ]
