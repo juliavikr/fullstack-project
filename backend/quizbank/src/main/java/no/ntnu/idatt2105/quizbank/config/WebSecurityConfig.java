@@ -46,7 +46,7 @@ public class WebSecurityConfig {
          .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/login","/api/user/login", "/api/register", "/h2-console/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll() // TODO bytte til authenticated() når den er ferdig
             )
              .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
