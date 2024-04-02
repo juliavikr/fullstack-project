@@ -7,6 +7,8 @@ import UserPageView from '@/views/UserPageView.vue'
 import QuizCreationView from '@/views/QuizCreationView.vue'
 import LibraryView from '@/views/LibraryView.vue'
 import YourQuizzesView from '@/views/YourQuizzesView.vue'
+import PlayView from '@/views/PlayView.vue'
+import ScoreView from '@/views/ScoreView.vue'
 
 const routes = [
   {
@@ -48,6 +50,16 @@ const routes = [
     path: '/your-quizzes',
     name: 'YourQuizzes',
     component: YourQuizzesView
+  },
+  {
+    path: '/play',
+    name: 'Play',
+    component: PlayView
+  },
+  {
+    path: '/score',
+    name: 'Score',
+    component: ScoreView
   }
   // ...andre ruter
 ]
