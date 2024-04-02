@@ -88,6 +88,10 @@
 			<version>4.0.4</version> <!-- Sjekk for den nyeste versjonen -->
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
 </dependencies>
 	<build>
 		<plugins>
