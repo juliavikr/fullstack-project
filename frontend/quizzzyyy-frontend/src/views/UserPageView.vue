@@ -16,6 +16,7 @@
         <MediumButton type="primary" @click="changePassword"> Submit new password </MediumButton>
       </form>
     </div>
+    <MediumButton class="btn-logout" @click="logout">Logg ut</MediumButton>
   </div>
 </template>
 
@@ -23,16 +24,26 @@
 import { ref } from 'vue'
 import MediumButton from '@/components/MediumButton.vue'
 import NavBar from '@/components/NavBar.vue'
+import { useRouter } from 'vue-router'
 
 const username = ref('Andramun') // Dette vil til slutt komme fra din brukerstatustjeneste
 const newPassword = ref('')
 const showChangePassword = ref(false)
+const router = useRouter()
 
 const changePassword = () => {
   // Kall til backend for å oppdatere passordet
   console.log('New password submitted:', newPassword.value)
   showChangePassword.value = false // Lukk modalen
   newPassword.value = '' // Tilbakestill passordfeltet
+}
+
+const logout = () => {
+  // Logg ut logikk her. F.eks. slette token, oppdatere state, osv.
+  console.log('Brukeren logget ut.')
+
+  // Omdiriger til logg inn-siden
+  router.push('/')
 }
 </script>
 
@@ -57,7 +68,7 @@ const changePassword = () => {
   align-items: center; /* Senterer knappene horisontalt */
   width: 300px; /* Setter bredden på knappene til å passe containeren */
   gap: 30px; /* Gir litt plass mellom knappene */
-  margin-top: 70px; /* Eller bruk margin-top istedenfor padding-top om nødvendig */
+  margin-top: 40px; /* Eller bruk margin-top istedenfor padding-top om nødvendig */
   justify-content: center;
 }
 
@@ -93,5 +104,15 @@ input[type='password']:focus {
   outline: none;
   border-color: #f472b6; /* Kanten farge for å matche knappen */
   box-shadow: 0 0 0 2px rgba(244, 114, 182, 0.5); /* Legg til en subtil skygge rundt fokusert input */
+}
+
+.btn-logout {
+  position: absolute;
+  right: 2rem; /* 2rem fra høyre kant av user-page-container */
+  bottom: 2rem; /* 2rem fra bunnen av user-page-container */
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
 }
 </style>
