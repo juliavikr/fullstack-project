@@ -14,6 +14,7 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue'
 import MediumButton from './MediumButton.vue'
+import { useRouter } from 'vue-router'
 
 defineProps({
   quiz: {
@@ -23,10 +24,12 @@ defineProps({
 })
 
 const emits = defineEmits(['play', 'edit'])
+const router = useRouter()
 
 const playQuiz = (quizId) => {
   // Logic for playing a quiz can go here or you can emit an event
   emits('play', quizId)
+  router.push('/play')
 }
 
 const editQuiz = (quizId) => {
