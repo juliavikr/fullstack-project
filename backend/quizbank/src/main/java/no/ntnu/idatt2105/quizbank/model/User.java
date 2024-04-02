@@ -2,7 +2,8 @@ package no.ntnu.idatt2105.quizbank.model;
 
 import jakarta.persistence.*;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class representing a user in the database
@@ -11,19 +12,22 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Table(name = "users")
 public class User {
     @Id
-    // Auto-generate id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String username;
     private String password;
+
+    // en bruker kan ha flere quizzer
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Quiz> quizzes = new ArrayList<>();
+
+    public User() {
+    }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-
-    }
-    public User() {
-
     }
 
 
