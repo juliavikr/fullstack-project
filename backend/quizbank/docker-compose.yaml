@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+
+  mysql:
+    platform: linux/amd64
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: quizApp_db
+      MYSQL_USER: minbruker
+      MYSQL_PASSWORD: minpassord
+    ports:
+      - "3307:3306"  # Endret til en annen port for å unngå konflikt
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - mysql-nettverk
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    platform: linux/amd64
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+    networks:
+      - mysql-nettverk
+
+networks:
+  mysql-nettverk:
+    driver: bridge
+
+volumes:
+  mysql-data:
+
+
