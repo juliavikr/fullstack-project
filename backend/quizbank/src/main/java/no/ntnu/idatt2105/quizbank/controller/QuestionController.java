@@ -1,6 +1,5 @@
 package no.ntnu.idatt2105.quizbank.controller;
 
-import no.ntnu.idatt2105.quizbank.model.Question;
 import no.ntnu.idatt2105.quizbank.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,7 @@ public class QuestionController {
     @Autowired
     QuestionService questionService;
     @GetMapping("allQuestions")
-    public Iterable<Question> getAllQuestions() {
-        return questionService.getAllQuestions();
+    public String getAllQuestions() {
+        return "All questions";
     }
 }
