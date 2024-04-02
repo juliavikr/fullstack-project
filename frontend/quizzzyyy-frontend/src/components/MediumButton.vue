@@ -28,8 +28,8 @@ const navigate = () => {
 <style scoped>
 .btn {
   padding: 10px 15px; /* Gir knappene størrelse og plass */
-  width: 250px; /* Standard bredde på knappene */
-  height: 60px; /* Standard høyde på knappene */
+  width: 200px; /* Standard bredde på knappene */
+  height: 50px; /* Standard høyde på knappene */
   font-size: 1rem; /* Passende skriftstørrelse */
   border: none; /* Ingen ramme */
   border-radius: 5px; /* Avrundede hjørner */
