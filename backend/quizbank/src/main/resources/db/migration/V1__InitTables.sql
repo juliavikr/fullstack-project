@@ -15,7 +15,7 @@ CREATE TABLE quizzes (
 
 CREATE TABLE questions (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    text VARCHAR(1000) NOT NULL,
+    question_text VARCHAR(1000) NOT NULL,
     answer VARCHAR(255) NOT NULL,
     quiz_id BIGINT,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id)

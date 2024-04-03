@@ -11,18 +11,19 @@ public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String category;
     private String difficulty;
 
-    // one quiz can have many questions
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Question> questions = new ArrayList<>();
-
+    // Establish a relationship with the User entity
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
 
+    // One quiz can have many questions
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Question> questions = new ArrayList<>();
     public Long getId() {
         return id;
     }
@@ -47,6 +48,10 @@ public class Quiz {
     }
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 }
 

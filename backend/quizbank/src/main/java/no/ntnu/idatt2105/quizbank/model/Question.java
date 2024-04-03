@@ -8,7 +8,11 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String text;
+
+
+    @Column(name = "question_text")
+    private String question_text;
+
     private String answer;
 
     @ManyToOne
@@ -22,16 +26,23 @@ public class Question {
     public Long getId() {
         return id;
     }
-    public void setText(String text) {
-        this.text = text;
+
+    public void setQuestion_text(String question) {
+        this.question_text = question;
     }
-    public String getText() {
-        return text;
+
+    public String getQuestion_text() {
+        return question_text;
     }
+
     public void setAnswer(String answer) {
         this.answer = answer;
     }
     public String getAnswer() {
         return answer;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
     }
 }
