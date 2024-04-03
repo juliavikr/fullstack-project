@@ -1,0 +1,11 @@
+
+`
+java:S5786"Remove this 'public' modifier.(¦Ëò8ç¹²ôé1J$59be9aa1-da80-45df-8c45-58882ee212b1
+a
+java:S57862"Remove this 'public' modifier.(úÚÄì8è¹²ôé1J$9bbde0de-2cd4-4284-810e-3cf344038a20
+a
+java:S5786"Remove this 'public' modifier.(ı«Ò8é¹²ôé1J$7099cdd0-9930-449f-b608-ff371abaa43d
+s
+java:S5838'"+Use assertThat(actual).isPresent() instead.(…Ä‡¢üÿÿÿÿ8í¹²ôé1J$77b43084-de23-46ce-bc0b-2630259cd712
+‘
+java:S5838:"NUse assertThat(actual).isNotPresent() or assertThat(actual).isEmpty() instead.(¥…Ï˜8ñ¹²ôé1J$07a07ebf-9d3e-4269-b76e-bb5d1de7e238

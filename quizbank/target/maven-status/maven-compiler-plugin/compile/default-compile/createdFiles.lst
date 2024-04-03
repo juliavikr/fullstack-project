@@ -1,0 +1,12 @@
+no/ntnu/idatt2105/quizbank/service/QuizService.class
+no/ntnu/idatt2105/quizbank/repository/QuestionRepository.class
+no/ntnu/idatt2105/quizbank/service/UserService.class
+no/ntnu/idatt2105/quizbank/model/User.class
+no/ntnu/idatt2105/quizbank/QuizBankWebApplication.class
+no/ntnu/idatt2105/quizbank/model/Question.class
+no/ntnu/idatt2105/quizbank/model/Quiz.class
+no/ntnu/idatt2105/quizbank/controller/QuizController.class
+no/ntnu/idatt2105/quizbank/repository/UserRepository.class
+no/ntnu/idatt2105/quizbank/config/WebSecurityConfig.class
+no/ntnu/idatt2105/quizbank/repository/QuizRepository.class
+no/ntnu/idatt2105/quizbank/controller/UserController.class

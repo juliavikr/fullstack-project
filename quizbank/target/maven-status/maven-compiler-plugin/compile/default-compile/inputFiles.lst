@@ -1,0 +1,12 @@
+/Users/andreaamundsen/Desktop/fullstack project/fullstack-project/quizbank/src/main/java/no/ntnu/idatt2105/quizbank/model/Quiz.java
+/Users/andreaamundsen/Desktop/fullstack project/fullstack-project/quizbank/src/main/java/no/ntnu/idatt2105/quizbank/service/UserService.java
+/Users/andreaamundsen/Desktop/fullstack project/fullstack-project/quizbank/src/main/java/no/ntnu/idatt2105/quizbank/repository/UserRepository.java
+/Users/andreaamundsen/Desktop/fullstack project/fullstack-project/quizbank/src/main/java/no/ntnu/idatt2105/quizbank/model/Question.java
+/Users/andreaamundsen/Desktop/fullstack project/fullstack-project/quizbank/src/main/java/no/ntnu/idatt2105/quizbank/config/WebSecurityConfig.java
+/Users/andreaamundsen/Desktop/fullstack project/fullstack-project/quizbank/src/main/java/no/ntnu/idatt2105/quizbank/repository/QuizRepository.java
+/Users/andreaamundsen/Desktop/fullstack project/fullstack-project/quizbank/src/main/java/no/ntnu/idatt2105/quizbank/service/QuizService.java
+/Users/andreaamundsen/Desktop/fullstack project/fullstack-project/quizbank/src/main/java/no/ntnu/idatt2105/quizbank/model/User.java
+/Users/andreaamundsen/Desktop/fullstack project/fullstack-project/quizbank/src/main/java/no/ntnu/idatt2105/quizbank/controller/QuizController.java
+/Users/andreaamundsen/Desktop/fullstack project/fullstack-project/quizbank/src/main/java/no/ntnu/idatt2105/quizbank/repository/QuestionRepository.java
+/Users/andreaamundsen/Desktop/fullstack project/fullstack-project/quizbank/src/main/java/no/ntnu/idatt2105/quizbank/QuizBankWebApplication.java
+/Users/andreaamundsen/Desktop/fullstack project/fullstack-project/quizbank/src/main/java/no/ntnu/idatt2105/quizbank/controller/UserController.java

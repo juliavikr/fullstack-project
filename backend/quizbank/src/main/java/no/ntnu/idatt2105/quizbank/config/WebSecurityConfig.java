@@ -26,9 +26,11 @@ public class WebSecurityConfig {
     private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
 
     private final CustomUserDetailsService customUserDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
     public WebSecurityConfig(CustomUserDetailsService customUserDetailsService , PasswordEncoder passwordEncoder) {
         this.customUserDetailsService = customUserDetailsService;
+        this.passwordEncoder = passwordEncoder;
         logger.info("CustomUserDetailsService and PasswordEncoder are injected successfully.");
     }
 
@@ -43,7 +45,7 @@ public class WebSecurityConfig {
      http
          .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/login","/api/user/login", "/api/register", "/h2-console/**").permitAll()
+                //.requestMatchers("/api/login","/api/user/login", "/api/register", "/h2-console/**").permitAll()
                 .anyRequest().permitAll() // TODO bytte til authenticated() når den er ferdig
             )
              .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))

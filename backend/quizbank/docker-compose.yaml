@@ -7,8 +7,8 @@ services:
     image: mysql:latest
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: quizApp_db
+      MYSQL_ROOT_PASSWORD: passord
+      MYSQL_DATABASE: quizApp_database
       MYSQL_USER: minbruker
       MYSQL_PASSWORD: minpassord
     ports:
