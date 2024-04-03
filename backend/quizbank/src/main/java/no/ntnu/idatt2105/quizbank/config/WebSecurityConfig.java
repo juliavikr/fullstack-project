@@ -28,9 +28,9 @@ public class WebSecurityConfig {
     private final PasswordEncoder passwordEncoder;
     private final CustomUserDetailsService customUserDetailsService;
 
-    public WebSecurityConfig(CustomUserDetailsService customUserDetailsService , PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService1) {
+    public WebSecurityConfig(CustomUserDetailsService customUserDetailsService , PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
-        this.customUserDetailsService = customUserDetailsService1;
+        this.customUserDetailsService = customUserDetailsService;
         logger.info("CustomUserDetailsService and PasswordEncoder are injected successfully.");
     }
 
