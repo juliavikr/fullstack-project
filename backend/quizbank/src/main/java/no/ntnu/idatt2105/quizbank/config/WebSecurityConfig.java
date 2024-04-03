@@ -25,11 +25,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
     private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
 
-    private final PasswordEncoder passwordEncoder;
     private final CustomUserDetailsService customUserDetailsService;
 
     public WebSecurityConfig(CustomUserDetailsService customUserDetailsService , PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
         this.customUserDetailsService = customUserDetailsService;
         logger.info("CustomUserDetailsService and PasswordEncoder are injected successfully.");
     }
