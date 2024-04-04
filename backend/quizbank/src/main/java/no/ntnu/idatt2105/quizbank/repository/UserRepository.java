@@ -2,6 +2,7 @@ package no.ntnu.idatt2105.quizbank.repository;
 
 import no.ntnu.idatt2105.quizbank.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -10,6 +11,7 @@ import java.util.Optional;
  * Repository interface for User for retrieving and accessing User entities from the database
  * Extends JpaRepository to get access to CRUD methods
  */
+@EnableJpaRepositories
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
     /**
@@ -17,5 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
      * @param username Username of the user to find
      * @return Optional of User containing the user if found, empty Optional otherwise
      */
-    Optional<User> findByUsername(String username);
+    Optional<User>findByUsernameAndPassword(String username, String password);
+    User findByUsername(String username);
+
 }

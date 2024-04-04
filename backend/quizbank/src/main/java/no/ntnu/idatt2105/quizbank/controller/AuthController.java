@@ -1,26 +1,10 @@
 package no.ntnu.idatt2105.quizbank.controller;
 
-import no.ntnu.idatt2105.quizbank.controller.dto.LoginRequest;
-import no.ntnu.idatt2105.quizbank.security.JwtUtil;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import org.slf4j.Logger;
-
 /**
  * Class that handles the HTTP requests for authentication
  * Manages the interaction between AuthenticationManager and JwtUtil
  */
-@RestController
+/*@RestController
 @RequestMapping("/api")
 public class AuthController {
 
@@ -40,7 +24,7 @@ public class AuthController {
      * @return ResponseEntity containing a JWT token if the login was successful or UNAUTHORIZED status if unsuccessful
      */
 
-    @PostMapping("/api/login")
+   /* @PostMapping("/api/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest loginRequest) {
         logger.debug("Attempting to authenticate user: {}", loginRequest.getUsername());
         try {
@@ -68,4 +52,4 @@ public class AuthController {
             return jwt;
         }
     }
-}
+}*/

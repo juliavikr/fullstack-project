@@ -1,6 +1,6 @@
 package no.ntnu.idatt2105.quizbank.controller;
 
-import no.ntnu.idatt2105.quizbank.controller.dto.QuizDto;
+import no.ntnu.idatt2105.quizbank.dto.QuizDto;
 import no.ntnu.idatt2105.quizbank.model.Quiz;
 import no.ntnu.idatt2105.quizbank.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;

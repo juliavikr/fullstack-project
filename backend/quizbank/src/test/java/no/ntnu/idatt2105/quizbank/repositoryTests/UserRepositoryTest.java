@@ -21,7 +21,7 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
     /**
-     * Test {@link UserRepository#findByUsername(String)} for a scenario where the requested user is exists in the database
+     * Test {@link UserRepository#findByUsernameAndPassword(String, String)} for a scenario where the requested user is exists in the database
      * Given a user Andramun is saved in the database
      * When the metyhod findByUsername is called with the username Andramun
      * The returned value should be an Optional containing the user Andramun
@@ -33,7 +33,7 @@ public class UserRepositoryTest {
         userRepository.save(alex);
 
         // when
-        Optional<User> found = userRepository.findByUsername(alex.getUsername());
+        Optional<User> found = userRepository.findByUsernameAndPassword(alex.getUsername(), alex.getPassword());
 
         // then
         assertThat(found.isPresent()).isTrue();
@@ -41,7 +41,7 @@ public class UserRepositoryTest {
     }
 
     /**
-     * Test {@link UserRepository#findByUsername(String)} for a scenario where the requested user does not exist in the database
+     * Test {@link UserRepository#findByUsernameAndPassword(String, String)} for a scenario where the requested user does not exist in the database
      * Given a user "unknown_user" that is not saved in the database
      * When the method findByUsername is called with the username unknown_user
      * The returned value should be an empty Optional and the user should not be found
@@ -52,7 +52,7 @@ public class UserRepositoryTest {
         String username = "unknown_user";
 
         // when
-        Optional<User> found = userRepository.findByUsername(username);
+        Optional<User> found = userRepository.findByUsernameAndPassword(username, "password");
 
         // then
         assertThat(found.isPresent()).isFalse();

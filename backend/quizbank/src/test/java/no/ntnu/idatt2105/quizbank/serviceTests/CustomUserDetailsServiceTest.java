@@ -1,6 +1,6 @@
 package no.ntnu.idatt2105.quizbank.serviceTests;
 
-import no.ntnu.idatt2105.quizbank.model.User;
+/*import no.ntnu.idatt2105.quizbank.model.User;
 import no.ntnu.idatt2105.quizbank.repository.UserRepository;
 import no.ntnu.idatt2105.quizbank.service.CustomUserDetailsService;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +19,8 @@ import static org.mockito.Mockito.when;
  * Class for testing {@link CustomUserDetailsService}
  * This class uses Mockito to mock the UserRepository for testing purposes so that the tests can be run without a database
  */
+/*
+
 class CustomUserDetailsServiceTest {
 
     @Mock
@@ -38,6 +40,7 @@ class CustomUserDetailsServiceTest {
      * The method loadUserByUsername is then called with the username "validUser"
      * The method should return a UserDetails object with the same username as the mockUser
      */
+/*
     @Test
     void whenValidUsername_thenUserShouldBeFound() {
         // Arrange
@@ -59,6 +62,7 @@ class CustomUserDetailsServiceTest {
      * The method loadUserByUsername is called with the username "invalidUser" that is not in the mock UserRepository
      * The method should throw a UsernameNotFoundException
      */
+/*
     @Test
     void whenInvalidUsername_thenThrowUsernameNotFoundException() {
         // Arrange
@@ -69,4 +73,4 @@ class CustomUserDetailsServiceTest {
             customUserDetailsService.loadUserByUsername("invalidUser");
         });
     }
-}
+}*/

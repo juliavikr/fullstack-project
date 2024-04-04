@@ -1,20 +1,9 @@
 package no.ntnu.idatt2105.quizbank.security;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.auth0.jwt.interfaces.JWTVerifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Service;
-
-import java.util.Date;
-
 /**
  * This class is responsible for generating and verifying JWT tokens
  */
+/*
 @Service
 public class JwtUtil {
 
@@ -57,3 +46,5 @@ public class JwtUtil {
         return false;
     }
 }
+
+ */

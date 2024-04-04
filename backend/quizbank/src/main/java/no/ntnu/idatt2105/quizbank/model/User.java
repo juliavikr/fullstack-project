@@ -11,23 +11,29 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
+    @Column(name = "id", length = 45)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "username")
     private String username;
+     @Column(name = "password")
     private String password;
 
     // en bruker kan ha flere quizzer
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Quiz> quizzes = new ArrayList<>();
 
-    public User() {
-    }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public User() {
+
     }
 
 
@@ -49,5 +55,15 @@ public class User {
     }
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", quizzes=" + quizzes +
+                '}';
     }
 }

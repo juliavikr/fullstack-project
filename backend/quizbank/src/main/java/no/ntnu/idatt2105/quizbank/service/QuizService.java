@@ -1,6 +1,6 @@
 package no.ntnu.idatt2105.quizbank.service;
 
-import no.ntnu.idatt2105.quizbank.controller.dto.QuizDto;
+import no.ntnu.idatt2105.quizbank.dto.QuizDto;
 import no.ntnu.idatt2105.quizbank.model.Question;
 import no.ntnu.idatt2105.quizbank.model.Quiz;
 import no.ntnu.idatt2105.quizbank.repository.QuestionRepository;

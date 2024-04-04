@@ -1,4 +1,4 @@
-package no.ntnu.idatt2105.quizbank.controller.dto;
+package no.ntnu.idatt2105.quizbank.dto;
 
 
 import java.util.List;
