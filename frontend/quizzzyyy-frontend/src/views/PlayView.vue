@@ -1,24 +1,71 @@
 <template>
   <div class="play-view">
-    <h2>THE US DURING THE 80'S</h2>
-    <div class="question-card">
-      <p>Who was the US president during the 80's?</p>
-      <input type="text" placeholder="Answer:" v-model="userAnswer" />
-      <MediumButton @click="submitAnswer">Next</MediumButton>
+    <h2>{{ quizTitle }}</h2>
+    <!-- Ensure you are using "question_text" to match the backend field name -->
+    <div v-if="currentQuestion" class="question-card">
+      <p>{{ currentQuestion.question_text }}</p>
+      <input type="text" placeholder="Your answer" v-model="userAnswer" />
+      <button @click="submitAndNext" v-if="!isLastQuestion">Next</button>
+      <button @click="finishQuiz" v-if="isLastQuestion">Finish</button>
+    </div>
+    <div v-else>
+      <!-- You can put a loading indicator here or a message if there are no questions -->
+      <p>Loading questions...</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import MediumButton from '@/components/MediumButton.vue'
+import { onMounted, ref, computed } from 'vue'
+import { useQuizStore } from '@/stores/quizStore'
+import { useRouter } from 'vue-router'
 
+const store = useQuizStore()
+const router = useRouter()
 const userAnswer = ref('')
 
-const submitAnswer = () => {
-  // Logikk for å behandle svaret
-  // For eksempel, valider svaret og gå til neste spørsmål eller avslutt quizen
+const quizTitle = computed(() => store.currentQuiz?.title || '')
+
+const currentQuestion = computed(() => store.currentQuestion)
+
+const isLastQuestion = computed(() => store.isLastQuestion)
+
+// Submit answer and handle navigation
+const submitAndNext = () => {
+  store.submitAnswer(userAnswer.value)
+  userAnswer.value = ''
+  if (!isLastQuestion.value) {
+    store.currentQuestionIndex++
+  }
 }
+
+// Finish quiz
+const finishQuiz = () => {
+  if (!isLastQuestion.value) {
+    // If there are still questions left, submit the last answer before finishing
+    store.submitAnswer(userAnswer.value)
+  }
+  // Navigate to the score view
+  router.push('/score')
+}
+
+// Fetch quizzes when component is mounted
+onMounted(async () => {
+  if (!store.currentQuiz) {
+    // If there's no current quiz set, try to fetch the quizzes
+    await store.fetchQuizzes()
+
+    // After fetching, check if we successfully got quizzes
+    if (store.quizzes.length > 0) {
+      // Set the first quiz as current
+      store.setCurrentQuiz(store.quizzes[0])
+    } else {
+      // Handle the case where no quizzes were fetched
+      console.error('No quizzes were loaded')
+      // Potentially set an error state here
+    }
+  }
+})
 </script>
 
 <style scoped>

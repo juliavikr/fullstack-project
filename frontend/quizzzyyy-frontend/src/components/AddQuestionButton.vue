@@ -19,6 +19,6 @@ const addQuestion = () => {
   height: 60px;
   background: #ff8bc3;
   margin: 20px;
-  border: none;
+  border: 1px solid black;
 }
 </style>

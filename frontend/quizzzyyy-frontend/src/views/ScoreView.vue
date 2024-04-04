@@ -1,21 +1,28 @@
 <template>
   <div class="score-view">
-    <h2>THE US DURING THE 80'S</h2>
+    <h2>Quiz Completed!</h2>
     <div class="score-card">
-      <p>Score:</p>
-      <p class="score">8/10</p>
-      <MediumButton @click="acknowledgeScore">Great</MediumButton>
+      <p>Your Score:</p>
+      <p class="score">{{ score }} / {{ totalQuestions }}</p>
+      <button @click="acknowledgeScore">Great</button>
     </div>
   </div>
 </template>
 
 <script setup>
-//import { ref } from 'vue'
-import MediumButton from '@/components/MediumButton.vue'
+import { computed } from 'vue'
+import { useQuizStore } from '@/stores/quizStore'
+import { useRouter } from 'vue-router'
+
+const quizStore = useQuizStore()
+const router = useRouter()
+
+const score = computed(() => quizStore.score.value)
+const totalQuestions = computed(() => quizStore.currentQuiz.value.questions.length)
 
 const acknowledgeScore = () => {
-  // Logikk for å håndtere når brukeren aksepterer sin score
-  // For eksempel, omdiriger til en annen side eller vis en melding
+  quizStore.resetQuiz()
+  router.push('/')
 }
 </script>
 

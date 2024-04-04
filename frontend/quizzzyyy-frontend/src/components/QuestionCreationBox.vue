@@ -2,16 +2,35 @@
   <div class="question-creation-box">
     <div class="input-group question">
       <label for="question">Question:</label>
-      <input type="text" id="question" />
+      <!-- Bind question_text ved hjelp av v-model -->
+      <input type="text" id="question" v-model="localQuestion.question_text" />
     </div>
     <div class="input-group answer">
       <label for="answer">Answer:</label>
-      <input type="text" id="answer" />
+      <!-- Bind answer ved hjelp av v-model -->
+      <input type="text" id="answer" v-model="localQuestion.answer" />
     </div>
-    <!-- Erstattet TrashIcon med en "-" knapp -->
-    <button class="remove-question-button" @click="$emit('remove')">-</button>
+    <button class="remove-question-button" @click="$emit('remove', localQuestion)">-</button>
   </div>
 </template>
+
+<script setup>
+import { ref, watchEffect, defineEmits } from 'vue'
+
+// Define the events that this component can emit
+const emit = defineEmits(['update:question', 'remove'])
+
+const props = defineProps({
+  question: Object,
+  index: Number
+})
+
+const localQuestion = ref({ ...props.question })
+
+watchEffect(() => {
+  emit('update:question', { ...localQuestion.value, index: props.index })
+})
+</script>
 
 <style scoped>
 .question-creation-box {

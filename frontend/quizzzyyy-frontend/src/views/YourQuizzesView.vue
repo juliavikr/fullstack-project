@@ -22,33 +22,41 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import { ref, computed } from 'vue'
-import QuizEntry from '@/components/QuizEntry.vue'
 import NavBar from '@/components/NavBar.vue'
+import QuizEntry from '@/components/QuizEntry.vue'
+import { useQuizStore } from '@/stores/quizStore'
 
-// Anta at disse dataene kommer fra en API-kall eller en global tilstand (for eksempel Vuex)
-const quizzes = ref([
-  // Mock data for eksempelets skyld
-  { id: 1, title: 'THE US DURING THE 80’S', category: 'History', difficulty: 'Hard' },
-  { id: 2, title: 'THE WORLD IN THE 90’S', category: 'Geography', difficulty: 'Medium' }
-  // ...andre quizer
-])
-
-const categories = ['History', 'Geography', 'Science']
+const quizStore = useQuizStore()
+const categories = [
+  'History',
+  'Geography',
+  'Science',
+  'Sports',
+  'Music',
+  'Movies',
+  'Technology',
+  'Arts & Literature',
+  'General Knowledge'
+]
 const difficulties = ['Easy', 'Medium', 'Hard']
-
 const selectedCategory = ref('')
 const selectedDifficulty = ref('')
 const searchTerm = ref('')
 
 const filteredQuizzes = computed(() => {
-  return quizzes.value.filter((quiz) => {
+  return quizStore.quizzes.filter((quiz) => {
     return (
       (!selectedCategory.value || quiz.category === selectedCategory.value) &&
       (!selectedDifficulty.value || quiz.difficulty === selectedDifficulty.value) &&
       (!searchTerm.value || quiz.title.toLowerCase().includes(searchTerm.value.toLowerCase()))
     )
   })
+})
+
+onMounted(() => {
+  quizStore.fetchQuizzes() // This will fetch quizzes when the component is mounted
 })
 </script>
 
