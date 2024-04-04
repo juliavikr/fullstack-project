@@ -30,7 +30,7 @@ public class QuizService {
 
         List<Question> questions = quizDto.getQuestions().stream().map(questionDto -> {
             Question question = new Question();
-            question.setQuestion_text(questionDto.getQuestion());
+            question.setQuestion_text(questionDto.getQuestion_text());
             question.setAnswer(questionDto.getAnswer());
             question.setQuiz(quiz); // Associate question with the quiz
             return question;
@@ -63,7 +63,7 @@ public class QuizService {
         // Update or create new questions
         List<Question> updatedQuestions = quizDto.getQuestions().stream().map(questionDto -> {
             Question question = new Question();
-            question.setQuestion_text(questionDto.getQuestion());
+            question.setQuestion_text(questionDto.getQuestion_text());
             question.setAnswer(questionDto.getAnswer());
             question.setQuiz(existingQuiz);
             return question;
