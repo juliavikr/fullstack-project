@@ -5,36 +5,37 @@
       <p>Category: {{ quiz.category }} - Difficulty: {{ quiz.difficulty }}</p>
     </div>
     <div class="buttons">
-      <MediumButton type="play" @click="playQuiz(quiz.id)">Play</MediumButton>
-      <MediumButton type="edit" @click="editQuiz(quiz.id)">Edit</MediumButton>
+      <MediumButton @click="startQuiz">Play</MediumButton>
+      <MediumButton @click="editQuiz">Edit</MediumButton>
     </div>
   </div>
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue'
-import MediumButton from './MediumButton.vue'
+import { defineProps } from 'vue'
+import MediumButton from '@/components/MediumButton.vue'
 import { useRouter } from 'vue-router'
+import { useQuizStore } from '@/stores/quizStore'
 
-defineProps({
+const props = defineProps({
   quiz: {
     type: Object,
     required: true
   }
 })
 
-const emits = defineEmits(['play', 'edit'])
 const router = useRouter()
+const quizStore = useQuizStore()
 
-const playQuiz = (quizId) => {
-  // Logic for playing a quiz can go here or you can emit an event
-  emits('play', quizId)
+const startQuiz = () => {
+  quizStore.setCurrentQuiz(props.quiz)
   router.push('/play')
+  console.log('Starting quiz...')
 }
 
-const editQuiz = (quizId) => {
-  // Logic for editing a quiz can go here or you can emit an event
-  emits('edit', quizId)
+const editQuiz = () => {
+  // Assuming you have a route named 'EditQuiz' and use the quiz ID as a parameter
+  router.push({ name: 'EditQuiz', params: { id: props.quiz.id } })
 }
 </script>
 
