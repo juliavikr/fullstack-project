@@ -52,6 +52,6 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDTO)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("1")); // forventet at det returnerte bruker IDen er "1"
+                .andExpect(content().string("1"));
     }
 }

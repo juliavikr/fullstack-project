@@ -1,7 +1,7 @@
 <template>
   <div class="auth-form">
     <h2>{{ title }}</h2>
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent="saveData">
       <div class="input-group">
         <label for="username">Username:</label>
         <input type="text" id="username" v-model="username" required />
@@ -18,8 +18,7 @@
 <script setup>
 import { ref } from 'vue'
 import MediumButton from '@/components/MediumButton.vue'
-import { useRouter } from 'vue-router'
-import AuthService from '@/services/AuthService'
+import axios from "axios";
 
 const props = defineProps({
   title: String,
@@ -27,12 +26,26 @@ const props = defineProps({
   buttonText: String
 })
 
-const username = ref('')
-const password = ref('')
-const router = useRouter()
+const user = ref({
+  username: '',
+  password: ''
+})
 
-const onSubmit = async () => {
-  if (props.buttonType === 'login') {
+const saveData = () => {
+  axios.post('http://localhost:8080/api/user/register', user.value)
+      .then(({ data }) => {
+       console.log(data);
+       try {
+         alert("User registered successfully")
+       } catch(err){
+         alert("User registration failed")
+       }
+      })
+}
+</script>
+/*const onSubmit = async () => {
+  console.log('Submitting form...')
+  if (props.buttonType === 'login'){
     try {
       const response = await AuthService.logIn({ username: username.value, password: password.value })
       // Her bør du lagre JWT token du får fra serveren, for eksempel i localStorage
@@ -44,14 +57,17 @@ const onSubmit = async () => {
   } else if (props.buttonType === 'signup') {
     try {
       const response = await AuthService.signUp({ username: username.value, password: password.value })
-      alert('Registrering vellykket') // Vis en suksessmelding
+      alert('Registrering vellykket')
+          console.log("successful registration")
+      // Vis en suksessmelding
       await router.push('/login') // Naviger til innloggingssiden
     } catch (error) {
       alert('Feil ved registrering') // Vis en feilmelding til brukeren
     }
+;
   }
-}
-</script>
+}*/
+
 
 
 <style scoped>

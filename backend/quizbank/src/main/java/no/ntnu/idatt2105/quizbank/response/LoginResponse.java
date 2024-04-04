@@ -4,11 +4,11 @@ public class LoginResponse {
     String message;
     Boolean success;
 
-    public String getMessage() {
+    public String getResponse() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setResponse(String message) {
         this.message = message;
     }
 
