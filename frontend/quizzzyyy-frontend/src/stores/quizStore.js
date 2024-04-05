@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
-import axios from 'axios'
+import { defineStore } from 'pinia';
+import axios from 'axios';
 
 export const useQuizStore = defineStore('quiz', {
   state: () => ({
@@ -12,80 +12,115 @@ export const useQuizStore = defineStore('quiz', {
   getters: {
     currentQuestion: (state) => {
       if (!state.currentQuiz || !state.currentQuiz.questions) {
-        return null
+        return null;
       }
-      return state.currentQuiz.questions[state.currentQuestionIndex]
+      return state.currentQuiz.questions[state.currentQuestionIndex];
     },
     isLastQuestion: (state) => {
       if (!state.currentQuiz || !state.currentQuiz.questions) {
-        return true
+        return true;
       }
-      return state.currentQuestionIndex === state.currentQuiz.questions.length - 1
+      return state.currentQuestionIndex === state.currentQuiz.questions.length - 1;
     }
   },
   actions: {
     async fetchQuizzes() {
       try {
-        const response = await axios.get('http://localhost:8080/quiz')
-        console.log('Quizzes fetched:', response.data)
-        this.quizzes = response.data
-        this.saveState() // Save state after fetching quizzes
+        const response = await axios.get('http://localhost:8080/quiz');
+        this.quizzes = response.data;
       } catch (error) {
-        console.error('Error fetching quizzes:', error)
+        console.error('Error fetching quizzes:', error);
       }
     },
-
+    async fetchUserQuizzes() {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:8080/quiz/user-quizzes', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        this.quizzes = response.data;
+      } catch (error) {
+        console.error('Error fetching user quizzes:', error);
+      }
+    },
+    async createQuiz(quizData) {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post('http://localhost:8080/quiz', quizData, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        this.quizzes.push(response.data);
+      } catch (error) {
+        console.error('Error creating quiz:', error);
+      }
+    },
+     setDifficulty(difficultyLevel) {
+    if (this.currentQuiz) {
+      this.currentQuiz.difficulty = difficultyLevel;
+    }
+  },
+    async updateQuiz(quizId, quizData) {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.put(`http://localhost:8080/quiz/${quizId}`, quizData, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const index = this.quizzes.findIndex(quiz => quiz.id === quizId);
+        if (index !== -1) {
+          this.quizzes[index] = response.data;
+        }
+      } catch (error) {
+        console.error('Error updating quiz:', error);
+      }
+    },
+    async deleteQuiz(quizId) {
+      try {
+        const token = localStorage.getItem('token');
+        await axios.delete(`http://localhost:8080/quiz/${quizId}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        this.quizzes = this.quizzes.filter(quiz => quiz.id !== quizId);
+      } catch (error) {
+        console.error('Error deleting quiz:', error);
+      }
+    },
     setCurrentQuiz(quiz) {
-      console.log('Selected quiz:', quiz)
-      this.currentQuiz = quiz
-      this.currentQuestionIndex = 0
-      this.score = 0
-      this.userAnswers = []
-      this.saveState() // Save state after setting the current quiz
+      this.currentQuiz = quiz;
+      this.currentQuestionIndex = 0;
+      this.score = 0;
+      this.userAnswers = [];
     },
-
     submitAnswer(answer) {
-      const currentQuestion = this.currentQuestion
-      console.log('Current question:', currentQuestion)
-      console.log('Submitted answer:', answer)
+      const currentQuestion = this.currentQuestion;
       if (answer.toLowerCase().trim() === currentQuestion.answer.toLowerCase().trim()) {
-        this.score++
-        console.log('Correct answer! Score:', this.score)
-      } else {
-        console.log('Wrong answer. Score remains:', this.score)
+        this.score++;
       }
-      this.userAnswers.push(answer)
+      this.userAnswers.push(answer);
       if (this.isLastQuestion) {
-        this.endQuiz()
+        this.endQuiz();
       } else {
-        this.currentQuestionIndex++
+        this.currentQuestionIndex++;
       }
-      this.saveState() // Save state after submitting an answer
     },
-
     endQuiz() {
-      console.log(`Quiz finished with score: ${this.score}`)
-      this.saveState() // Save state after ending the quiz
+      // Logic to handle the end of a quiz
     },
-
     resetQuiz() {
-      this.currentQuiz = null
-      this.currentQuestionIndex = 0
-      this.score = 0
-      this.userAnswers = []
-      localStorage.removeItem('quizState') // Clear the saved state upon resetting
+      this.currentQuiz = null;
+      this.currentQuestionIndex = 0;
+      this.score = 0;
+      this.userAnswers = [];
+      localStorage.removeItem('quizState');
     },
-
     saveState() {
-      const stateToSave = JSON.stringify(this.$state)
-      localStorage.setItem('quizState', stateToSave)
+      localStorage.setItem('quizState', JSON.stringify(this.$state));
     },
-
     loadState() {
-      const savedState = localStorage.getItem('quizState')
+      const savedState = localStorage.getItem('quizState');
       if (savedState) {
-        this.$state = JSON.parse(savedState)
+        this.$state = JSON.parse(savedState);
       }
     }
   }
-})
+});
+
