@@ -9,6 +9,7 @@ import LibraryView from '@/views/LibraryView.vue'
 import YourQuizzesView from '@/views/YourQuizzesView.vue'
 import PlayView from '@/views/PlayView.vue'
 import ScoreView from '@/views/ScoreView.vue'
+import { useQuizStore } from '@/stores/quizStore'
 
 const routes = [
   {
@@ -67,6 +68,26 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const store = useQuizStore()
+
+  // Check if trying to leave the quiz page and a quiz is in progress
+  if (
+    from.path === '/quiz' &&
+    store.currentQuiz &&
+    store.currentQuestionIndex < store.currentQuiz.questions.length
+  ) {
+    if (window.confirm('Are you sure you want to leave the quiz? Your progress will be lost.')) {
+      store.resetQuiz() // Reset the quiz if leaving the page
+      next()
+    } else {
+      next(false) // Cancel the navigation
+    }
+  } else {
+    next() // Proceed with navigation for all other cases
+  }
 })
 
 export default router

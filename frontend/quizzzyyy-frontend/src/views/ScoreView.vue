@@ -3,6 +3,7 @@
     <h2>Quiz Completed!</h2>
     <div class="score-card">
       <p>Your Score:</p>
+      <!-- Remove the .value from score and totalQuestions -->
       <p class="score">{{ score }} / {{ totalQuestions }}</p>
       <button @click="acknowledgeScore">Great</button>
     </div>
@@ -10,20 +11,33 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useQuizStore } from '@/stores/quizStore'
 import { useRouter } from 'vue-router'
 
 const quizStore = useQuizStore()
 const router = useRouter()
 
-const score = computed(() => quizStore.score.value)
-const totalQuestions = computed(() => quizStore.currentQuiz.value.questions.length)
+// Access store properties directly, not with .value
+const score = computed(() => {
+  console.log('Final score:', quizStore.score)
+  return quizStore.score
+})
+
+const totalQuestions = computed(() => {
+  console.log('Total questions:', quizStore.currentQuiz.questions.length)
+  return quizStore.currentQuiz.questions.length
+})
 
 const acknowledgeScore = () => {
   quizStore.resetQuiz()
-  router.push('/')
+  router.push('/home') // Or wherever you want to navigate after acknowledging the score
 }
+
+onMounted(() => {
+  const quizStore = useQuizStore()
+  quizStore.loadState()
+})
 </script>
 
 <style scoped>

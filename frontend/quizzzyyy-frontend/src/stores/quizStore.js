@@ -6,20 +6,20 @@ export const useQuizStore = defineStore('quiz', {
     quizzes: [],
     currentQuiz: null,
     currentQuestionIndex: 0,
-    score: 0
+    score: 0,
+    userAnswers: [] // To keep track of all answers given
   }),
   getters: {
     currentQuestion: (state) => {
-      if (
-        state.currentQuiz &&
-        state.currentQuiz.questions &&
-        state.currentQuiz.questions.length > state.currentQuestionIndex
-      ) {
-        return state.currentQuiz.questions[state.currentQuestionIndex]
+      if (!state.currentQuiz || !state.currentQuiz.questions) {
+        return null
       }
-      return null
+      return state.currentQuiz.questions[state.currentQuestionIndex]
     },
     isLastQuestion: (state) => {
+      if (!state.currentQuiz || !state.currentQuiz.questions) {
+        return true
+      }
       return state.currentQuestionIndex === state.currentQuiz.questions.length - 1
     }
   },
@@ -27,56 +27,65 @@ export const useQuizStore = defineStore('quiz', {
     async fetchQuizzes() {
       try {
         const response = await axios.get('http://localhost:8080/quiz')
-        console.log(response.data) // Log to see the actual structure
+        console.log('Quizzes fetched:', response.data)
         this.quizzes = response.data
+        this.saveState() // Save state after fetching quizzes
       } catch (error) {
-        console.error('There was an error fetching the quizzes', error)
+        console.error('Error fetching quizzes:', error)
       }
     },
 
     setCurrentQuiz(quiz) {
-      console.log('Setting current quiz:', quiz) // Add this line to log the quiz object
+      console.log('Selected quiz:', quiz)
       this.currentQuiz = quiz
       this.currentQuestionIndex = 0
-      this.score = 0 // Reset the score each time a new quiz is started.
-
-      // If you want to log the questions specifically, you can add another log statement
-      if (quiz.questions && quiz.questions.length > 0) {
-        console.log('Questions in the current quiz:', quiz.questions)
-      } else {
-        console.warn('No questions found in the current quiz')
-      }
+      this.score = 0
+      this.userAnswers = []
+      this.saveState() // Save state after setting the current quiz
     },
 
     submitAnswer(answer) {
-      // Get the current question
       const currentQuestion = this.currentQuestion
-      if (currentQuestion) {
-        // Check if the user's answer is correct
-        if (answer.toLowerCase().trim() === currentQuestion.answer.toLowerCase().trim()) {
-          this.score++ // Increment score if the answer is correct
-        }
-      }
-
-      // Move to the next question or end the quiz
-      if (!this.isLastQuestion) {
-        this.currentQuestionIndex++
+      console.log('Current question:', currentQuestion)
+      console.log('Submitted answer:', answer)
+      if (answer.toLowerCase().trim() === currentQuestion.answer.toLowerCase().trim()) {
+        this.score++
+        console.log('Correct answer! Score:', this.score)
       } else {
-        this.endQuiz()
+        console.log('Wrong answer. Score remains:', this.score)
       }
+      this.userAnswers.push(answer)
+      if (this.isLastQuestion) {
+        this.endQuiz()
+      } else {
+        this.currentQuestionIndex++
+      }
+      this.saveState() // Save state after submitting an answer
     },
 
     endQuiz() {
-      // You can perform any additional actions needed at the end of the quiz here
       console.log(`Quiz finished with score: ${this.score}`)
-      // For example, you might navigate to a score page or show a score summary
-      // This can be handled in your Vue component using the router
+      this.saveState() // Save state after ending the quiz
     },
 
     resetQuiz() {
       this.currentQuiz = null
       this.currentQuestionIndex = 0
       this.score = 0
+      this.userAnswers = []
+      localStorage.removeItem('quizState') // Clear the saved state upon resetting
+    },
+
+    saveState() {
+      const stateToSave = JSON.stringify(this.$state)
+      localStorage.setItem('quizState', stateToSave)
+    },
+
+    loadState() {
+      const savedState = localStorage.getItem('quizState')
+      if (savedState) {
+        this.$state = JSON.parse(savedState)
+      }
     }
   }
 })

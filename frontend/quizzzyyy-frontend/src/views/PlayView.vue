@@ -32,20 +32,17 @@ const isLastQuestion = computed(() => store.isLastQuestion)
 
 // Submit answer and handle navigation
 const submitAndNext = () => {
+  console.log('Answer before submission:', userAnswer.value)
   store.submitAnswer(userAnswer.value)
+  console.log('Index after submission:', store.currentQuestionIndex)
   userAnswer.value = ''
-  if (!isLastQuestion.value) {
-    store.currentQuestionIndex++
-  }
 }
 
 // Finish quiz
 const finishQuiz = () => {
-  if (!isLastQuestion.value) {
-    // If there are still questions left, submit the last answer before finishing
-    store.submitAnswer(userAnswer.value)
-  }
-  // Navigate to the score view
+  console.log('Finishing quiz with last answer:', userAnswer.value)
+  store.submitAnswer(userAnswer.value) // Make sure to submit the last answer
+  console.log('Navigating to score view')
   router.push('/score')
 }
 
