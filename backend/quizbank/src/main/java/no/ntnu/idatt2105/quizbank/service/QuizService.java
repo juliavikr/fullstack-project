@@ -3,10 +3,8 @@ package no.ntnu.idatt2105.quizbank.service;
 import no.ntnu.idatt2105.quizbank.dto.QuizDto;
 import no.ntnu.idatt2105.quizbank.model.Question;
 import no.ntnu.idatt2105.quizbank.model.Quiz;
-import no.ntnu.idatt2105.quizbank.model.User;
 import no.ntnu.idatt2105.quizbank.repository.QuestionRepository;
 import no.ntnu.idatt2105.quizbank.repository.QuizRepository;
-import no.ntnu.idatt2105.quizbank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,24 +13,20 @@ import java.util.stream.Collectors;
 
 @Service
 public class QuizService {
-   private final QuizRepository quizRepository;
-    private final UserRepository userRepository;
+    private final QuizRepository quizRepository;
+    private final QuestionRepository questionRepository;
 
     @Autowired
-    public QuizService(QuizRepository quizRepository, UserRepository userRepository) {
+    public QuizService(QuizRepository quizRepository, QuestionRepository questionRepository) {
         this.quizRepository = quizRepository;
-        this.userRepository = userRepository;
+        this.questionRepository = questionRepository;
     }
-    public Quiz createQuiz(QuizDto quizDto, String username) {
-        User user = userRepository.findByUsername(username)
-                      .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Sett opp quiz-entiteten
+    public Quiz createQuiz(QuizDto quizDto) {
         Quiz quiz = new Quiz();
         quiz.setTitle(quizDto.getTitle());
         quiz.setCategory(quizDto.getCategory());
         quiz.setDifficulty(quizDto.getDifficulty());
-        quiz.setOwner(user); // Tilknytt brukeren til quizen
 
         List<Question> questions = quizDto.getQuestions().stream().map(questionDto -> {
             Question question = new Question();
@@ -45,7 +39,6 @@ public class QuizService {
         // Save the quiz and its questions to the database
         quiz.setQuestions(questions); // Set the questions to the quiz
         return quizRepository.save(quiz);
-
     }
 
     public List<Quiz> getAllQuizzes() {
@@ -83,9 +76,5 @@ public class QuizService {
 
     public List<Quiz> getQuizzesByCategory(String category) {
         return quizRepository.findByCategory(category);
-    }
-
-    public List<Quiz> getQuizzesForUser(String username) {
-        return quizRepository.findByUsername(username);
     }
 }

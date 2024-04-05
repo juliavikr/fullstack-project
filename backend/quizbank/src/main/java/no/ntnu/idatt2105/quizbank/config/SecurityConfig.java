@@ -46,7 +46,7 @@ public class SecurityConfig {
             .csrf().disable()
             .authenticationProvider(authenticationProvider)
             .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                .requestMatchers("*").permitAll()
+                .requestMatchers("/api/user/login/**", "/api/user/register/**").permitAll()
                 .anyRequest().authenticated() // Resten av requestene skal autentiseres
             )
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
