@@ -6,11 +6,13 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import no.ntnu.idatt2105.quizbank.model.Quiz;
+import no.ntnu.idatt2105.quizbank.model.User;
 import no.ntnu.idatt2105.quizbank.service.QuizService;
 import no.ntnu.idatt2105.quizbank.dto.QuizDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,19 +25,6 @@ public class QuizController {
     @Autowired
     public QuizController(QuizService quizService) {
         this.quizService = quizService;
-    }
-
-    @Operation(summary = "Create a new quiz",
-        responses = {
-            @ApiResponse(responseCode = "201", description = "Quiz created successfully",
-                content = @Content(schema = @Schema(implementation = Quiz.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid input data")
-        })
-    @PostMapping
-    public ResponseEntity<Quiz> createQuiz(
-        @Parameter(description = "Quiz data transfer object containing the details of the quiz to be created", required = true)
-        @RequestBody QuizDto quizDto) {
-        return new ResponseEntity<>(quizService.createQuiz(quizDto), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Get all quizzes",
@@ -88,5 +77,18 @@ public class QuizController {
         @PathVariable Long id) {
         quizService.deleteQuizById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<List<Quiz>> getQuizzesForCurrentUser(@AuthenticationPrincipal
+                                                               User userDetails) {
+        List<Quiz> quizzes = quizService.getQuizzesByUser(userDetails.getId());
+        return new ResponseEntity<>(quizzes, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Quiz> createQuiz(@RequestBody QuizDto quizDto, @AuthenticationPrincipal User principal) {
+        // Use the principal (the authenticated user) to set the owner of the new quiz
+        return new ResponseEntity<>(quizService.createQuiz(quizDto, principal), HttpStatus.CREATED);
     }
 }

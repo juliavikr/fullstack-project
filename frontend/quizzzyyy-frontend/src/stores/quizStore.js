@@ -26,7 +26,11 @@ export const useQuizStore = defineStore('quiz', {
   actions: {
     async fetchQuizzes() {
       try {
-        const response = await axios.get('http://localhost:8080/quiz')
+        const response = await axios.get('http://localhost:8080/quiz/my', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
         console.log('Quizzes fetched:', response.data)
         this.quizzes = response.data
         this.saveState() // Save state after fetching quizzes

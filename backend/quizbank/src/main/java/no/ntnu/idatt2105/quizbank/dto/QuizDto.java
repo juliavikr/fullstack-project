@@ -9,7 +9,16 @@ public class QuizDto {
   private String difficulty;
   private List<QuestionDto> questions;
 
+  private Long userId;
+
   public QuizDto() {
+  }
+
+  public QuizDto(String title, String category, String difficulty, List<QuestionDto> questions) {
+    this.title = title;
+    this.category = category;
+    this.difficulty = difficulty;
+    this.questions = questions;
   }
 
   public String getTitle() {
@@ -43,6 +52,15 @@ public class QuizDto {
   public void setQuestions(List<QuestionDto> questions) {
     this.questions = questions;
   }
+
+  public Long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
+
 
   @Override
   public String toString() {
