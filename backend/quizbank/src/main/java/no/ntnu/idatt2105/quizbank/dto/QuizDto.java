@@ -1,9 +1,14 @@
 package no.ntnu.idatt2105.quizbank.dto;
 
 
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
 public class QuizDto {
+  @NotBlank(message = "Title cannot be blank")
   private String title;
   private String category;
   private String difficulty;
@@ -21,32 +26,16 @@ public class QuizDto {
     this.questions = questions;
   }
 
-  public String getTitle() {
-    return title;
-  }
-
   public void setTitle(String title) {
     this.title = title;
-  }
-
-  public String getCategory() {
-    return category;
   }
 
   public void setCategory(String category) {
     this.category = category;
   }
 
-  public String getDifficulty() {
-    return difficulty;
-  }
-
   public void setDifficulty(String difficulty) {
     this.difficulty = difficulty;
-  }
-
-  public List<QuestionDto> getQuestions() {
-    return questions;
   }
 
   public void setQuestions(List<QuestionDto> questions) {

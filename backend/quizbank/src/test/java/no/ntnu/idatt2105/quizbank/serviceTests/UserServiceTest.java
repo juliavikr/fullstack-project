@@ -1,51 +1,79 @@
 package no.ntnu.idatt2105.quizbank.serviceTests;
-
+import no.ntnu.idatt2105.quizbank.dto.LoginDTO;
 import no.ntnu.idatt2105.quizbank.dto.UserDTO;
 import no.ntnu.idatt2105.quizbank.model.User;
 import no.ntnu.idatt2105.quizbank.repository.UserRepository;
-import no.ntnu.idatt2105.quizbank.service.implementation.UserIMPL;
+import no.ntnu.idatt2105.quizbank.response.LoginResponse;
+import no.ntnu.idatt2105.quizbank.security.JwtTokenUtil;
+import no.ntnu.idatt2105.quizbank.service.UserService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class) // Bruk Mockito-utvidelsen for JUnit 5
+import java.util.Optional;
+
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest
 public class UserServiceTest {
 
-    @Mock
+  @MockBean
     private UserRepository userRepository;
 
-    @Mock
+    @MockBean
     private PasswordEncoder passwordEncoder;
 
-    @InjectMocks
-    private UserIMPL userService;
-@Test
-public void shouldRegisterNewUserAccount() {
-    // Opprett en UserDTO med brukernavn og passord
-    UserDTO userDTO = new UserDTO("testUser", "testPass");
+    @MockBean
+    private JwtTokenUtil jwtTokenUtil;
 
-    // Opprett et User-objekt som representerer det som ville blitt lagret i databasen
-    User user = new User();
-    user.setUsername(userDTO.getUsername());
-    user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-    user.setId(1L); // Simuler at databasen har satt en ID for brukeren
+    @Autowired
+    private UserService userService;
 
-    // Når userRepository.save blir kalt med hvilken som helst User,
-    // returner brukerobjektet vi opprettet over
-    when(userRepository.save(any(User.class))).thenReturn(user);
+    @Test
+    public void registerNewUserAccount_WhenUsernameExists_ThrowsException() {
+        UserDTO userDTO = new UserDTO("existingUser", "password");
+        when(userRepository.existsByUsername(anyString())).thenReturn(true);
 
-    // Utfør tjenestekallet
-   String savedUserName = userService.registerNewUserAccount(userDTO);
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> userService.registerNewUserAccount(userDTO));
 
-    // Verifiser at den lagrede brukerens ID er den samme som vi satt
-    assertEquals(user.getUsername(), savedUserName);
+        assertEquals("Username is already taken", exception.getMessage());
+    }
+
+    @Test
+    public void registerNewUserAccount_WhenUsernameNotExists_ReturnsUsername() {
+        UserDTO userDTO = new UserDTO("newUser", "password");
+        when(userRepository.existsByUsername(anyString())).thenReturn(false);
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        String returnedUsername = userService.registerNewUserAccount(userDTO);
+
+        assertEquals(userDTO.getUsername(), returnedUsername);
+    }
+
+    @Test
+    public void loginUser_WhenCredentialsAreCorrect_ReturnsLoginResponse() {
+    String username = "user";
+    String password = "password";
+    User mockUser = new User();
+    mockUser.setUsername(username);
+    mockUser.setPassword(passwordEncoder.encode(password));
+
+    when(userRepository.findByUsername(username)).thenReturn(Optional.of(mockUser));
+    when(passwordEncoder.matches(password, mockUser.getPassword())).thenReturn(true);
+    when(jwtTokenUtil.generateToken(mockUser)).thenReturn("token");
+
+    LoginDTO loginDTO = new LoginDTO(username, password);
+    LoginResponse loginResponse = userService.loginUser(loginDTO);
+
+    assertTrue(loginResponse.getSuccess());
+    assertEquals("token", loginResponse.getToken());
 }
+
+    // Flere tester etter behov ...
 }
+
 

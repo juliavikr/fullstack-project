@@ -14,10 +14,18 @@ public class Question {
     private String question_text;
 
     private String answer;
+    public Question(String questionText, String answer) {
+    this.question_text = questionText;
+    this.answer = answer;
+}
 
     @ManyToOne
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
+
+    public Question() {
+
+    }
 
     public void setId(Long id) {
         this.id = id;
