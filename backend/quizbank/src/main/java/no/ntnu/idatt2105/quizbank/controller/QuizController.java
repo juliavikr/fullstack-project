@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -24,18 +25,16 @@ public class QuizController {
     public QuizController(QuizService quizService) {
         this.quizService = quizService;
     }
-
-    @Operation(summary = "Create a new quiz",
+ @Operation(summary = "Get all quizzes for the logged-in user",
         responses = {
-            @ApiResponse(responseCode = "201", description = "Quiz created successfully",
-                content = @Content(schema = @Schema(implementation = Quiz.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid input data")
+            @ApiResponse(responseCode = "200", description = "All quizzes for the user retrieved successfully",
+                content = @Content(schema = @Schema(implementation = Quiz.class)))
         })
-    @PostMapping
-    public ResponseEntity<Quiz> createQuiz(
-        @Parameter(description = "Quiz data transfer object containing the details of the quiz to be created", required = true)
-        @RequestBody QuizDto quizDto) {
-        return new ResponseEntity<>(quizService.createQuiz(quizDto), HttpStatus.CREATED);
+    @GetMapping("/user-quizzes")
+    public ResponseEntity<List<Quiz>> getQuizzesForUser(Principal principal) {
+        String username = principal.getName();
+        List<Quiz> quizzes = quizService.getQuizzesForUser(username);
+        return new ResponseEntity<>(quizzes, HttpStatus.OK);
     }
 
     @Operation(summary = "Get all quizzes",
