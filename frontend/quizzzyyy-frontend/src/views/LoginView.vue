@@ -4,10 +4,7 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
 import AuthForm from '@/components/AuthForm.vue'
-
-const router = useRouter()
 
 const handleLogin = () => {
   // Her vil du senere legge til autorisasjonslogikk.
