@@ -56,5 +56,13 @@ public class Quiz {
     public List<Question> getQuestions() {
         return questions;
     }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 }
 

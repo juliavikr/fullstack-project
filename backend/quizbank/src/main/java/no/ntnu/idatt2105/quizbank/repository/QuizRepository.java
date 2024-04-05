@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
 
+    List<Quiz> findByOwnerId(Long ownerId);
+
     List<Quiz> findByCategory(String category);
 
     // Custom method to fetch all quizzes with their questions

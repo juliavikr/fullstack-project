@@ -1,5 +1,7 @@
 package no.ntnu.idatt2105.quizbank.service;
 
+import no.ntnu.idatt2105.quizbank.model.User;
+import org.springframework.transaction.annotation.Transactional;
 import no.ntnu.idatt2105.quizbank.dto.QuizDto;
 import no.ntnu.idatt2105.quizbank.model.Question;
 import no.ntnu.idatt2105.quizbank.model.Quiz;
@@ -22,11 +24,13 @@ public class QuizService {
         this.questionRepository = questionRepository;
     }
 
-    public Quiz createQuiz(QuizDto quizDto) {
+    @Transactional
+    public Quiz createQuiz(QuizDto quizDto, User owner) {
         Quiz quiz = new Quiz();
         quiz.setTitle(quizDto.getTitle());
         quiz.setCategory(quizDto.getCategory());
         quiz.setDifficulty(quizDto.getDifficulty());
+        quiz.setOwner(owner);
 
         List<Question> questions = quizDto.getQuestions().stream().map(questionDto -> {
             Question question = new Question();
@@ -76,5 +80,9 @@ public class QuizService {
 
     public List<Quiz> getQuizzesByCategory(String category) {
         return quizRepository.findByCategory(category);
+    }
+
+    public List<Quiz> getQuizzesByUser(Long userId) {
+        return quizRepository.findByOwnerId(userId);
     }
 }

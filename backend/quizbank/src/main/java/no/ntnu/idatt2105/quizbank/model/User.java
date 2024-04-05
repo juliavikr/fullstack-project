@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private String password;
 
     // en bruker kan ha flere quizzer
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Quiz> quizzes = new ArrayList<>();
 
 

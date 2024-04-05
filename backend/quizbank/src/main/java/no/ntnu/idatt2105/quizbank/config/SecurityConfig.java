@@ -47,7 +47,7 @@ public class SecurityConfig {
             .authenticationProvider(authenticationProvider)
             .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                 .requestMatchers("/api/user/login/**", "/api/user/register/**").permitAll()
-                .anyRequest().authenticated() // Resten av requestene skal autentiseres
+                .anyRequest().authenticated()
             )
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
