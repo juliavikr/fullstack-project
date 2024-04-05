@@ -1,19 +1,23 @@
 package no.ntnu.idatt2105.quizbank.controller;
 
-import no.ntnu.idatt2105.quizbank.dto.LoginDTO;
-import no.ntnu.idatt2105.quizbank.dto.UserDTO;
-import no.ntnu.idatt2105.quizbank.response.LoginResponse;
-import no.ntnu.idatt2105.quizbank.response.SignUpResponse;
-import no.ntnu.idatt2105.quizbank.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 /**
  * Class that handles the HTTP requests for the user entity
  * This class uses the UserService to access the business logic and manage the connection to the front-end
  */
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import no.ntnu.idatt2105.quizbank.dto.LoginDTO; // Importer din LoginDTO
+import no.ntnu.idatt2105.quizbank.dto.UserDTO; // Importer din UserDTO
+import no.ntnu.idatt2105.quizbank.response.LoginResponse; // Importer din LoginResponse
+import no.ntnu.idatt2105.quizbank.response.SignUpResponse; // Importer din SignUpResponse
+import no.ntnu.idatt2105.quizbank.service.UserService; // Importer din UserService
+
 @RestController
 @CrossOrigin
 @RequestMapping("/api/user")
@@ -22,31 +26,32 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-@PostMapping("/register")
-public ResponseEntity<SignUpResponse> registerUser(@RequestBody UserDTO userDTO) {
-   try {
-       String username = userService.registerNewUserAccount(userDTO);
-       SignUpResponse response = new SignUpResponse(username, "User registered successfully", true);
-       return ResponseEntity.ok(response);
-   } catch (RuntimeException e) {
-       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SignUpResponse(null, e.getMessage(), false));
-   }
-}
-
-
- @PostMapping("/login")
- public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginDTO loginDTO) {
-    try {
-        LoginResponse loginResponse = userService.loginUser(loginDTO);
-        if (loginResponse.getSuccess()) {
-            return ResponseEntity.ok(loginResponse);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResponse);
+    @PostMapping("/register")
+    public ResponseEntity<SignUpResponse> registerUser(@RequestBody UserDTO userDTO) {
+        try {
+            String username = userService.registerNewUserAccount(userDTO);
+            SignUpResponse response = new SignUpResponse(username, "User registered successfully", true);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SignUpResponse(null, e.getMessage(), false));
         }
-    } catch (RuntimeException e) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(e.getMessage(), false));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginDTO loginDTO) {
+        try {
+            LoginResponse loginResponse = userService.loginUser(loginDTO);
+            if (loginResponse.getSuccess()) {
+                return ResponseEntity.ok(loginResponse);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResponse);
+            }
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(e.getMessage(), false, null));
+        }
     }
 }
+
 
 
 
@@ -90,5 +95,5 @@ public ResponseEntity<SignUpResponse> registerUser(@RequestBody UserDTO userDTO)
     }
 }*/
 
-}
+
 
