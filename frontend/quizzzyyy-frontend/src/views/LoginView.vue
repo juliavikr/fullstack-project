@@ -12,6 +12,5 @@ const router = useRouter()
 const handleLogin = () => {
   // Her vil du senere legge til autorisasjonslogikk.
   // For nå, naviger direkte til hjemmesiden.
-  router.push('/home')
 }
 </script>

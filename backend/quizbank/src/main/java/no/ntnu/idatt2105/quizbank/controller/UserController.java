@@ -3,8 +3,10 @@ package no.ntnu.idatt2105.quizbank.controller;
 import no.ntnu.idatt2105.quizbank.dto.LoginDTO;
 import no.ntnu.idatt2105.quizbank.dto.UserDTO;
 import no.ntnu.idatt2105.quizbank.response.LoginResponse;
+import no.ntnu.idatt2105.quizbank.response.SignUpResponse;
 import no.ntnu.idatt2105.quizbank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,18 +22,33 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register")
-    public String registerUser(@RequestBody UserDTO userDTO)
-    {
-       String id = userService.registerNewUserAccount(userDTO);
-        return id;
-    }
+@PostMapping("/register")
+public ResponseEntity<SignUpResponse> registerUser(@RequestBody UserDTO userDTO) {
+   try {
+       String username = userService.registerNewUserAccount(userDTO);
+       SignUpResponse response = new SignUpResponse(username, "User registered successfully", true);
+       return ResponseEntity.ok(response);
+   } catch (RuntimeException e) {
+       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new SignUpResponse(null, e.getMessage(), false));
+   }
+}
 
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
+
+ @PostMapping("/login")
+ public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginDTO loginDTO) {
+    try {
         LoginResponse loginResponse = userService.loginUser(loginDTO);
-        return ResponseEntity.ok(loginResponse);
+        if (loginResponse.getSuccess()) {
+            return ResponseEntity.ok(loginResponse);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(loginResponse);
+        }
+    } catch (RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(e.getMessage(), false));
     }
+}
+
+
 
     /**
      * Method for registering a new userDTO account

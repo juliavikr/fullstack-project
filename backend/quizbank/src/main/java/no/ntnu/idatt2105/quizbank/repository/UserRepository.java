@@ -2,6 +2,7 @@ package no.ntnu.idatt2105.quizbank.repository;
 
 import no.ntnu.idatt2105.quizbank.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +20,9 @@ public interface UserRepository extends JpaRepository<User, Long>{
      * @param username Username of the user to find
      * @return Optional of User containing the user if found, empty Optional otherwise
      */
-    Optional<User>findByUsernameAndPassword(String username, String password);
-    User findByUsername(String username);
+    @Query("SELECT u FROM User u WHERE u.username = ?1")
+    Optional<User> findByUsername(String username);
+
+    boolean existsByUsername(String username);
 
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="auth-form">
     <h2>{{ title }}</h2>
-    <form @submit.prevent="saveData">
+    <form @submit.prevent="handleSubmit">
       <div class="input-group">
         <label for="username">Username:</label>
         <input type="text" id="username" v-model="username" required />
@@ -14,11 +14,12 @@
     </form>
   </div>
 </template>
-
 <script setup>
 import { ref } from 'vue'
 import MediumButton from '@/components/MediumButton.vue'
-import axios from "axios";
+import axios from 'axios'
+import router from "@/router/index.js";
+
 
 const props = defineProps({
   title: String,
@@ -26,49 +27,63 @@ const props = defineProps({
   buttonText: String
 })
 
-const user = ref({
-  username: '',
-  password: ''
-})
+const username = ref('')
+const password = ref('')
 
-const saveData = () => {
-  axios.post('http://localhost:8080/api/user/register', user.value)
-      .then(({ data }) => {
-       console.log(data);
-       try {
-         alert("User registered successfully")
-       } catch(err){
-         alert("User registration failed")
-       }
-      })
-}
-</script>
-/*const onSubmit = async () => {
-  console.log('Submitting form...')
-  if (props.buttonType === 'login'){
-    try {
-      const response = await AuthService.logIn({ username: username.value, password: password.value })
-      // Her bør du lagre JWT token du får fra serveren, for eksempel i localStorage
-      localStorage.setItem('token', response.data.jwt)
-      await router.push('/home') // Naviger til hjemmesiden etter vellykket innlogging
-    } catch (error) {
-      alert('Feil ved innlogging') // Vis en feilmelding til brukeren
-    }
-  } else if (props.buttonType === 'signup') {
-    try {
-      const response = await AuthService.signUp({ username: username.value, password: password.value })
-      alert('Registrering vellykket')
-          console.log("successful registration")
-      // Vis en suksessmelding
-      await router.push('/login') // Naviger til innloggingssiden
-    } catch (error) {
-      alert('Feil ved registrering') // Vis en feilmelding til brukeren
-    }
-;
+const handleSubmit = () => {
+  if (props.buttonType === 'signup') {
+    handleSignUp()
+  } else if (props.buttonType === 'login') {
+    handleLogin()
   }
-}*/
+}
 
+const handleSignUp = async () => {
+  try {
+    const response = await axios.post('http://localhost:8080/api/user/register', {
+      username: username.value,
+      password: password.value
+    });
+    if (response.data) {
+      alert('User registered successfully');
+      await router.push("/login")
+    } else {
+      alert('No user found');
+    }
+  } catch (error) {
+    console.error(error);
+    if (error.response && error.response.data && error.response.data.message) {
+      alert(error.response.data.message); // Vis feilmeldingen fra backend
+    } else {
+      alert('User registration failed');
+    }
+  }
+}
+const handleLogin = async () => {
+  try {
+    const response = await axios.post('http://localhost:8080/api/user/login', {
+      username: username.value,
+      password: password.value
+    });
+    if (response.data && response.data.success) {
+      alert('Login successful');
+      // Her kan du lagre autentiseringstokenet som kommer fra serveren
+      // For eksempel i localStorage eller en Vuex state for videre bruk
+      await router.push("/home");
+    } else {
+      alert('Login failed: ' + response.data.message);
+    }
+  } catch (error) {
+    console.error(error);
+    if (error.response && error.response.data && error.response.data.message) {
+      alert('Login failed: ' + error.response.data.message); // Vis feilmeldingen fra backend
+    } else {
+      alert('invalid username or password');
+    }
+  }
+}
 
+</script>
 
 <style scoped>
 .auth-form {

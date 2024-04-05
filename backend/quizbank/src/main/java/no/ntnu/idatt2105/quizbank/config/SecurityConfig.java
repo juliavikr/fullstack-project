@@ -30,13 +30,14 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authenticationProvider(authenticationProvider)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("*").permitAll()
+                        .requestMatchers("/api/user/login/**", "/api/user/register/**").permitAll()
                 )
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
                 return http.build();
     }
 }
+
 
 
 

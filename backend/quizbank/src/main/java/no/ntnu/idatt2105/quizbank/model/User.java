@@ -1,6 +1,7 @@
 package no.ntnu.idatt2105.quizbank.model;
 
 import jakarta.persistence.*;
+import no.ntnu.idatt2105.quizbank.model.Quiz;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * Class representing a user in the database
  */
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
 public class User implements UserDetails {
 
     @Id
