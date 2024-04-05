@@ -103,6 +103,27 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.6.9</version>
 		</dependency>
+		<!-- Spring Boot Starter Test (includes JUnit Jupiter and Mockito) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<!-- No need to specify version; it's managed by Spring Boot Starter Parent -->
+			<!-- Exclude JUnit 4 to ensure only JUnit Jupiter is used -->
+			<exclusions>
+				<exclusion>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Spring Security Test for testing security configurations -->
+		<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-test</artifactId>
+		<scope>test</scope>
+		</dependency>
 
 </dependencies>
 	<build>
