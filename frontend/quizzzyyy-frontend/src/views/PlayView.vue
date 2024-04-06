@@ -68,22 +68,27 @@ onMounted(async () => {
 <style scoped>
 .play-view {
   max-width: 600px;
-  margin: 2rem auto;
-  text-align: center;
+  margin: 2rem auto; /* Centers the play-view in the middle of the page */
+  text-align: center; /* Centers the text */
 }
 
 .question-card {
   background-color: #fff;
   padding: 2rem;
-  margin-top: 2rem;
+  margin-top: 2rem; /* Adds space between the title and the card */
   border: 1px solid #ccc;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
 }
 
 input[type='text'] {
-  width: 100%;
+  width: calc(100% - 2rem); /* Full width minus padding */
   padding: 1rem;
-  margin-top: 1rem;
+  margin-top: 1rem; /* Adds space between the question and the input field */
+  margin-bottom: 1rem; /* Adds space between the input field and the button */
   border: 1px solid #ccc;
   border-radius: 5px;
 }

@@ -17,13 +17,17 @@
       </select>
       <input type="text" v-model="searchTerm" placeholder="Search your quizzes" />
     </div>
+    <!-- Message when no quizzes match the filter -->
+    <div v-if="filteredQuizzes.length === 0" class="no-quizzes-message">
+      No quizzes found. Try adjusting your search or filter criteria.
+    </div>
+    <!-- Render the quizzes that match the filter criteria -->
     <QuizEntry v-for="quiz in filteredQuizzes" :key="quiz.id" :quiz="quiz" />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-import { ref, computed } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import NavBar from '@/components/NavBar.vue'
 import QuizEntry from '@/components/QuizEntry.vue'
 import { useQuizStore } from '@/stores/quizStore'
@@ -37,8 +41,8 @@ const categories = [
   'Music',
   'Movies',
   'Technology',
-  'Arts & Literature',
-  'General Knowledge'
+  'Arts_Literature',
+  'General_Knowledge'
 ]
 const difficulties = ['Easy', 'Medium', 'Hard']
 const selectedCategory = ref('')
@@ -47,19 +51,24 @@ const searchTerm = ref('')
 
 const filteredQuizzes = computed(() => {
   return quizStore.quizzes.filter((quiz) => {
-    return (
-      (!selectedCategory.value || quiz.category === selectedCategory.value) &&
-      (!selectedDifficulty.value || quiz.difficulty === selectedDifficulty.value) &&
-      (!searchTerm.value || quiz.title.toLowerCase().includes(searchTerm.value.toLowerCase()))
-    )
+    const categoryMatch =
+      !selectedCategory.value ||
+      quiz.category.toLowerCase() === selectedCategory.value.toLowerCase()
+    const difficultyMatch =
+      !selectedDifficulty.value ||
+      quiz.difficulty.toLowerCase() === selectedDifficulty.value.toLowerCase()
+    const searchTermMatch =
+      !searchTerm.value || quiz.title.toLowerCase().includes(searchTerm.value.toLowerCase())
+    return categoryMatch && difficultyMatch && searchTermMatch
   })
 })
 
 onMounted(() => {
-  quizStore.fetchQuizzes() // This will fetch quizzes when the component is mounted
+  quizStore.fetchQuizzes().then(() => {
+    console.log('Quizzes after fetch:', quizStore.quizzes)
+  })
 })
 </script>
-
 <style scoped>
 .your-quizzes-page {
   padding: 2rem;

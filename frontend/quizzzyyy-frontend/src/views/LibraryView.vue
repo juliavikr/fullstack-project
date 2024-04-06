@@ -4,40 +4,67 @@
     <h2>YOUR LIBRARY</h2>
     <div class="activity-section">
       <h3>Activity:</h3>
-      <ul class="activity-list">
-        <!-- Anta at disse dataene kommer fra din brukers aktivitetslogg -->
-        <li v-for="(activity, index) in activities" :key="index">
-          {{ activity.quizTitle }}: {{ activity.score }}
-        </li>
-      </ul>
+      <div class="scroll-box">
+        <ul class="activity-list">
+          <li v-for="activity in activities" :key="activity.id">
+            {{ activity.quizTitle }}: {{ activity.score }}
+          </li>
+        </ul>
+      </div>
     </div>
-    <div class="quizzes-list">
-      <QuizEntry v-for="quiz in quizzes" :key="quiz.id" :quiz="quiz" />
+    <div class="quizzes-section">
+      <h3>Available Quizzes:</h3>
+      <div class="quizzes-list">
+        <QuizEntry v-for="quiz in quizzes" :key="quiz.id" :quiz="quiz" />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import QuizEntry from '@/components/QuizEntry.vue'
+import { onMounted, computed } from 'vue'
 import NavBar from '@/components/NavBar.vue'
+import QuizEntry from '@/components/QuizEntry.vue'
+import { useQuizStore } from '@/stores/quizStore'
 
-// Mock data
-const activities = ref([
-  { quizTitle: 'THE US DURING THE 80’S', score: '10/10' },
-  { quizTitle: 'THE US DURING THE 80’S', score: '9/10' },
-  { quizTitle: 'THE US DURING THE 80’S', score: '7/10' }
-  // ...andre aktiviteter
-])
+const quizStore = useQuizStore()
+const activities = computed(() => quizStore.activities)
+const quizzes = computed(() => {
+  return quizStore.quizzes
+})
 
-const quizzes = ref([
-  // Mock data for quizer
-  { id: 1, title: 'THE US DURING THE 80’S', category: 'History', difficulty: 'Hard' }
-  // ...andre quizer
-])
+onMounted(() => {
+  // Assume fetchQuizzes is an action that fetches quizzes and updates the store
+  quizStore.fetchQuizzes() // Fetch quizzes when the component mounts
+})
 </script>
 
 <style scoped>
+.activity-section {
+  /* Styles for the activity section */
+  max-height: 200px; /* Or any other value */
+  overflow-y: auto; /* This will create a scrollbar if content overflows */
+}
+
+.activity-scroll-box {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 20px; /* Add space between the activity list and the quizzes list */
+}
+
+.activity-list {
+  /* Styles for the activity list */
+  list-style-type: none; /* Remove list bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+}
+
+.activity-list li {
+  /* Styles for each activity list item */
+  margin-bottom: 10px; /* Add space between items */
+}
+
 .library-view {
   padding: 2rem;
   max-width: 1200px;
