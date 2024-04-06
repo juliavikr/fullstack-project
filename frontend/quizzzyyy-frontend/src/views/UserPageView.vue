@@ -25,11 +25,22 @@ import { ref } from 'vue'
 import MediumButton from '@/components/MediumButton.vue'
 import NavBar from '@/components/NavBar.vue'
 import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
 
-const username = ref('Andramun') // Dette vil til slutt komme fra din brukerstatustjeneste
+ // Dette vil til slutt komme fra din brukerstatustjeneste
+const username = ref('')
 const newPassword = ref('')
 const showChangePassword = ref(false)
 const router = useRouter()
+
+onMounted(() => {
+  const localUsername = localStorage.getItem('username');
+  if (localUsername) {
+    username.value = localUsername;
+  } else {
+    username.value = 'Guest';
+  }
+});
 
 const changePassword = () => {
   // Kall til backend for å oppdatere passordet
@@ -46,6 +57,13 @@ const logout = () => {
   // Omdiriger til logg inn-siden
   router.push('/')
 }
+const displayUsername = () => {
+  const username = localStorage.getItem('username');
+  if (username) {
+    // Vis brukernavnet i appen, for eksempel ved å sette det i en HTML-element
+    document.getElementById('username-display').textContent = username;
+}}
+
 </script>
 
 <style scoped>

@@ -8,17 +8,18 @@ function login(credentials) {
   axios
     .post('/api/user/login', credentials)
     .then((response) => {
-      const token = response.data.token
-      localStorage.setItem('token', token)
-      // Set the token as default header for future requests
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
-      // Do something on successful login, like redirecting the user
+      const { token, username } = response.data;
+      localStorage.setItem('token', token);
+      localStorage.setItem('username', username); // Lagre brukernavnet
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+      // Gjør noe etter vellykket innlogging, som å videresende brukeren
     })
     .catch((error) => {
-      console.error('Login failed:', error)
-      // Handle login failure, like showing a message to the user
-    })
+      console.error('Login failed:', error);
+      // Håndter innloggingsfeil, som å vise en melding til brukeren
+    });
 }
+
 
 // Log out the user and remove the token from local storage
 function logout() {
