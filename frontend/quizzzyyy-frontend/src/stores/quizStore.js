@@ -98,6 +98,7 @@ export const useQuizStore = defineStore('quiz', {
         timestamp: Date.now()
       }
       this.activities.push(newActivity)
+      this.saveState()
     },
 
     resetQuiz() {
@@ -109,14 +110,28 @@ export const useQuizStore = defineStore('quiz', {
     },
 
     saveState() {
-      const stateToSave = JSON.stringify(this.$state)
-      localStorage.setItem('quizState', stateToSave)
+      const stateToSave = {
+        quizzes: this.quizzes,
+        currentQuiz: this.currentQuiz,
+        currentQuestionIndex: this.currentQuestionIndex,
+        score: this.score,
+        userAnswers: this.userAnswers,
+        activities: this.activities
+      }
+      localStorage.setItem('quizState', JSON.stringify(stateToSave))
     },
 
     loadState() {
       const savedState = localStorage.getItem('quizState')
       if (savedState) {
-        this.$state = JSON.parse(savedState)
+        const parsedState = JSON.parse(savedState)
+        // Update each piece of the state as needed
+        this.quizzes = parsedState.quizzes || []
+        this.currentQuiz = parsedState.currentQuiz
+        this.currentQuestionIndex = parsedState.currentQuestionIndex || 0
+        this.score = parsedState.score || 0
+        this.userAnswers = parsedState.userAnswers || []
+        this.activities = parsedState.activities || []
       }
     }
   }

@@ -35,6 +35,8 @@ const quizzes = computed(() => {
 
 onMounted(() => {
   // Assume fetchQuizzes is an action that fetches quizzes and updates the store
+  const quizStore = useQuizStore()
+  quizStore.loadState()
   quizStore.fetchQuizzes() // Fetch quizzes when the component mounts
 })
 </script>
@@ -43,14 +45,13 @@ onMounted(() => {
 .activity-section {
   /* Styles for the activity section */
   max-height: 200px; /* Or any other value */
-  overflow-y: auto; /* This will create a scrollbar if content overflows */
 }
 
 .activity-scroll-box {
-  border: 1px solid #ccc;
   border-radius: 4px;
   padding: 10px;
   margin-bottom: 20px; /* Add space between the activity list and the quizzes list */
+  overflow-y: auto; /* This will create a scrollbar if content overflows */
 }
 
 .activity-list {
@@ -77,8 +78,7 @@ h2 {
   margin-bottom: 1rem;
 }
 
-.activity-section,
-.quizzes-list {
+.activity-section {
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 1rem;
