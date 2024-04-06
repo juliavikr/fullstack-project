@@ -31,4 +31,10 @@ h1 {
   font-weight: 400;
   font-size: 48px;
 }
+
+@media (max-width: 768px) {
+  .welcome-container {
+    flex-direction: column;
+  }
+}
 </style>
