@@ -7,7 +7,8 @@ export const useQuizStore = defineStore('quiz', {
     currentQuiz: null,
     currentQuestionIndex: 0,
     score: 0,
-    userAnswers: [] // To keep track of all answers given
+    userAnswers: [], // To keep track of all answers given
+    activities: [] // To keep track of all activities
   }),
   getters: {
     currentQuestion: (state) => {
@@ -47,29 +48,56 @@ export const useQuizStore = defineStore('quiz', {
       this.userAnswers = []
       this.saveState() // Save state after setting the current quiz
     },
-
     submitAnswer(answer) {
       const currentQuestion = this.currentQuestion
+      if (!currentQuestion) {
+        console.error('No current question available for submitting an answer.')
+        return
+      }
+
       console.log('Current question:', currentQuestion)
       console.log('Submitted answer:', answer)
+      this.userAnswers.push({
+        questionId: currentQuestion.id,
+        answer,
+        isCorrect: answer.toLowerCase().trim() === currentQuestion.answer.toLowerCase().trim()
+      })
+
+      // Update the score immediately if the answer is correct
       if (answer.toLowerCase().trim() === currentQuestion.answer.toLowerCase().trim()) {
         this.score++
-        console.log('Correct answer! Score:', this.score)
-      } else {
-        console.log('Wrong answer. Score remains:', this.score)
       }
-      this.userAnswers.push(answer)
+
       if (this.isLastQuestion) {
+        this.recordActivity(this.currentQuiz.title, this.score)
         this.endQuiz()
       } else {
         this.currentQuestionIndex++
       }
+
       this.saveState() // Save state after submitting an answer
     },
 
     endQuiz() {
       console.log(`Quiz finished with score: ${this.score}`)
-      this.saveState() // Save state after ending the quiz
+      this.saveState()
+    },
+
+    finalizeScore() {
+      this.score = this.userAnswers.reduce((total, userAnswer) => {
+        const question = this.currentQuiz.questions.find((q) => q.id === userAnswer.questionId)
+        return userAnswer.isCorrect ? total + 1 : total
+      }, 0)
+      console.log(`Final score: ${this.score}`)
+    },
+
+    recordActivity(quizTitle, score) {
+      const newActivity = {
+        quizTitle,
+        score,
+        timestamp: Date.now()
+      }
+      this.activities.push(newActivity)
     },
 
     resetQuiz() {

@@ -18,8 +18,7 @@
 import { ref } from 'vue'
 import MediumButton from '@/components/MediumButton.vue'
 import axios from 'axios'
-import router from "@/router/index.js";
-
+import router from '@/router/index.js'
 
 const props = defineProps({
   title: String,
@@ -43,19 +42,19 @@ const handleSignUp = async () => {
     const response = await axios.post('http://localhost:8080/api/user/register', {
       username: username.value,
       password: password.value
-    });
+    })
     if (response.data) {
-      alert('User registered successfully');
-      await router.push("/login")
+      alert('User registered successfully')
+      await router.push('/login')
     } else {
-      alert('No user found');
+      alert('No user found')
     }
   } catch (error) {
-    console.error(error);
+    console.error(error)
     if (error.response && error.response.data && error.response.data.message) {
-      alert(error.response.data.message); // Vis feilmeldingen fra backend
+      alert(error.response.data.message) // Vis feilmeldingen fra backend
     } else {
-      alert('User registration failed');
+      alert('User registration failed')
     }
   }
 }
@@ -64,25 +63,30 @@ const handleLogin = async () => {
     const response = await axios.post('http://localhost:8080/api/user/login', {
       username: username.value,
       password: password.value
-    });
+    })
     if (response.data && response.data.success) {
-      alert('Login successful');
-      // Her kan du lagre autentiseringstokenet som kommer fra serveren
-      // For eksempel i localStorage eller en Vuex state for videre bruk
-      await router.push("/home");
+      // Save the token to localStorage
+      localStorage.setItem('token', response.data.token)
+
+      // Optionally, set the token as a common header for all Axios requests
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+
+      // Inform the user of successful login
+      alert('Login successful')
+
+      // Redirect to the home page
+      await router.push('/home')
     } else {
-      alert('Login failed: ' + response.data.message);
+      // Handle the case where the login was not successful according to your API
+      alert('Login failed: ' + response.data.message)
     }
   } catch (error) {
-    console.error(error);
-    if (error.response && error.response.data && error.response.data.message) {
-      alert('Login failed: ' + error.response.data.message); // Vis feilmeldingen fra backend
-    } else {
-      alert('invalid username or password');
-    }
+    console.error(error)
+    // Handle different kinds of errors (e.g., network error, no response from the server, etc.)
+    const errorMessage = error.response?.data?.message || 'Login failed. Please try again.'
+    alert(errorMessage)
   }
 }
-
 </script>
 
 <style scoped>

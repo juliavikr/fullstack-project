@@ -5,7 +5,7 @@
       <p>Your Score:</p>
       <!-- Remove the .value from score and totalQuestions -->
       <p class="score">{{ score }} / {{ totalQuestions }}</p>
-      <button @click="acknowledgeScore">Great</button>
+      <SmallButton @click="acknowledgeScore">Great</SmallButton>
     </div>
   </div>
 </template>
@@ -14,6 +14,7 @@
 import { onMounted, computed } from 'vue'
 import { useQuizStore } from '@/stores/quizStore'
 import { useRouter } from 'vue-router'
+import SmallButton from '@/components/SmallButton.vue'
 
 const quizStore = useQuizStore()
 const router = useRouter()

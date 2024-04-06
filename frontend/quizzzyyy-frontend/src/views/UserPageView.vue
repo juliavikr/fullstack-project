@@ -41,6 +41,7 @@ const changePassword = () => {
 const logout = () => {
   // Logg ut logikk her. F.eks. slette token, oppdatere state, osv.
   console.log('Brukeren logget ut.')
+  localStorage.removeItem('token')
 
   // Omdiriger til logg inn-siden
   router.push('/')

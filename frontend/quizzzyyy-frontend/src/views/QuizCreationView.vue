@@ -61,6 +61,7 @@ import NavBar from '@/components/NavBar.vue'
 import QuestionCreationBox from '@/components/QuestionCreationBox.vue'
 import AddQuestionButton from '@/components/AddQuestionButton.vue'
 import SmallButton from '@/components/SmallButton.vue'
+import router from '@/router/index.js'
 
 // Reactive state for the new quiz
 const quiz = reactive({
@@ -94,11 +95,28 @@ const saveQuiz = async () => {
   console.log('Attempting to save quiz', quiz)
   isSaving = true
 
+  // Retrieve the token from local storage
+  const token = localStorage.getItem('token')
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+
   try {
-    const response = await axios.post('http://localhost:8080/quiz', quiz)
+    // Include the Authorization header with the token
+    const response = await axios.post('http://localhost:8080/quiz', quiz, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     console.log('Quiz saved', response.data)
+
+    // Show the success message
+    alert('Quiz saved successfully!')
+
+    // Redirect the user to the "yourquizzes" page
+    router.push('/your-quizzes')
   } catch (error) {
     console.error('There was an error saving the quiz', error)
+    // Show the error message
+    alert('There was an error saving the quiz.')
   } finally {
     isSaving = false
   }
