@@ -82,9 +82,20 @@ public class QuizService {
         return quizRepository.findByOwnerId(userId);
     }
 
-    @Transactional
     public void deleteQuizById(Long id) {
         // Custom method to delete a quiz and handle additional logic if needed
-        quizRepository.deleteQuizWithQuestionsById(id);
+        try {
+            //delete questions first
+            List<Question> questions = questionRepository.findByQuizId(id);
+            questionRepository.deleteAll(questions);
+            quizRepository.deleteById(id);
+            //verify that the quiz is deleted
+            Quiz quiz = quizRepository.findById(id).orElse(null);
+            if (quiz != null) {
+                throw new RuntimeException("Failed to delete quiz with id: " + id);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete quiz with id: " + id);
+        }
     }
 }

@@ -27,16 +27,20 @@ export const useQuizStore = defineStore('quiz', {
   actions: {
     async fetchQuizzes() {
       try {
+        const token = localStorage.getItem('token')
+        if (!token) {
+          throw new Error('No authentication token found')
+        }
+
         const response = await axios.get('http://localhost:8080/quiz/my', {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+            Authorization: `Bearer ${token}`
           }
         })
-        console.log('Quizzes fetched:', response.data)
         this.quizzes = response.data
-        this.saveState() // Save state after fetching quizzes
       } catch (error) {
         console.error('Error fetching quizzes:', error)
+        // Handle errors appropriately
       }
     },
 

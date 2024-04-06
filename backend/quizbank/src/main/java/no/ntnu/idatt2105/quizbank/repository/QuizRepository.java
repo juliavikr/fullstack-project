@@ -24,8 +24,7 @@ public interface QuizRepository extends JpaRepository<Quiz, Long> {
     @Query("SELECT q FROM Quiz q JOIN FETCH q.questions WHERE q.id = :id")
     Optional<Quiz> findQuizWithQuestionsById(Long id);
 
-    @Modifying
-    @Query("DELETE FROM Quiz q WHERE q.id = :id")
     void deleteQuizWithQuestionsById(@Param("id") Long id);
+
 }
 

@@ -41,23 +41,29 @@ const editQuiz = () => {
 }
 
 const deleteQuiz = async () => {
-  console.log('Attempting to delete quiz with ID:', props.quiz.id)
   try {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      throw new Error('No authentication token found')
+    }
+
     const response = await axios.delete(`http://localhost:8080/quiz/${props.quiz.id}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        Authorization: `Bearer ${token}`
       }
     })
-    console.log('Response status:', response.status) // Log the status
 
     if (response.status === 204) {
-      // Check for 204, not 200
+      // Removal from local state
       quizStore.removeQuiz(props.quiz.id)
-      console.log('Quiz deleted successfully')
+      // Re-fetch quizzes or navigate away
+      quizStore.fetchQuizzes()
+      // Optional: Redirect to another page if needed
+      // router.push('/some-other-page');
     }
   } catch (error) {
     console.error('Failed to delete quiz:', error)
-    console.log(error.response.data) // Log error response data
+    // Handle any additional error logging or user feedback
   }
 }
 </script>

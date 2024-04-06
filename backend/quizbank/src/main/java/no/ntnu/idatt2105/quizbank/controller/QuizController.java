@@ -74,8 +74,13 @@ public class QuizController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteQuizById(
         @Parameter(description = "The ID of the quiz to delete", required = true)
-        @PathVariable Long id) {
+        @PathVariable Long id, @AuthenticationPrincipal
+    User userDetails) {
+        //find quiz by id
+        Quiz quizById = quizService.getQuizById(id);
         quizService.deleteQuizById(id);
+        Quiz quiz = quizService.getQuizById(id);
+
         return ResponseEntity.noContent().build();
     }
 

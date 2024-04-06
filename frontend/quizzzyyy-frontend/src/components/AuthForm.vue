@@ -63,20 +63,20 @@ const handleLogin = async () => {
     const response = await axios.post('http://localhost:8080/api/user/login', {
       username: username.value,
       password: password.value
-    });
+    })
     if (response.data.success) {
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('username', username.value); // Lagre brukernavnet i localStorage
-      alert('User logged in successfully');
-      await router.push('/user'); // Omdiriger til brukersiden etter vellykket innlogging
+      localStorage.setItem('token', response.data.token)
+      localStorage.setItem('username', username.value) // Lagre brukernavnet i localStorage
+      alert('User logged in successfully')
+      await router.push('/home') // Omdiriger til brukersiden etter vellykket innlogging
     } else {
-      alert('Incorrect username or password');
+      alert('Incorrect username or password')
     }
   } catch (error) {
-    console.error(error);
-    alert('Login failed');
+    console.error(error)
+    alert('Login failed')
   }
-};
+}
 </script>
 
 <style scoped>
