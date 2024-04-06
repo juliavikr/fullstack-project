@@ -54,10 +54,6 @@ public class QuizService {
             new RuntimeException("Quiz not found with id: " + id));
     }
 
-    public void deleteQuizById(Long id) {
-        quizRepository.deleteById(id);
-    }
-
     public Quiz updateQuiz(Long id, QuizDto quizDto) {
         Quiz existingQuiz = getQuizById(id);
         existingQuiz.setTitle(quizDto.getTitle());
@@ -84,5 +80,11 @@ public class QuizService {
 
     public List<Quiz> getQuizzesByUser(Long userId) {
         return quizRepository.findByOwnerId(userId);
+    }
+
+    @Transactional
+    public void deleteQuizById(Long id) {
+        // Custom method to delete a quiz and handle additional logic if needed
+        quizRepository.deleteQuizWithQuestionsById(id);
     }
 }
