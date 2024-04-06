@@ -45,18 +45,19 @@ const deleteQuiz = async () => {
   try {
     const response = await axios.delete(`http://localhost:8080/quiz/${props.quiz.id}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}` // Replace with your auth token retrieval method
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
+    console.log('Response status:', response.status) // Log the status
 
-    if (response.status === 200) {
-      // Assuming your store has a method to remove the quiz from the state
+    if (response.status === 204) {
+      // Check for 204, not 200
       quizStore.removeQuiz(props.quiz.id)
-
       console.log('Quiz deleted successfully')
     }
   } catch (error) {
     console.error('Failed to delete quiz:', error)
+    console.log(error.response.data) // Log error response data
   }
 }
 </script>
