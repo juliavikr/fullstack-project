@@ -1,6 +1,8 @@
 package no.ntnu.idatt2105.quizbank.service;
 
 import no.ntnu.idatt2105.quizbank.model.User;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.transaction.annotation.Transactional;
 import no.ntnu.idatt2105.quizbank.dto.QuizDto;
 import no.ntnu.idatt2105.quizbank.model.Question;
@@ -9,6 +11,7 @@ import no.ntnu.idatt2105.quizbank.repository.QuestionRepository;
 import no.ntnu.idatt2105.quizbank.repository.QuizRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -85,10 +88,7 @@ public class QuizService {
     public void deleteQuizById(Long id) {
         // Custom method to delete a quiz and handle additional logic if needed
         try {
-            //delete questions first
-            List<Question> questions = questionRepository.findByQuizId(id);
-            questionRepository.deleteAll(questions);
-            quizRepository.deleteById(id);
+            quizRepository.deleteQuizWithQuestionsById(id);
             //verify that the quiz is deleted
             Quiz quiz = quizRepository.findById(id).orElse(null);
             if (quiz != null) {

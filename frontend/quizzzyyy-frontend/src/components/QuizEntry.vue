@@ -47,11 +47,18 @@ const deleteQuiz = async () => {
       throw new Error('No authentication token found')
     }
 
-    const response = await axios.delete(`http://localhost:8080/quiz/${props.quiz.id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    const response = await axios
+      .delete(`http://localhost:8080/quiz/${props.quiz.id}`, {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      })
+      .then((response) => {
+        console.log('Quiz deleted successfully')
+      })
+      .catch((error) => {
+        console.log('Failed to delete quiz: ', error)
+      })
 
     if (response.status === 204) {
       // Removal from local state

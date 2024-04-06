@@ -12,6 +12,7 @@ import no.ntnu.idatt2105.quizbank.dto.QuizDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,6 +72,7 @@ public class QuizController {
             @ApiResponse(responseCode = "204", description = "Quiz deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Quiz not found")
         })
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteQuizById(
         @Parameter(description = "The ID of the quiz to delete", required = true)
