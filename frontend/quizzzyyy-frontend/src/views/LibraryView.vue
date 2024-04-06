@@ -3,7 +3,7 @@
   <div class="library-view">
     <h2>YOUR LIBRARY</h2>
     <div class="activity-section">
-      <h3>Activity:</h3>
+      <h3>Quiz activity since logged in:</h3>
       <div class="scroll-box">
         <ul class="activity-list">
           <li v-for="activity in activities" :key="activity.id">

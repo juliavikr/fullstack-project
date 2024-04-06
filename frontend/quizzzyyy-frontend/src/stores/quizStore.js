@@ -133,6 +133,9 @@ export const useQuizStore = defineStore('quiz', {
         this.userAnswers = parsedState.userAnswers || []
         this.activities = parsedState.activities || []
       }
+    },
+    removeQuiz(quizId) {
+      this.quizzes = this.quizzes.filter((q) => q.id !== quizId)
     }
   }
 })
