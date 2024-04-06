@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import no.ntnu.idatt2105.quizbank.dto.LoginDTO;
+import no.ntnu.idatt2105.quizbank.model.User;
 import no.ntnu.idatt2105.quizbank.response.SignUpResponse;
 import no.ntnu.idatt2105.quizbank.response.LoginResponse;
 import no.ntnu.idatt2105.quizbank.dto.UserDTO;
@@ -13,6 +14,7 @@ import no.ntnu.idatt2105.quizbank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -63,4 +65,10 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(e.getMessage(), false, null));
         }
     }
+    @GetMapping("/me")
+    public ResponseEntity<User> getCurrentUser(@AuthenticationPrincipal User currentUser) {
+    // @AuthenticationPrincipal vil automatisk injisere den autentiserte brukeren
+    return ResponseEntity.ok(currentUser);
+}
+
 }
