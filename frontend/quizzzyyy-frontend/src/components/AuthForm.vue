@@ -63,30 +63,20 @@ const handleLogin = async () => {
     const response = await axios.post('http://localhost:8080/api/user/login', {
       username: username.value,
       password: password.value
-    })
-    if (response.data && response.data.success) {
-      // Save the token to localStorage
-      localStorage.setItem('token', response.data.token)
-
-      // Optionally, set the token as a common header for all Axios requests
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-
-      // Inform the user of successful login
-      alert('Login successful')
-
-      // Redirect to the home page
-      await router.push('/home')
+    });
+    if (response.data.success) {
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('username', username.value); // Lagre brukernavnet i localStorage
+      alert('User logged in successfully');
+      await router.push('/user'); // Omdiriger til brukersiden etter vellykket innlogging
     } else {
-      // Handle the case where the login was not successful according to your API
-      alert('Login failed: ' + response.data.message)
+      alert('Incorrect username or password');
     }
   } catch (error) {
-    console.error(error)
-    // Handle different kinds of errors (e.g., network error, no response from the server, etc.)
-    const errorMessage = error.response?.data?.message || 'Login failed. Please try again.'
-    alert(errorMessage)
+    console.error(error);
+    alert('Login failed');
   }
-}
+};
 </script>
 
 <style scoped>

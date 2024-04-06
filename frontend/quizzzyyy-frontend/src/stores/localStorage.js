@@ -4,22 +4,20 @@
 
 import axios from 'axios'
 
+// Login-funksjon
 function login(credentials) {
-  axios
-    .post('/api/user/login', credentials)
-    .then((response) => {
-      const { token, username } = response.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('username', username); // Lagre brukernavnet
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-      // Gjør noe etter vellykket innlogging, som å videresende brukeren
-    })
-    .catch((error) => {
-      console.error('Login failed:', error);
-      // Håndter innloggingsfeil, som å vise en melding til brukeren
-    });
+    axios.post('/api/user/login', credentials)
+        .then(response => {
+            const {token, username} = response.data;
+            localStorage.setItem('token', token);
+            localStorage.setItem('username', username); // Lagrer brukernavnet
+            // ... resten av koden
+        })
+        .catch(error => {
+            console.error('Login failed:', error);
+            // ... feilhåndtering
+        });
 }
-
 
 // Log out the user and remove the token from local storage
 function logout() {

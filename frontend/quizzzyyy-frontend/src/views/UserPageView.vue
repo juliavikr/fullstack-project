@@ -21,50 +21,40 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import MediumButton from '@/components/MediumButton.vue'
 import NavBar from '@/components/NavBar.vue'
 import { useRouter } from 'vue-router'
-import { onMounted } from 'vue'
 
- // Dette vil til slutt komme fra din brukerstatustjeneste
 const username = ref('')
 const newPassword = ref('')
 const showChangePassword = ref(false)
 const router = useRouter()
 
 onMounted(() => {
-  const localUsername = localStorage.getItem('username');
-  if (localUsername) {
-    username.value = localUsername;
-  } else {
-    username.value = 'Guest';
+  // Hent brukernavnet fra localStorage og oppdater den reaktive referansen
+  const storedUsername = localStorage.getItem('username')
+  if (storedUsername) {
+    username.value = storedUsername
   }
-});
+})
 
 const changePassword = () => {
   // Kall til backend for å oppdatere passordet
   console.log('New password submitted:', newPassword.value)
-  showChangePassword.value = false // Lukk modalen
-  newPassword.value = '' // Tilbakestill passordfeltet
+  showChangePassword.value = false
+  newPassword.value = ''
 }
 
 const logout = () => {
-  // Logg ut logikk her. F.eks. slette token, oppdatere state, osv.
+  // Logg ut logikk her
   console.log('Brukeren logget ut.')
   localStorage.removeItem('token')
-
-  // Omdiriger til logg inn-siden
+  localStorage.removeItem('username') // Fjern brukernavnet fra localStorage
   router.push('/')
 }
-const displayUsername = () => {
-  const username = localStorage.getItem('username');
-  if (username) {
-    // Vis brukernavnet i appen, for eksempel ved å sette det i en HTML-element
-    document.getElementById('username-display').textContent = username;
-}}
-
 </script>
+
 
 <style scoped>
 .user-page-container {
