@@ -1,5 +1,10 @@
 # Semester Project - 2024: Quiz Bank Web Application
 **Quizzzyyy webapp**
+## Authors
+
+List of individuals who have contributed to the development of Quizzzyyy:
+- **Julia Vik Remøy** 
+- **Andrea Amundsen** 
 
 ## Introduction
 
@@ -40,10 +45,54 @@ This project involves developing a full-stack web application designed to provid
 - **Session Storage**: For short-lived login sessions.
 
 ## Getting Started
-
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
+Before you begin, ensure you have the following installed:
+- Git
+- Docker
+- npm
 
-What things you need to install the software and how to install them.
+### Installation
+**Clone the repository**
+Start by cloning the repository to your local machine:
+git clone https://your-repository-link-here.git
+
+### Start the Backend
+
+Navigate to the quizbank package:
+```bash
+cd backend/quizbank
+```
+
+Then, start the services using Docker:
+
+```bash
+docker-compose up -d
+```
+After the services are up, run the QuizBankWebApplication class to start the backend server.
+
+```bash
+mvn spring-boot:run
+```
+
+### Set up the Frontend
+
+Now, move to the quizzzyyy-frontend package:
+
+```bash
+cd frontend/quizzzyyy-frontend
+```
+Install the necessary npm packages:
+
+```bash
+npm install
+```
+After installation, start the development server:
+
+```bash
+npm run dev
+```
+After completing these steps, the Quizzzyyy platform should be running locally on your machine, and you can access the frontend in your web browser.
 
