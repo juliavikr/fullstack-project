@@ -12,20 +12,18 @@ html, body {
   padding: 0;
   background-color: #fff4f9;
 }
-
 .primary-button {
   font-family: 'Roboto', sans-serif;
   background-color: #ff8bc3; /* Rosa farge */
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s; /* Gjør en myk overgang for bakgrunnsfarge ved hover */
+  transition: background-color 0.3s;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 5px; /* Margin rundt knappen */
-  padding: 10px 20px; /* Polstring inni knappen */
+  margin: 5px;
+  padding: 10px 20px;
 
 }
-
 .primary-button:hover {
-  background-color: #f268aa; /* Mørkere rosa for hover-effekt */
+  background-color: #f268aa;
 }
