@@ -119,23 +119,6 @@ h2 {
   margin-bottom: 0.5rem;
 }
 
-.play-button,
-.edit-button {
-  background-color: #ff8bc3;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
-  border-radius: 4px;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.play-button:hover,
-.edit-button:hover {
-  background-color: #f362a8;
-}
-
 /* Responsiv design for mindre skjermer */
 @media (max-width: 768px) {
   .filters {

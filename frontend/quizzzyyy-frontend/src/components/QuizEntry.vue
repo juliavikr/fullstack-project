@@ -3,11 +3,11 @@
     <div class="right">
       <h3>{{ quiz.title }}</h3>
       <p>Category: {{ quiz.category }} - Difficulty: {{ quiz.difficulty }}</p>
-      <button class="primary-button action-button" @click="deleteQuiz">Delete Quiz</button>
+
     </div>
     <div class="buttons">
-      <button class="primary-button action-button" @click="startQuiz">Play</button>
-      <button class="primary-button action-button" @click="editQuiz">Edit</button>
+      <button class="primary-button action-button delete-button" @click="deleteQuiz">x</button>
+       <button class="primary-button action-button play-button" @click="startQuiz">Play</button>
     </div>
   </div>
 </template>
@@ -35,29 +35,20 @@ const startQuiz = () => {
   console.log('Starting quiz...')
 }
 
-const editQuiz = () => {
-  // Assuming you have a route named 'EditQuiz' and use the quiz ID as a parameter
-  router.push({ name: 'CreateQuiz', params: { id: props.quiz.id } })
-}
-
 const deleteQuiz = async () => {
   try {
     const token = localStorage.getItem('token')
     if (!token) {
       throw new Error('No authentication token found')
     }
-
-    const response = await axios.delete(`http://localhost:8080/quiz/${props.quiz.id}`, {
+    await axios.delete(`http://localhost:8080/quiz/${props.quiz.id}`, {
       headers: {
         Authorization: 'Bearer ' + token
       }
     })
-
     console.log('Quiz deleted successfully')
     quizStore.removeQuiz(props.quiz.id)
     quizStore.fetchQuizzes()
-    // Optional: Redirect to another page if needed
-    // router.push('/some-other-page');
   } catch (error) {
     console.error('Failed to delete quiz:', error)
     // Handle any additional error logging or user feedback
@@ -67,12 +58,12 @@ const deleteQuiz = async () => {
 
 <style scoped>
 .quiz-entry {
+  position: relative;
   display: flex;
-  padding: 1em;
-  margin: 1em 0;
-  border: 1px solid #ccc;
+  padding: 0.5em;
+  margin:  0;
+  border: 2px solid #ccc;
   border-radius: 4px;
-  background-color: #fff;
 }
 
 .right {
@@ -85,7 +76,26 @@ const deleteQuiz = async () => {
   gap: 1em;
   flex-direction: column;
 }
+.delete-button {
+  position: absolute;
+  top: 0px; /* Legger til denne linjen */
+  right: 0px; /* Legger til denne linjen */
+  background-color: crimson;
+  color: white;
+  border-radius: 10%;
+  align-items: center;
 
+}
+.action-button {
+  margin: 10px;
+
+}
+.play-button {
+  width: 200px;
+  height: 50%;
+  margin-top: 50px
+
+}
 /* Responsiv design for mindre skjermer */
 @media (max-width: 768px) {
   .quiz-entry {
