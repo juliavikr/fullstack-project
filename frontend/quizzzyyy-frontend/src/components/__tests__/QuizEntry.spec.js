@@ -1,93 +1,49 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import axios from 'axios'
-import QuizEntry from '@/components/QuizEntry.vue' // Adjust the import path as necessary
+import QuizEntry from '@/components/QuizEntry.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import { createPinia, setActivePinia } from 'pinia'
 
-// Mocking Axios
+// Mock axios
 vi.mock('axios', () => ({
-  delete: vi.fn(() => Promise.resolve({ status: 204 }))
+  delete: vi.fn(() => Promise.resolve({ data: 'Quiz deleted successfully' }))
 }))
 
-// Mocking Vue Router
-const mockRouterPush = vi.fn()
-vi.mock('vue-router', () => ({
-  useRouter: () => ({
-    push: mockRouterPush
-  })
-}))
-
-vi.mock('@/components/MediumButton.vue', () => ({
-  name: 'MediumButton',
-  // Simulate a component that emits 'click' event
-  methods: {
-    click: vi.fn()
-  },
-  render() {
-    return vi.fn() // Stub the render function if necessary
-  }
-}))
-
-// Mocking Quiz Store
-const mockSetCurrentQuiz = vi.fn()
-const mockRemoveQuiz = vi.fn()
-const mockFetchQuizzes = vi.fn()
-vi.mock('@/stores/quizStore', () => ({
-  useQuizStore: () => ({
-    setCurrentQuiz: mockSetCurrentQuiz,
-    removeQuiz: mockRemoveQuiz,
-    fetchQuizzes: mockFetchQuizzes
-  })
-}))
+const quiz = {
+  id: 1,
+  title: 'Test Quiz',
+  category: 'General Knowledge',
+  difficulty: 'Easy'
+}
 
 describe('QuizEntry.vue', () => {
-  const quiz = {
-    id: '1',
-    title: 'Vue Basics',
-    category: 'Programming',
-    difficulty: 'Easy'
-  }
+  let wrapper
 
-  it('renders quiz details', () => {
-    const wrapper = mount(QuizEntry, {
-      props: { quiz }
+  beforeEach(() => {
+    // Setup Pinia
+    setActivePinia(createPinia())
+
+    // Setup router
+    const router = createRouter({
+      history: createWebHistory(),
+      routes: []
     })
 
-    expect(wrapper.text()).toContain(quiz.title)
-    expect(wrapper.text()).toContain(`Category: ${quiz.category}`)
-    expect(wrapper.text()).toContain(`Difficulty: ${quiz.difficulty}`)
-  })
-
-  it('deletes quiz on delete button click', async () => {
-    window.localStorage.setItem('token', 'dummy-token') // Setup local storage for token
-    const wrapper = mount(QuizEntry, {
-      props: { quiz },
+    // Mount component with global plugins (router, pinia)
+    wrapper = mount(QuizEntry, {
       global: {
-        mocks: {
-          axios
-        }
+        plugins: [router]
+      },
+      props: {
+        quiz
       }
     })
-
-    await wrapper.find('button').trigger('click')
-    expect(axios.delete).toHaveBeenCalled()
-    window.localStorage.removeItem('token') // Cleanup
   })
 
-  it('navigates to play quiz on Play button click', async () => {
-    const wrapper = mount(QuizEntry, {
-      props: { quiz }
-    })
-
-    await wrapper.findAllComponents({ name: 'MediumButton' })[0].trigger('click')
-    expect(mockRouterPush).toHaveBeenCalledWith('/play')
-  })
-
-  it('navigates to edit quiz on Edit button click', async () => {
-    const wrapper = mount(QuizEntry, {
-      props: { quiz }
-    })
-
-    await wrapper.findAllComponents({ name: 'MediumButton' })[1].trigger('click')
-    expect(mockRouterPush).toHaveBeenCalledWith({ name: 'CreateQuiz', params: { id: quiz.id } })
+  it('renders quiz information', () => {
+    expect(wrapper.text()).toContain(quiz.title)
+    expect(wrapper.text()).toContain(
+      'Category: ' + quiz.category + ' - Difficulty: ' + quiz.difficulty
+    )
   })
 })

@@ -6,8 +6,8 @@
       <button @click="deleteQuiz">Delete Quiz</button>
     </div>
     <div class="buttons">
-      <MediumButton @click="startQuiz">Play</MediumButton>
-      <MediumButton @click="editQuiz">Edit</MediumButton>
+      <button @click="startQuiz">Play</button>
+      <button @click="editQuiz">Edit</button>
     </div>
   </div>
 </template>
@@ -15,7 +15,6 @@
 <script setup>
 import axios from 'axios'
 import { defineProps } from 'vue'
-import MediumButton from '@/components/MediumButton.vue'
 import { useRouter } from 'vue-router'
 import { useQuizStore } from '@/stores/quizStore'
 
@@ -47,27 +46,17 @@ const deleteQuiz = async () => {
       throw new Error('No authentication token found')
     }
 
-    const response = await axios
-      .delete(`http://localhost:8080/quiz/${props.quiz.id}`, {
-        headers: {
-          Authorization: 'Bearer ' + token
-        }
-      })
-      .then((response) => {
-        console.log('Quiz deleted successfully')
-      })
-      .catch((error) => {
-        console.log('Failed to delete quiz: ', error)
-      })
+    const response = await axios.delete(`http://localhost:8080/quiz/${props.quiz.id}`, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    })
 
-    if (response.status === 204) {
-      // Removal from local state
-      quizStore.removeQuiz(props.quiz.id)
-      // Re-fetch quizzes or navigate away
-      quizStore.fetchQuizzes()
-      // Optional: Redirect to another page if needed
-      // router.push('/some-other-page');
-    }
+    console.log('Quiz deleted successfully')
+    quizStore.removeQuiz(props.quiz.id)
+    quizStore.fetchQuizzes()
+    // Optional: Redirect to another page if needed
+    // router.push('/some-other-page');
   } catch (error) {
     console.error('Failed to delete quiz:', error)
     // Handle any additional error logging or user feedback
