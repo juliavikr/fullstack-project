@@ -1,5 +1,6 @@
 package no.ntnu.idatt2105.quizbank.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 /**
@@ -18,6 +19,7 @@ public class Question {
     private String question_text;
     private String answer;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;

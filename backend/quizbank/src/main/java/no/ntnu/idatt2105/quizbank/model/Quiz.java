@@ -1,5 +1,6 @@
 package no.ntnu.idatt2105.quizbank.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -26,6 +27,8 @@ public class Quiz {
     @JoinColumn(name = "user_id")
     private User owner;
 
+
+    @JsonManagedReference
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 
