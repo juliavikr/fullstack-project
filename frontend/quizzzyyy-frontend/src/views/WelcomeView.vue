@@ -1,14 +1,20 @@
 <template>
   <div class="welcome-container">
-    <img src="@/assets/logo.svg" alt="Quizzzyyy Logo" />
+    <img src="@/assets/logo.svg" alt="QZY logo" />
     <h1>WELCOME TO QUIZZZYYY</h1>
-    <MediumButton to="/login">Log in</MediumButton>
-    <MediumButton to="/signup">Sign up</MediumButton>
+    <AuthForm
+      :title="formType === 'login' ? 'Log In' : 'Sign Up'"
+      :buttonType="formType"
+      :buttonText="formType === 'login' ? 'Log In' : 'Sign Up'"
+      @update:mode="formType = $event"
+    />
   </div>
 </template>
-
 <script setup>
-import MediumButton from '@/components/MediumButton.vue'
+import { ref } from 'vue';
+import AuthForm from '@/components/AuthForm.vue';
+
+const formType = ref('login');
 </script>
 
 <style scoped>
