@@ -14,7 +14,16 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
 import UserIcon from './icons/UserIcon.vue'
+const username = ref('')
+
+onMounted(() => {
+  const storedUsername = localStorage.getItem('username')
+  if (storedUsername) {
+    username.value = storedUsername
+  }
+})
 </script>
 
 <style scoped>
@@ -23,10 +32,10 @@ import UserIcon from './icons/UserIcon.vue'
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  top: 0; /* 0px fra toppen */
-  left: 0; /* 0px fra venstre */
-  right: 0; /* 0px fra høyre, sikrer at navigasjonsbaren strekker seg over hele bredden av siden */
-  background-color: white; /* Bruk fargen fra din wireframe */
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
 }
@@ -37,7 +46,7 @@ import UserIcon from './icons/UserIcon.vue'
 }
 
 .left .logo {
-  margin-right: 20px; /* Juster som nødvendig */
+  margin-right: 20px;
   width: 50px;
   height: auto;
 }
@@ -45,7 +54,7 @@ import UserIcon from './icons/UserIcon.vue'
 .nav-link {
   text-decoration: none;
   margin-right: 1rem;
-  color: #333; /* Bruk fargen fra din wireframe */
+  color: #333;
   font-size: 20px;
 }
 
@@ -55,9 +64,8 @@ import UserIcon from './icons/UserIcon.vue'
   margin-left: 20px;
 }
 
-/* Juster link-stil for når de er aktive eller i fokus */
 .nav-link:active,
 .nav-link:focus {
-  color: #000; /* Bruk en farge for aktiv/fokusert link */
+  color: #000;
 }
 </style>

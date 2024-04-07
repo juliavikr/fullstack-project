@@ -1,7 +1,7 @@
 <template>
   <div class="play-view">
     <h2>{{ quizTitle }}</h2>
-    <!-- Ensure you are using "question_text" to match the backend field name -->
+
     <div v-if="currentQuestion" class="question-card">
       <p>{{ currentQuestion.question_text }}</p>
       <input type="text" placeholder="Your answer" v-model="userAnswer" />
@@ -9,7 +9,7 @@
       <button @click="finishQuiz" v-if="isLastQuestion">Finish</button>
     </div>
     <div v-else>
-      <!-- You can put a loading indicator here or a message if there are no questions -->
+
       <p>Loading questions...</p>
     </div>
   </div>
@@ -30,7 +30,6 @@ const currentQuestion = computed(() => store.currentQuestion)
 
 const isLastQuestion = computed(() => store.isLastQuestion)
 
-// Submit answer and handle navigation
 const submitAndNext = () => {
   console.log('Answer before submission:', userAnswer.value)
   store.submitAnswer(userAnswer.value)
@@ -38,7 +37,6 @@ const submitAndNext = () => {
   userAnswer.value = ''
 }
 
-// Finish quiz
 const finishQuiz = () => {
   console.log('Finishing quiz with last answer:', userAnswer.value)
   store.submitAnswer(userAnswer.value) // Make sure to submit the last answer
@@ -57,9 +55,7 @@ onMounted(async () => {
       // Set the first quiz as current
       store.setCurrentQuiz(store.quizzes[0])
     } else {
-      // Handle the case where no quizzes were fetched
       console.error('No quizzes were loaded')
-      // Potentially set an error state here
     }
   }
 })
@@ -68,27 +64,27 @@ onMounted(async () => {
 <style scoped>
 .play-view {
   max-width: 600px;
-  margin: 2rem auto; /* Centers the play-view in the middle of the page */
-  text-align: center; /* Centers the text */
+  margin: 2rem auto;
+  text-align: center;
 }
 
 .question-card {
   background-color: #fff;
   padding: 2rem;
-  margin-top: 2rem; /* Adds space between the title and the card */
+  margin-top: 2rem;
   border: 1px solid #ccc;
   border-radius: 10px;
   display: flex;
-  flex-direction: column; /* Stack elements vertically */
-  justify-content: center; /* Center items vertically */
-  align-items: center; /* Center items horizontally */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 input[type='text'] {
-  width: calc(100% - 2rem); /* Full width minus padding */
+  width: calc(100% - 2rem);
   padding: 1rem;
-  margin-top: 1rem; /* Adds space between the question and the input field */
-  margin-bottom: 1rem; /* Adds space between the input field and the button */
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
 }

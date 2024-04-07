@@ -2,12 +2,12 @@
   <div class="question-creation-box">
     <div class="input-group question">
       <label for="question">Question:</label>
-      <!-- Bind question_text ved hjelp av v-model -->
+
       <input type="text" id="question" v-model="localQuestion.question_text" />
     </div>
     <div class="input-group answer">
       <label for="answer">Answer:</label>
-      <!-- Bind answer ved hjelp av v-model -->
+
       <input type="text" id="answer" v-model="localQuestion.answer" />
     </div>
     <button class="remove-question-button" @click="$emit('remove', localQuestion)">x</button>
@@ -17,9 +17,7 @@
 <script setup>
 import { ref, watchEffect, defineEmits } from 'vue'
 
-// Define the events that this component can emit
 const emit = defineEmits(['update:question', 'remove'])
-
 const props = defineProps({
   question: Object,
   index: Number
@@ -41,9 +39,9 @@ watchEffect(() => {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #fff;
-  justify-content: space-between; /* Endret til space-between for å flytte knappen til høyre */
+  justify-content: space-between;
   width: 95%;
-  margin: auto; /* Sentrerer boksen horisontalt */
+  margin: auto;
 }
 
 .input-group {
@@ -75,20 +73,19 @@ watchEffect(() => {
   font-weight: bold;
 }
 
-/* Media query for mindre skjermer */
 @media (max-width: 768px) {
   .question-creation-box {
-    flex-direction: column; /* Endrer layouten til vertikal for mindre skjermer */
-    align-items: stretch; /* Strekker barna for å fylle containerens bredde */
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .input-group {
-    width: 100%; /* Sørger for at input-feltene tar full bredde */
+    width: 100%;
   }
 
   .remove-question-button {
-    align-self: center; /* Sentrerer fjern-knappen */
-    margin-top: 10px; /* Gir litt plass over knappen */
+    align-self: center;
+    margin-top: 10px;
   }
 }
 </style>
