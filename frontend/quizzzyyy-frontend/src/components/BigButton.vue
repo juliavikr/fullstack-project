@@ -30,7 +30,8 @@ button {
   padding: 10px 15px; /* Gir knappene størrelse og plass */
   width: 500px; /* Standard bredde på knappene */
   height: 100px; /* Standard høyde på knappene */
-  font-size: 1rem; /* Passende skriftstørrelse */
+  font-size: 1.2rem; /* Passende skriftstørrelse */
+  font-weight: bold;
   border: none; /* Ingen ramme */
   border-radius: 5px; /* Avrundede hjørner */
   cursor: pointer; /* Endrer musepekeren til en peker */
