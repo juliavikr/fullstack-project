@@ -24,7 +24,7 @@ public class Quiz {
     private User owner;
 
     // One quiz can have many questions
-    @OneToMany(mappedBy = "quiz", orphanRemoval = true)
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 
     public void setId(Long id) {
