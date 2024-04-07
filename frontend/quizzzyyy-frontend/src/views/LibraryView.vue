@@ -7,7 +7,7 @@
       <div class="scroll-box">
         <ul class="activity-list">
           <li v-for="activity in activities" :key="activity.id">
-            {{ activity.quizTitle }}: {{ activity.score }}
+            {{ activity.quizTitle }}: {{ activity.score }}/{{ activity.totalQuestions }}
           </li>
         </ul>
       </div>
@@ -26,6 +26,7 @@ import { onMounted, computed } from 'vue'
 import NavBar from '@/components/NavBar.vue'
 import QuizEntry from '@/components/QuizEntry.vue'
 import { useQuizStore } from '@/stores/quizStore'
+import router from "@/router/index.js";
 
 const quizStore = useQuizStore()
 const activities = computed(() => quizStore.activities)
@@ -38,6 +39,7 @@ onMounted(() => {
   quizStore.loadState()
   quizStore.fetchQuizzes()
 })
+
 </script>
 
 <style scoped>

@@ -46,7 +46,10 @@ export const useQuizStore = defineStore('quiz', {
 
     setCurrentQuiz(quiz) {
       console.log('Selected quiz:', quiz)
-      this.currentQuiz = quiz
+      this.currentQuiz = {
+    ...quiz,
+    totalQuestions: quiz.questions.length, // Legg til dette feltet
+    } // Set the current quiz
       this.currentQuestionIndex = 0
       this.score = 0
       this.userAnswers = []
@@ -91,6 +94,7 @@ export const useQuizStore = defineStore('quiz', {
       const newActivity = {
         quizTitle,
         score,
+        totalQuestions: this.currentQuiz.totalQuestions,
         timestamp: Date.now()
       }
       this.activities.push(newActivity)
