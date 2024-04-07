@@ -134,6 +134,9 @@ input[type='password'] {
   cursor: pointer; /* Vis en peker hånd når du holder over knappen */
   font-size: 1rem; /* Standard tekststørrelse for knappen */
 }
+.medium-button:hover {
+  background-color: #f268aa; /* Litt mørkere farge ved hover for en subtil effekt */
+}
 
 /* Tilpasse input-felter når de er i fokus */
 input[type='text']:focus,
