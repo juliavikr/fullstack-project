@@ -59,7 +59,7 @@ const deleteQuiz = async () => {
   position: relative;
   display: flex;
   padding: 0.5em;
-  margin:  0;
+  margin:  20px;
   border-radius: 4px;
   background-color: rgba(255, 20, 147, 0.2);
 }
