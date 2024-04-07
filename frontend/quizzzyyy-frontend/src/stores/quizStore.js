@@ -40,7 +40,7 @@ export const useQuizStore = defineStore('quiz', {
         this.quizzes = response.data
       } catch (error) {
         console.error('Error fetching quizzes:', error)
-        // Handle errors appropriately
+
       }
     },
 
@@ -87,14 +87,6 @@ export const useQuizStore = defineStore('quiz', {
       this.saveState()
     },
 
-    finalizeScore() {
-      this.score = this.userAnswers.reduce((total, userAnswer) => {
-        const question = this.currentQuiz.questions.find((q) => q.id === userAnswer.questionId)
-        return userAnswer.isCorrect ? total + 1 : total
-      }, 0)
-      console.log(`Final score: ${this.score}`)
-    },
-
     recordActivity(quizTitle, score) {
       const newActivity = {
         quizTitle,
@@ -129,7 +121,7 @@ export const useQuizStore = defineStore('quiz', {
       const savedState = localStorage.getItem('quizState')
       if (savedState) {
         const parsedState = JSON.parse(savedState)
-        // Update each piece of the state as needed
+        // Update the store with the saved state
         this.quizzes = parsedState.quizzes || []
         this.currentQuiz = parsedState.currentQuiz
         this.currentQuestionIndex = parsedState.currentQuestionIndex || 0
