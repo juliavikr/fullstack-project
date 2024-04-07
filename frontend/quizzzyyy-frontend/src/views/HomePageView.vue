@@ -2,8 +2,8 @@
   <div class="home-container">
     <NavBar />
     <div class="action-buttons">
-      <BigButton to="/your-quizzes">PLAY!!!</BigButton>
-      <BigButton to="/create-quiz">CREATE A NEW QUIZ</BigButton>
+      <BigButton to="/your-quizzes">Your quizzes</BigButton>
+      <BigButton to="/create-quiz">Create a new quiz</BigButton>
     </div>
   </div>
 </template>
@@ -15,9 +15,10 @@ import BigButton from '../components/BigButton.vue'
 
 <style scoped>
 .home-container {
+  font: 16px 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Start aligning content from the top */
+  justify-content: flex-start;
   height: 100vh;
 }
 
