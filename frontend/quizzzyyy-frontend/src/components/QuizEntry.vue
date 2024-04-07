@@ -48,10 +48,10 @@ const deleteQuiz = async () => {
     })
     console.log('Quiz deleted successfully')
     quizStore.removeQuiz(props.quiz.id)
-    quizStore.fetchQuizzes()
+    await quizStore.fetchQuizzes()
   } catch (error) {
     console.error('Failed to delete quiz:', error)
-    // Handle any additional error logging or user feedback
+
   }
 }
 </script>
@@ -78,8 +78,8 @@ const deleteQuiz = async () => {
 }
 .delete-button {
   position: absolute;
-  top: 0px; /* Legger til denne linjen */
-  right: 0px; /* Legger til denne linjen */
+  top: 0;
+  right: 0;
   background-color: crimson;
   color: white;
   border-radius: 10%;

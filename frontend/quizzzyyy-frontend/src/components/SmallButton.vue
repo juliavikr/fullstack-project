@@ -12,17 +12,17 @@ defineProps({
 
 <style scoped>
 .small-button {
-  display: flex; /* Setter display til flex for å tillate flexbox egenskaper */
-  align-items: center; /* Sentrerer barn vertikalt i flex container */
-  justify-content: center; /* Sentrerer barn horisontalt i flex container */
-  padding: 10px 15px; /* Gir knappene størrelse og plass */
-  min-width: 70px; /* Minimumsbredde på knappene */
-  height: 40px; /* Justert høyde for bedre estetikk */
-  font-size: 1rem; /* Passende skriftstørrelse */
-  text-decoration: none; /* Fjerner tekstdekorasjon som kan komme fra <a> elementer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  min-width: 70px;
+  height: 40px;
+  font-size: 1rem;
+  text-decoration: none;
 }
 .small-button.active {
-  border: 1px solid black; /* Mørkere rosa farge for aktive knapper */
+  border: 1px solid black;
 }
 
 </style>

@@ -100,14 +100,6 @@ h2 {
   flex-grow: 1;
 }
 
-.quiz-entry {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  background-color: white;
-}
-
 .quiz-entry h3 {
   font-size: 1.2rem;
   color: #333;
@@ -130,16 +122,6 @@ h2 {
   .filters input {
     margin-bottom: 0.5rem;
     width: 100%;
-  }
-
-  .play-button,
-  .edit-button {
-    width: 100%;
-    margin-bottom: 0.5rem;
-  }
-
-  .quiz-entry {
-    padding: 0.5rem;
   }
 }
 </style>

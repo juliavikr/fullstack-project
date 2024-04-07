@@ -20,19 +20,19 @@ const formType = ref('login');
 <style scoped>
 .welcome-container {
   text-align: center;
-  padding-top: 100px; /* Adjust this value as needed for your layout */
-  height: 100vh; /* Full height */
-  font-family: 'Arial', sans-serif; /* Your font choice */
+  padding-top: 100px;
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
 }
 
 img {
-  margin-bottom: 20px; /* Spacing below the logo */
+  margin-bottom: 20px;
 }
 
 h1 {
-  color: #333; /* Text color for the title */
-  margin-bottom: 40px; /* Spacing below the title */
-  font-family: 'Inter', sans-serif; /* Font for the title */
+  color: #333;
+  margin-bottom: 40px;
+  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 48px;
