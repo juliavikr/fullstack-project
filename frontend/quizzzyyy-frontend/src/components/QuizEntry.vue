@@ -60,8 +60,8 @@ const deleteQuiz = async () => {
   display: flex;
   padding: 0.5em;
   margin:  0;
-  border: 2px solid #ccc;
   border-radius: 4px;
+  background-color: rgba(255, 20, 147, 0.2);
 }
 
 .right {
@@ -82,7 +82,9 @@ const deleteQuiz = async () => {
   color: white;
   border-radius: 10%;
   align-items: center;
-
+}
+.delete-button:hover {
+  background-color: darkred;
 }
 .action-button {
   margin: 10px;

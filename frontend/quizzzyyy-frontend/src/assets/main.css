@@ -14,7 +14,7 @@ html, body {
 }
 .primary-button {
   font-family: 'Roboto', sans-serif;
-  background-color: #ff8bc3; /* Rosa farge */
+  background-color: rgba(255, 20, 147, 0.3);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -25,5 +25,5 @@ html, body {
 
 }
 .primary-button:hover {
-  background-color: #f268aa;
+ background-color: rgba(255, 20, 147, 0.5);
 }
