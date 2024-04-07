@@ -3,14 +3,15 @@
     <div class="right">
       <h3>{{ quiz.title }}</h3>
       <p>Category: {{ quiz.category }} - Difficulty: {{ quiz.difficulty }}</p>
-      <button @click="deleteQuiz">Delete Quiz</button>
+      <button class="primary-button action-button" @click="deleteQuiz">Delete Quiz</button>
     </div>
     <div class="buttons">
-      <button @click="startQuiz">Play</button>
-      <button @click="editQuiz">Edit</button>
+      <button class="primary-button action-button" @click="startQuiz">Play</button>
+      <button class="primary-button action-button" @click="editQuiz">Edit</button>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import axios from 'axios'

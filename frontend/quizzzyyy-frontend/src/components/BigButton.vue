@@ -1,7 +1,6 @@
 <template>
-  <button :class="`button ${type}`" @click="navigate">
+  <button :class="['primary-button', `button-${type}`]" @click="navigate">
     <slot></slot>
-    <!-- Use slot for button text -->
   </button>
 </template>
 
@@ -34,17 +33,11 @@ button {
   font-weight: bold;
   border: none; /* Ingen ramme */
   border-radius: 5px; /* Avrundede hjørner */
-  cursor: pointer; /* Endrer musepekeren til en peker */
-  background-color: #ff8bc3; /* Pink color for the buttons */
+
   margin: 0 5px; /* Liten margin mellom knappene */
   text-align: center; /* Sentrerer tekst i knappen */
-  transition: background-color 0.3s; /* Gjør en myk overgang for bakgrunnsfarge ved hover */
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-button:hover {
-  background-color: #f362a8;
-}
 
 @media (max-width: 768px) {
   button {
