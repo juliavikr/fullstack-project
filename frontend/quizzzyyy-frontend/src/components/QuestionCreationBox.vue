@@ -10,7 +10,7 @@
       <!-- Bind answer ved hjelp av v-model -->
       <input type="text" id="answer" v-model="localQuestion.answer" />
     </div>
-    <button class="remove-question-button" @click="$emit('remove', localQuestion)">-</button>
+    <button class="remove-question-button" @click="$emit('remove', localQuestion)">x</button>
   </div>
 </template>
 
@@ -64,7 +64,7 @@ watchEffect(() => {
 
 .remove-question-button {
   cursor: pointer;
-  background-color: #ff8bc3; /* Samme rosa farge som før */
+  background-color: #ff8bc3;
   border: none;
   border-radius: 50%;
   width: 30px;

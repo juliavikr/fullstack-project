@@ -44,13 +44,14 @@
         :question="question"
         :index="index"
         @remove="removeQuestion(index)"
-        @update:question="updateQuestion"
-      />
+        @update:question="updateQuestion"></QuestionCreationBox>
+      </div>
+    <div class="actions-container">
+      <AddQuestionButton @click="addQuestion" />
+      <SmallButton type="button" class="save-quiz-button" :disabled="isSaving" @click="saveQuiz">
+        Save Quiz
+      </SmallButton>
     </div>
-    <AddQuestionButton @click="addQuestion" />
-    <SmallButton type="button" class="save-quiz-button" :disabled="isSaving" @click="saveQuiz">
-      Save Quiz
-    </SmallButton>
   </div>
 </template>
 
@@ -143,24 +144,23 @@ const saveQuiz = async () => {
   flex-direction: column;
 }
 
-.add-question-button {
-  align-self: center; /* Sentrerer knappen i flex-kontaineren */
-  /* ... resten av dine stiler ... */
-}
-
 h1 {
   text-align: center; /* Sentrerer tekst innenfor h1 */
   width: 100%; /* Full bredde */
   margin-bottom: 1rem; /* Mellomrom under h1 */
 }
-
+.actions-container {
+  display: flex;
+  justify-content: space-between; /* Plasserer elementene på hver sin side av containeren */
+  align-items: center; /* Sentrerer elementene vertikalt */
+  padding: 1rem; /* Gir litt polstring rundt containeren */
+  margin-top: 1rem; /* Gir litt margin over containeren */
+}
 .save-quiz-button {
   position: fixed; /* Holder knappen fast på skjermen */
   bottom: 20px; /* 20px fra bunnen av skjermen */
   right: 20px; /* 20px fra høyre side av skjermen */
   padding: 10px 20px; /* Padding rundt tekst */
-  border: none; /* Fjerner standard kant */
-  cursor: pointer; /* Endrer musepekeren til en peker */
 }
 
 .difficulty-buttons {
