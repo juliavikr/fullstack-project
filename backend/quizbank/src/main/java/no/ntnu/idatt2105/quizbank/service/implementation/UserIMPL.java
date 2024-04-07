@@ -11,7 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
+/**
+ * UserIMPL class for User
+ * @version 1.0
+ * @Author Andrea Amundsen, Julia Vik Remøy
+ */
 @Service
 public class UserIMPL implements UserService {
 
@@ -22,8 +26,13 @@ public class UserIMPL implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil; // Legg til JwtTokenUtil
+    private JwtTokenUtil jwtTokenUtil;
 
+    /**
+     * Method for registering a new user account
+     * @param userDTO The user to be registered
+     * @return The username of the registered user
+     */
     @Override
     public String registerNewUserAccount(UserDTO userDTO) {
         if (userRepository.existsByUsername(userDTO.getUsername())) {
@@ -38,11 +47,16 @@ public class UserIMPL implements UserService {
         return user.getUsername();
     }
 
+    /**
+     * Method for logging in a user
+     * @param loginDTO The user to be logged in
+     * @return The response of the login
+     */
     @Override
     public LoginResponse loginUser(LoginDTO loginDTO) {
         User user = userRepository.findByUsername(loginDTO.getUsername()).orElse(null);
         if (user != null && passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-            // Generere og returnere JWT token
+
             final String token = jwtTokenUtil.generateToken(user);
             return new LoginResponse("Login successful", true, token);
         } else {

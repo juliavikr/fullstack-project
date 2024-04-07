@@ -15,21 +15,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * Defines the application's security configuration.
- * This configuration class
- * specifies the beans for the authentication process, including the user details service,
- * password encoder, and authentication provider.
- * <p>
- * It integrates with Spring Security to facilitate the authentication and authorization
- * mechanisms used throughout the application.
- * </p>
- *
- * @author Vegard Johnsen, Sander R. Skofsrud
- * @see UserDetailsService
- * @see PasswordEncoder
- * @see AuthenticationManager
- * @since 0.1
- * @version 0.1
+ * Class that configures the application.
+ * It defines the beans for the authentication provider, authentication manager,
+ * password encoder, and user details service.
+ * It also enables transaction management.
+ * The user details service is configured to use the custom user repository.
+ * The password encoder is configured to use BCrypt hashing.
+ * The authentication provider is configured to use the user details service and password encoder.
+ * @version 1.0
+ * @Author Andrea Amundsen, Julia Vik Remøy
  */
 @Configuration
 @RequiredArgsConstructor
@@ -37,12 +31,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class ApplicationConfig {
 
     private final UserRepository userRepository;
+
     /**
      * Defines the bean for the authentication provider.
-     * It is configured with the
-     * custom user details service and password encoder to support authentication.
+     * The authentication provider is configured to use the user details service and password encoder.
      *
-     * @return The {@link DaoAuthenticationProvider} bean.
+     * @return The {@link AuthenticationProvider} bean.
      */
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -53,12 +47,12 @@ public class ApplicationConfig {
     }
 
     /**
-     * Defines the bean for the authentication manager, required by Spring Security
-     * to handle authentication processes.
+     * Defines the bean for the authentication manager.
+     * The authentication manager is configured to use the authentication configuration.
      *
-     * @param config The {@link AuthenticationConfiguration} provided by Spring Security.
+     * @param config The {@link AuthenticationConfiguration} object.
      * @return The {@link AuthenticationManager} bean.
-     * @throws Exception If there is an issue configuring the authentication manager.
+     * @throws Exception If an error occurs.
      */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
@@ -67,8 +61,7 @@ public class ApplicationConfig {
 
     /**
      * Defines the bean for the password encoder.
-     * This application uses BCrypt hashing
-     * for storing and verifying user passwords securely.
+     * The password encoder is configured to use BCrypt hashing.
      *
      * @return The {@link PasswordEncoder} bean.
      */
@@ -77,6 +70,12 @@ public class ApplicationConfig {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Defines the bean for the user details service.
+     * The user details service is configured to use the custom user repository.
+     *
+     * @return The {@link UserDetailsService} bean.
+     */
   @Bean
     public UserDetailsService userDetailsService() {
     return username -> userRepository.findByUsername(username)

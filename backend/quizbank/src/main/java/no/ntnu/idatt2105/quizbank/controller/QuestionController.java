@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Class representing the controller for the Question entity
+ * @version 1.0
+ * @Author Andrea Amundsen, Julia Vik Remøy
+ */
 @RestController
 @RequestMapping("/questions")
 public class QuestionController {
@@ -21,6 +26,10 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
+    /**
+     * Method for retrieving all questions
+     * @return List of all questions
+     */
     @Operation(summary = "Retrieve all questions",
         responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved all questions",
@@ -31,6 +40,11 @@ public class QuestionController {
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
+    /**
+     * Method for retrieving a question by ID
+     * @param id ID of the question to retrieve
+     * @return The question with the provided ID
+     */
     @Operation(summary = "Retrieve a question by ID",
         responses = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved the question",
@@ -48,6 +62,11 @@ public class QuestionController {
         }
     }
 
+    /**
+     * Method for creating a new question
+     * @param question Question data to create a new question
+     * @return The created question
+     */
     @Operation(summary = "Create a new question",
         responses = {
             @ApiResponse(responseCode = "201", description = "Question created successfully",
@@ -61,6 +80,12 @@ public class QuestionController {
         return new ResponseEntity<>(createdQuestion, HttpStatus.CREATED);
     }
 
+    /**
+     * Method for updating a question
+     * @param id ID of the question to update
+     * @param updatedQuestion Updated question data
+     * @return The updated question
+     */
     @Operation(summary = "Update a question",
         responses = {
             @ApiResponse(responseCode = "200", description = "Question updated successfully",
@@ -81,6 +106,11 @@ public class QuestionController {
         }
     }
 
+    /**
+     * Method for deleting a question by ID
+     * @param id ID of the question to delete
+     * @return Response entity with no content
+     */
     @Operation(summary = "Delete a question by ID",
         responses = {
             @ApiResponse(responseCode = "204", description = "Question deleted successfully"),

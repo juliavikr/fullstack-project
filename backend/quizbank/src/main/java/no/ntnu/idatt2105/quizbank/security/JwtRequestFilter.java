@@ -15,15 +15,32 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import io.jsonwebtoken.ExpiredJwtException;
 
+/**
+ * Class for filtering requests
+ * @version 1.0
+ * @Author Andrea Amundsen, Julia Vik Remøy
+ */
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     private UserDetailsService userDetailsService;
     private JwtTokenUtil jwtTokenUtil;
 
+    /**
+     * Constructor for JwtRequestFilter
+     * @param userDetailsService The user details service
+     * @param jwtTokenUtil The jwt token util
+     */
     public JwtRequestFilter(UserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil) {
         this.userDetailsService = userDetailsService;
         this.jwtTokenUtil = jwtTokenUtil;
     }
+
+    /**
+     * Method for filtering requests
+     * @param request The request
+     * @param response The response
+     * @param chain The filter chain
+     */
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                  FilterChain chain)
@@ -33,7 +50,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String username = null;
         String jwtToken = null;
 
-        // JWT Token er i form "Bearer token". Fjern Bearer og få kun token delen
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
             try {
@@ -47,20 +63,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             logger.warn("JWT Token does not begin with Bearer String");
         }
 
-        // Valider tokenet
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
-            // Hvis tokenet er gyldig, konfigurer Spring Security for å manuelt sette autentisering
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken
                     .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                // Etter å sette autentiseringen i konteksten, spesifiserer vi
-                // at den nåværende brukeren er autentisert. Dermed passerer den Spring Security-konfigurasjonene vellykket.
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
