@@ -3,23 +3,10 @@
   <div class="user-page-container">
     <div class="user-info">
       <h2>Username: {{ username }}</h2>
-      <MediumButton type="primary" @click="showChangePassword = true">
-        Change password
-      </MediumButton>
+      <MediumButton type="primary" @click="logout">Log out</MediumButton>
     </div>
-    <div v-if="showChangePassword" class="change-password-modal">
-      <form @submit.prevent="changePassword">
-        <div class="form-group">
-          <label for="new-password">New password:</label>
-          <input type="password" id="new-password" v-model="newPassword" required />
-        </div>
-        <MediumButton type="primary" @click="changePassword"> Submit new password </MediumButton>
-      </form>
-    </div>
-    <MediumButton class="btn-logout" @click="logout">Logg ut</MediumButton>
   </div>
 </template>
-
 <script setup>
 import { ref, onMounted } from 'vue'
 import MediumButton from '@/components/MediumButton.vue'
