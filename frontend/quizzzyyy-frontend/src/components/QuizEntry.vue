@@ -1,17 +1,15 @@
 <template>
-  <div class="quiz-entry">
+  <div class="quiz-entry" v-if="quiz">
     <div class="right">
       <h3>{{ quiz.title }}</h3>
       <p>Category: {{ quiz.category }} - Difficulty: {{ quiz.difficulty }}</p>
-
     </div>
     <div class="buttons">
       <button class="primary-button action-button delete-button" @click="deleteQuiz">x</button>
-       <button class="primary-button action-button play-button" @click="startQuiz">Play</button>
+      <button class="primary-button action-button play-button" @click="startQuiz">Play</button>
     </div>
   </div>
 </template>
-
 
 <script setup>
 import axios from 'axios'
