@@ -126,7 +126,6 @@ h2 {
   border: none;
   padding: 0.5rem 1rem;
   margin-right: 0.5rem;
-  cursor: pointer;
   border-radius: 4px;
   text-transform: uppercase;
   font-weight: bold;
