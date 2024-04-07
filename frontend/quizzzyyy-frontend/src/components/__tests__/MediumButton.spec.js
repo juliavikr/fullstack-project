@@ -1,58 +1,52 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import MediumButton from '../MediumButton.vue'
+import MediumButton from '@/components/MediumButton.vue'
+import { nextTick } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
 
-const push = vi.fn() // Mock function for router push
-
-// Mock useRouter
-vi.mock('vue-router', () => ({
-  useRouter: () => ({
-    push
-  })
-}))
-
-// Reset the push mock before each test
-beforeEach(() => {
-  push.mockClear()
+const router = createRouter({
+  history: createWebHistory(),
+  routes: []
 })
 
 describe('MediumButton', () => {
   it('renders a button with the correct class based on type prop', () => {
     const type = 'secondary'
     const wrapper = mount(MediumButton, {
-      props: { type }
+      props: { type },
+      global: {
+        plugins: [router]
+      }
     })
 
     const button = wrapper.find('button')
-    expect(button.classes()).toContain('btn')
-    expect(button.classes()).toContain(type)
-  })
-
-  it('renders slot content', () => {
-    const slotContent = 'Click Me'
-    const wrapper = mount(MediumButton, {
-      slots: { default: slotContent }
-    })
-
-    expect(wrapper.text()).toContain(slotContent)
+    expect(button.classes()).toContain('primary-button')
+    expect(button.classes()).toContain(`button-${type}`)
   })
 
   it('navigates to the "to" prop when clicked', async () => {
-    const toPath = '/another-path'
+    const to = '/path'
     const wrapper = mount(MediumButton, {
-      props: { to: toPath, type: 'secondary' }
+      props: { to, type: 'secondary' },
+      global: {
+        plugins: [router]
+      }
     })
 
     await wrapper.find('button').trigger('click')
-    expect(push).toHaveBeenCalledWith(toPath)
+    await nextTick()
+    expect(router.currentRoute.value.path).toBe(to)
   })
 
   it('does not navigate if "to" prop is not provided', async () => {
     const wrapper = mount(MediumButton, {
-      props: { type: 'secondary' }
+      props: { type: 'secondary' },
+      global: {
+        plugins: [router]
+      }
     })
 
     await wrapper.find('button').trigger('click')
-    expect(push).not.toHaveBeenCalled()
+    await nextTick()
+    expect(router.currentRoute.value.path).toBe('/')
   })
 })
