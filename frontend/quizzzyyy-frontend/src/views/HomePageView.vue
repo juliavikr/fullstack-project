@@ -2,6 +2,7 @@
   <div class="home-container">
     <NavBar />
     <div class="action-buttons">
+        <p>Hello, {{ username }}</p>
       <BigButton to="/your-quizzes">Your quizzes</BigButton>
       <BigButton to="/create-quiz">Create a new quiz</BigButton>
     </div>
@@ -9,13 +10,24 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
 import NavBar from '../components/NavBar.vue'
 import BigButton from '../components/BigButton.vue'
+
+const username = ref('')
+
+onMounted(() => {
+  const storedUsername = localStorage.getItem('username')
+  if (storedUsername) {
+    username.value = storedUsername
+  }
+})
 </script>
 
 <style scoped>
 .home-container {
-  font: 16px 'Poppins', sans-serif;
+  font: 20px 'Poppins', sans-serif;
+  font-weight: 400;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -24,11 +36,12 @@ import BigButton from '../components/BigButton.vue'
 
 .action-buttons {
   display: flex;
-  flex-direction: column; /* Setter knappene under hverandre */
-  align-items: center; /* Senterer knappene horisontalt */
-  width: 100%; /* Setter bredden på knappene til å passe containeren */
-  gap: 30px; /* Gir litt plass mellom knappene */
-  margin-top: 150px; /* Eller bruk margin-top istedenfor padding-top om nødvendig */
+  flex-direction: column;
   align-items: center;
+  width: 100%;
+  gap: 30px;
+  margin-top: 150px;
 }
+
+
 </style>
