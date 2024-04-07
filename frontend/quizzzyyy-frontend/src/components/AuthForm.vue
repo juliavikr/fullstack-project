@@ -5,77 +5,82 @@
       <div class="input-group">
         <label for="username">Username:</label>
         <input type="text" id="username" v-model="username" required />
+        <div v-if="errorMessage  === 'username'" class="error-message">{{ errorMessage }}</div>
       </div>
       <div class="input-group">
         <label for="password">Password:</label>
         <input type="password" id="password" v-model="password" required />
+        <div v-if="errorMessage === 'password'" class="error-message">{{ errorMessage }}</div>
       </div>
-      <MediumButton :type="buttonType">{{ buttonText }}</MediumButton>
+     <div class="button-container">
+        <button type="submit" class="medium-button">{{ title }}</button>
+
+        <router-link
+          :to="props.buttonType === 'login' ? '/signup' : '/login'">
+          {{ props.buttonType === 'login' ? 'Need an account? Sign Up' : 'Already have an account? Log In' }}
+        </router-link>
+      </div>
     </form>
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
-import MediumButton from '@/components/MediumButton.vue'
-import axios from 'axios'
-import router from '@/router/index.js'
+import { ref } from 'vue';
+import axios from 'axios';
+import router from '@/router/index.js';
 
 const props = defineProps({
   title: String,
   buttonType: String,
   buttonText: String
-})
+});
 
-const username = ref('')
-const password = ref('')
 
-const handleSubmit = () => {
+const username = ref('');
+const password = ref('');
+const errorMessage = ref('');
+
+
+// Form submit handler
+const handleSubmit = async () => {
   if (props.buttonType === 'signup') {
-    handleSignUp()
-  } else if (props.buttonType === 'login') {
-    handleLogin()
+    await handleSignUp();
+  } else {
+    await handleLogin();
   }
-}
+};
 
 const handleSignUp = async () => {
   try {
-    const response = await axios.post('http://localhost:8080/api/user/register', {
-      username: username.value,
-      password: password.value
-    })
-    if (response.data) {
-      alert('User registered successfully')
+    const response = await axios.post('http://localhost:8080/api/user/register', { username: username.value, password: password.value });
+    if (response.data.success) {
+      alert('Signup successful, please log in.');
       await router.push('/login')
     } else {
-      alert('No user found')
+      alert('Signup failed: ' + "User already exists");
     }
   } catch (error) {
-    console.error(error)
-    if (error.response && error.response.data && error.response.data.message) {
-      alert(error.response.data.message) // Vis feilmeldingen fra backend
-    } else {
-      alert('User registration failed')
-    }
+    alert('Signup failed: ' + "user already exists");
   }
-}
-const handleLogin = async () => {
-  try {
-    const response = await axios.post('http://localhost:8080/api/user/login', {
-      username: username.value,
-      password: password.value
-    })
-    if (response.data.success) {
-      localStorage.setItem('token', response.data.token)
-      localStorage.setItem('username', username.value) // Lagre brukernavnet i localStorage
-      alert('User logged in successfully')
-      await router.push('/home') // Omdiriger til brukersiden etter vellykket innlogging
-    } else {
+};
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/user/login', {
+        username: username.value,
+        password: password.value
+      })
+      if (response.data.success) {
+        localStorage.setItem('token', response.data.token)
+        localStorage.setItem('username', username.value) // Lagre brukernavnet i localStorage
+        alert('User logged in successfully')
+        await router.push('/home') // Omdiriger til brukersiden etter vellykket innlogging
+      } else {
+        alert('Incorrect username or password')
+      }
+    } catch (error) {
+      console.error(error)
       alert('Incorrect username or password')
     }
-  } catch (error) {
-    console.error(error)
-    alert('Login failed')
-  }
 }
 </script>
 
@@ -89,6 +94,12 @@ const handleLogin = async () => {
   border-radius: 8px; /* Avrund hjørnene for å matche designet */
   text-align: center; /* Sentrer tekst innenfor */
 }
+.button-container {
+  display: flex;
+  justify-content: space-between;
+
+}
+
 
 h2 {
   margin-bottom: 2rem; /* Gi mer plass under tittelen */
@@ -110,12 +121,11 @@ input[type='password'] {
   margin-bottom: 1rem; /* Legg til avstand mellom input-feltene og knappen */
 }
 
-/* Stil knappen slik at den matcher bildet */
 .medium-button {
   display: block;
-  width: 100%;
+  width: 30%;
   padding: 1rem;
-  border: none; /* Fjern border */
+  border: none;
   border-radius: 4px;
   background-color: #f472b6; /* Velg en farge som matcher bildet */
   color: white;
