@@ -6,6 +6,11 @@ import lombok.Getter;
 
 import java.util.List;
 
+/**
+ * Class representing the Data Transfer Object for quizzes
+ * @version 1.0
+ * @Author Andrea Amundsen, Julia Vik Remøy
+ */
 @Getter
 public class QuizDto {
   @NotBlank(message = "Title cannot be blank")
@@ -16,9 +21,19 @@ public class QuizDto {
 
   private Long userId;
 
+  /**
+   * Default constructor
+   */
   public QuizDto() {
   }
 
+  /**
+   * Constructor that initializes the quiz DTO
+   * @param title The title of the quiz
+   * @param category The category of the quiz
+   * @param difficulty The difficulty of the quiz
+   * @param questions The questions in the quiz
+   */
   public QuizDto(String title, String category, String difficulty, List<QuestionDto> questions) {
     this.title = title;
     this.category = category;
@@ -26,61 +41,52 @@ public class QuizDto {
     this.questions = questions;
   }
 
+  /**
+   * Method for setting the title of the quiz
+   * @param title
+   */
   public void setTitle(String title) {
     this.title = title;
   }
 
+  /**
+   * Method for setting the category of the quiz
+   * @param category
+   */
   public void setCategory(String category) {
     this.category = category;
   }
 
+  /**
+   * Method for setting the difficulty of the quiz
+   * @param difficulty
+   */
   public void setDifficulty(String difficulty) {
     this.difficulty = difficulty;
   }
 
+  /**
+   * Method for setting the questions of the quiz
+   * @param questions
+   */
   public void setQuestions(List<QuestionDto> questions) {
     this.questions = questions;
   }
 
+  /**
+   * Method for retrieving the user ID
+   * @return The user ID
+   */
   public Long getUserId() {
     return userId;
   }
 
+  /**
+   * Method for setting the user ID
+   * @param userId The user ID
+   */
   public void setUserId(Long userId) {
     this.userId = userId;
-  }
-
-
-  @Override
-  public String toString() {
-    return "QuizDto{" +
-      "title='" + title + '\'' +
-      ", category='" + category + '\'' +
-      ", difficulty='" + difficulty + '\'' +
-      ", questions=" + questions +
-      '}';
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    QuizDto quizDto = (QuizDto) o;
-
-    if (title != null ? !title.equals(quizDto.title) : quizDto.title != null) return false;
-    if (category != null ? !category.equals(quizDto.category) : quizDto.category != null) return false;
-    if (difficulty != null ? !difficulty.equals(quizDto.difficulty) : quizDto.difficulty != null) return false;
-    return questions != null ? questions.equals(quizDto.questions) : quizDto.questions == null;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = title != null ? title.hashCode() : 0;
-    result = 31 * result + (category != null ? category.hashCode() : 0);
-    result = 31 * result + (difficulty != null ? difficulty.hashCode() : 0);
-    result = 31 * result + (questions != null ? questions.hashCode() : 0);
-    return result;
   }
 
 }

@@ -5,7 +5,6 @@ import no.ntnu.idatt2105.quizbank.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,10 +14,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.io.IOException;
 
 /**
- * Class for configuring the password encoder
+ * Class that configures the security of the application.
+ * It defines the beans for the JWT request filter and the security filter chain.
+ * It enables web security and method security.
+ * The security filter chain is configured to disable CSRF, authorize requests, and create a stateless session.
+ * The security filter chain is also configured to add the JWT request filter before the username password authentication filter.
+ * @version 1.0
+ * @Author Andrea Amundsen, Julia Vik Remøy
  */
 @Configuration
 @EnableWebSecurity
@@ -39,6 +43,14 @@ public class SecurityConfig {
         return new JwtRequestFilter(userDetailsService, jwtTokenUtil);
     }
 
+    /**
+     * Defines the bean for the security filter chain.
+     * The security filter chain is configured to disable CSRF, authorize requests, and create a stateless session.
+     * The security filter chain is also configured to add the JWT request filter before the username password authentication filter.
+     *
+     * @param http The {@link HttpSecurity} object.
+     * @return The {@link SecurityFilterChain} bean.
+     */
  @SuppressWarnings("removal")
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

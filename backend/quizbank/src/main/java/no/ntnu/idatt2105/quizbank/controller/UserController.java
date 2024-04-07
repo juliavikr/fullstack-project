@@ -17,6 +17,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Class representing the controller for the User entity
+ * @version 1.0
+ * @Author Andrea Amundsen, Julia Vik Remøy
+ */
 @RestController
 @CrossOrigin
 @RequestMapping("/api/user")
@@ -25,6 +30,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Method for registering a new user
+     * @param userDTO User DTO containing user registration information
+     * @return Response entity containing the user's username and a message
+     */
     @Operation(summary = "Register a new user",
         responses = {
             @ApiResponse(responseCode = "200", description = "User registered successfully",
@@ -44,6 +54,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Method for logging in a user
+     * @param loginDTO Login DTO containing user login credentials
+     * @return Response entity containing the user's username and a message
+     */
     @Operation(summary = "Login a user",
         responses = {
             @ApiResponse(responseCode = "200", description = "User logged in successfully",
@@ -65,10 +80,22 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(e.getMessage(), false, null));
         }
     }
+
+    /**
+     * Method for getting the current user's information
+     * @param currentUser The current user
+     * @return The current user's information
+     */
+    @Operation(summary = "Get current user's information",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Current user's information retrieved successfully",
+                content = @Content(schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized, user is not authenticated")
+        })
     @GetMapping("/me")
     public ResponseEntity<User> getCurrentUser(@AuthenticationPrincipal User currentUser) {
-    // @AuthenticationPrincipal vil automatisk injisere den autentiserte brukeren
-    return ResponseEntity.ok(currentUser);
-}
+        // The @AuthenticationPrincipal automatically injects the authenticated user
+        return ResponseEntity.ok(currentUser);
+    }
 
 }
