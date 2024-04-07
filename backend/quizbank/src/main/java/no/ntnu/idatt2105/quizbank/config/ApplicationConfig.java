@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Defines the application's security configuration.
@@ -32,6 +33,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 @RequiredArgsConstructor
+@EnableTransactionManagement
 public class ApplicationConfig {
 
     private final UserRepository userRepository;
