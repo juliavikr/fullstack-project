@@ -71,9 +71,9 @@ const handleSignUp = async () => {
       })
       if (response.data.success) {
         localStorage.setItem('token', response.data.token)
-        localStorage.setItem('username', username.value) // Lagre brukernavnet i localStorage
+        localStorage.setItem('username', username.value)
         alert('User logged in successfully')
-        await router.push('/home') // Omdiriger til brukersiden etter vellykket innlogging
+        await router.push('/home') 
       } else {
         alert('Incorrect username or password')
       }
@@ -86,13 +86,13 @@ const handleSignUp = async () => {
 
 <style scoped>
 .auth-form {
-  max-width: 400px; /* Juster bredden slik det passer med designet */
-  margin: 100px auto; /* Øk toppmarg for å sentrere vertikalt, juster etter behov */
+  max-width: 400px;
+  margin: 100px auto; 
   padding: 2rem;
   background: #fff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Myk opp skyggen litt */
-  border-radius: 8px; /* Avrund hjørnene for å matche designet */
-  text-align: center; /* Sentrer tekst innenfor */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+  border-radius: 8px; 
+  text-align: center; 
 }
 .button-container {
   display: flex;
@@ -100,25 +100,24 @@ const handleSignUp = async () => {
 
 }
 
-
 h2 {
-  margin-bottom: 2rem; /* Gi mer plass under tittelen */
-  color: #333; /* Mørkere farge for bedre lesbarhet */
+  margin-bottom: 2rem; 
+  color: #333; 
 }
 
 label {
   display: block;
-  margin-bottom: 0.5rem; /* Øk avstanden litt under label */
-  color: #333; /* Samme som for h2 for konsistens */
+  margin-bottom: 0.5rem; 
+  color: #333; 
 }
 
 input[type='text'],
 input[type='password'] {
-  width: calc(100% - 1.5rem); /* Trekk fra polstring for å unngå overflow */
+  width: calc(100% - 1.5rem); 
   padding: 0.75rem;
-  border: 2px solid #ccc; /* Tykkere border for å matche designet */
-  border-radius: 4px; /* Litt mindre avrundet enn boksen */
-  margin-bottom: 1rem; /* Legg til avstand mellom input-feltene og knappen */
+  border: 2px solid #ccc; 
+  border-radius: 4px; 
+  margin-bottom: 1rem; 
 }
 
 .medium-button {
@@ -127,29 +126,27 @@ input[type='password'] {
   padding: 1rem;
   border: none;
   border-radius: 4px;
-  background-color: #f472b6; /* Velg en farge som matcher bildet */
+  background-color: #f472b6; 
   color: white;
-  margin-top: 1rem; /* Avstand mellom passord felt og knapp */
-  box-sizing: border-box; /* For å inkludere polstring i bredde-beregningen */
-  cursor: pointer; /* Vis en peker hånd når du holder over knappen */
-  font-size: 1rem; /* Standard tekststørrelse for knappen */
+  margin-top: 1rem; 
+  box-sizing: border-box;
+  cursor: pointer; 
+  font-size: 1rem;
 }
 .medium-button:hover {
-  background-color: #f268aa; /* Litt mørkere farge ved hover for en subtil effekt */
+  background-color: #f268aa; 
 }
 
-/* Tilpasse input-felter når de er i fokus */
 input[type='text']:focus,
 input[type='password']:focus {
   outline: none;
-  border-color: #f472b6; /* Kanten farge for å matche knappen */
-  box-shadow: 0 0 0 2px rgba(244, 114, 182, 0.5); /* Legg til en subtil skygge rundt fokusert input */
+  border-color: #f472b6; 
+  box-shadow: 0 0 0 2px rgba(244, 114, 182, 0.5); 
 }
 
-/* Gjør endringer her for å tilpasse mellomrom og responsive design */
 @media (max-width: 768px) {
   .auth-form {
-    margin: 50px auto; /* Mindre vertikal margin for mindre skjermer */
+    margin: 50px auto;
   }
 }
 </style>

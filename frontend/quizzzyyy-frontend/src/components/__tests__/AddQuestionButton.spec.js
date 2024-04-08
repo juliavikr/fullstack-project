@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import AddQuestionButton from '../AddQuestionButton.vue' // Adjust the path as necessary.
+import AddQuestionButton from '../AddQuestionButton.vue' 
 
 describe('AddQuestionButton', () => {
   it('renders a button', () => {
