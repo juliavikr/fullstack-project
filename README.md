@@ -131,6 +131,12 @@ npx cypress run
 SQL schema to manually insert in the database:
 backend/quizbank/src/main/resources/sql/schema.sql
 
+Data to insert:
+backend/quizbank/src/main/resources/sql/data.sql
+This creates two users with quizzes:
+- Username Julia and password pass123
+- Username Andrea and password pass321
+
 
 
 
