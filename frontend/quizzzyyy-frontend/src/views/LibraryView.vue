@@ -26,7 +26,6 @@ import { onMounted, computed } from 'vue'
 import NavBar from '@/components/NavBar.vue'
 import QuizEntry from '@/components/QuizEntry.vue'
 import { useQuizStore } from '@/stores/quizStore'
-import router from "@/router/index.js";
 
 const quizStore = useQuizStore()
 const activities = computed(() => quizStore.activities)

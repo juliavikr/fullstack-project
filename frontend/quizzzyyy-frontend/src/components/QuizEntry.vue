@@ -3,9 +3,9 @@
     <div class="right">
       <h3>{{ quiz.title }}</h3>
       <p>Category: {{ quiz.category }} - Difficulty: {{ quiz.difficulty }}</p>
+      <button class="primary-button action-button delete-button" @click="deleteQuiz">Delete</button>
     </div>
     <div class="buttons">
-      <button class="primary-button action-button delete-button" @click="deleteQuiz">x</button>
       <button class="primary-button action-button play-button" @click="startQuiz">Play</button>
     </div>
   </div>
@@ -56,12 +56,12 @@ const deleteQuiz = async () => {
 
 <style scoped>
 .quiz-entry {
-  position: relative;
   display: flex;
   padding: 0.5em;
   margin:  20px;
   border-radius: 4px;
-  background-color: rgba(255, 20, 147, 0.2);
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .right {
@@ -71,20 +71,18 @@ const deleteQuiz = async () => {
 
 .buttons {
   display: flex;
-  gap: 1em;
+  gap: 5px;
   flex-direction: column;
 }
 .delete-button {
-  position: absolute;
   top: 0;
   right: 0;
-  background-color: crimson;
-  color: white;
+  background-color: rgb(255, 105, 135);
   border-radius: 10%;
   align-items: center;
 }
 .delete-button:hover {
-  background-color: darkred;
+  background-color: rgb(226, 62, 62);
 }
 .action-button {
   margin: 10px;
@@ -92,8 +90,8 @@ const deleteQuiz = async () => {
 }
 .play-button {
   width: 200px;
-  height: 50%;
-  margin-top: 50px
+  margin-top: 50px;
+  height: 50px;
 
 }
 /* Responsiv design for mindre skjermer */
