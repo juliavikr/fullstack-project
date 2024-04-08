@@ -63,6 +63,14 @@ const finishQuiz = () => {
   store.recordActivity(quizTitle.value, store.score) // Record the activity
   router.push('/score') // Navigate to the score page
 }
+
+onMounted(() => {
+  const savedIndex = localStorage.getItem('currentQuestionIndex');
+  if (savedIndex !== null) {
+    store.currentQuestionIndex = parseInt(savedIndex, 10);
+    // Vurder å hente spørsmålet basert på denne indeksen eller tilsvarende nødvendige oppdateringer.
+  }
+})
 </script>
 
 <style scoped>

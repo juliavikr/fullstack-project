@@ -20,7 +20,7 @@ const formType = ref('login');
 <style scoped>
 .welcome-container {
   text-align: center;
-  padding-top: 100px;
+  padding-top: 50px;
   height: 100vh;
   font-family: 'Arial', sans-serif;
 }
@@ -41,6 +41,7 @@ h1 {
 @media (max-width: 768px) {
   .welcome-container {
     flex-direction: column;
+    margin: 20px;
   }
 }
 </style>

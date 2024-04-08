@@ -97,7 +97,6 @@ const handleSignUp = async () => {
 .button-container {
   display: flex;
   justify-content: space-between;
-
 }
 
 h2 {
