@@ -6,8 +6,8 @@
       <p>{{ currentQuestion.question_text }}</p>
       <input type="text" placeholder="Your answer" v-model="userAnswer" :disabled="hasSubmitted" />
       <p v-if="isCorrectAnswer !== null">
-        Your answer was <strong>{{ isCorrectAnswer ? 'correct' : 'incorrect' }}</strong>.
-        <span v-if="!isCorrectAnswer">| The correct answer is <strong> {{ currentCorrectAnswer }}</strong></span>
+        Your answer was <strong>{{ isCorrectAnswer ? 'correct' : 'incorrect' }}</strong>
+        <span v-if="!isCorrectAnswer"> | The correct answer is <strong> {{ currentCorrectAnswer }}</strong></span>
       </p>
       <div class="actions">
         <button class=" primary-button quizBtn" @click="submitAnswer" :disabled="userAnswer === '' || hasSubmitted">Submit</button>

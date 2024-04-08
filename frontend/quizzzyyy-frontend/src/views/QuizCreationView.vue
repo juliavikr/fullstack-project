@@ -48,9 +48,9 @@
       </div>
     <div class="actions-container">
       <AddQuestionButton @click="addQuestion" />
-      <SmallButton type="button" class="save-quiz-button" :disabled="isSaving" @click="saveQuiz">
-        Save Quiz
-      </SmallButton>
+     <SmallButton type="button" class="save-quiz-button" :disabled="isSaving || !isValidQuiz()" @click="saveQuiz">
+  Save Quiz
+</SmallButton>
     </div>
   </div>
 </template>
@@ -90,9 +90,29 @@ const updateQuestion = (updatedQuestion) => {
 }
 
 let isSaving = false
+const isValidQuiz = () => {
+  // Check if the title, category, and difficulty are not empty
+  if (!quiz.title || !quiz.category || !quiz.difficulty) {
+    return false
+  }
 
+  // Check if all questions have both question_text and answer
+  for (let question of quiz.questions) {
+    if (!question.question_text || !question.answer) {
+      return false
+    }
+  }
+  return true
+}
 const saveQuiz = async () => {
   if (isSaving) return
+
+  // Validate the quiz before attempting to save it
+  if (!isValidQuiz()) {
+    alert('Please fill in all fields before saving the quiz.')
+    return
+  }
+
   console.log('Attempting to save quiz', quiz)
   isSaving = true
 
@@ -113,7 +133,7 @@ const saveQuiz = async () => {
     alert('Quiz saved successfully!')
 
     // Redirect the user to the "yourquizzes" page
-    router.push('/your-quizzes')
+    await router.push('/your-quizzes')
   } catch (error) {
     console.error('There was an error saving the quiz', error)
     // Show the error message
