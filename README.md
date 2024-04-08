@@ -126,9 +126,15 @@ Cypress e2e tests:
 npx cypress run
 ```
 
-## Test database
+## Test database (optional)
 
-SQL schema
+SQL schema to manually insert in the database:
+backend/quizbank/src/main/resources/sql/schema.sql
+
+
+
+
+
 
 
 
