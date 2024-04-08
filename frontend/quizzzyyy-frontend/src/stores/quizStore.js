@@ -55,37 +55,31 @@ export const useQuizStore = defineStore('quiz', {
         this.userAnswers = []
         this.saveState() // Save state after setting the current quiz
       },
-    submitAnswer(answer) {
-    const currentQuestion = this.currentQuestion
-    if (!currentQuestion) {
-      console.error('No current question available for submitting an answer.')
-      return
-    }
 
-    console.log('Current question:', currentQuestion)
-    console.log('Submitted answer:', answer)
-    const isCorrect = answer.toLowerCase().trim() === currentQuestion.answer.toLowerCase().trim()
-    this.userAnswers.push({
-      questionId: currentQuestion.id,
-      answer,
-      isCorrect
-    })
+    submitAnswer(answer) {
+  const currentQuestion = this.currentQuestion
+  if (!currentQuestion) {
+    console.error('No current question available for submitting an answer.')
+    return
+  }
+
+  console.log('Current question:', currentQuestion)
+  console.log('Submitted answer:', answer)
+  const isCorrect = answer.toLowerCase().trim() === currentQuestion.answer.toLowerCase().trim()
+  this.userAnswers.push({
+    questionId: currentQuestion.id,
+    answer,
+    isCorrect
+  })
 
   // Update the score immediately if the answer is correct
-    if (isCorrect) {
-      this.score++
-    }
+  if (isCorrect) {
+    this.score++
+  }
 
-    if (this.isLastQuestion) {
-      this.recordActivity(this.currentQuiz.title, this.score)
-      this.endQuiz()
-    } else {
-      this.currentQuestionIndex++
-    }
-
-    this.saveState() // Save state after submitting an answer
-    return isCorrect // Return whether the answer is correct
-  },
+  this.saveState() // Save state after submitting an answer
+  return isCorrect // Return whether the answer is correct
+},
 
     endQuiz() {
       console.log(`Quiz finished with score: ${this.score}`)
@@ -93,15 +87,15 @@ export const useQuizStore = defineStore('quiz', {
     },
 
     recordActivity(quizTitle, score) {
-      const newActivity = {
-        quizTitle,
-        score,
-        totalQuestions: this.currentQuiz.totalQuestions,
-        timestamp: Date.now()
-      }
-      this.activities.push(newActivity)
-      this.saveState()
-    },
+  const newActivity = {
+    quizTitle,
+    score,
+    totalQuestions: this.currentQuiz.totalQuestions,
+    timestamp: Date.now()
+  }
+  this.activities.push(newActivity)
+  this.saveState() // Save state after recording an activity
+},
 
     resetQuiz() {
       this.currentQuiz = null
@@ -112,30 +106,30 @@ export const useQuizStore = defineStore('quiz', {
     },
 
     saveState() {
-      const stateToSave = {
-        quizzes: this.quizzes,
-        currentQuiz: this.currentQuiz,
-        currentQuestionIndex: this.currentQuestionIndex,
-        score: this.score,
-        userAnswers: this.userAnswers,
-        activities: this.activities
-      }
-      localStorage.setItem('quizState', JSON.stringify(stateToSave))
-    },
+  const stateToSave = {
+    quizzes: this.quizzes,
+    currentQuiz: this.currentQuiz,
+    currentQuestionIndex: this.currentQuestionIndex,
+    score: this.score,
+    userAnswers: this.userAnswers,
+    activities: this.activities // Make sure activities are being saved
+  }
+  localStorage.setItem('quizState', JSON.stringify(stateToSave))
+},
 
-    loadState() {
-      const savedState = localStorage.getItem('quizState')
-      if (savedState) {
-        const parsedState = JSON.parse(savedState)
-        // Update the store with the saved state
-        this.quizzes = parsedState.quizzes || []
-        this.currentQuiz = parsedState.currentQuiz
-        this.currentQuestionIndex = parsedState.currentQuestionIndex || 0
-        this.score = parsedState.score || 0
-        this.userAnswers = parsedState.userAnswers || []
-        this.activities = parsedState.activities || []
-      }
-    },
+loadState() {
+  const savedState = localStorage.getItem('quizState')
+  if (savedState) {
+    const parsedState = JSON.parse(savedState)
+    // Update the store with the saved state
+    this.quizzes = parsedState.quizzes || []
+    this.currentQuiz = parsedState.currentQuiz
+    this.currentQuestionIndex = parsedState.currentQuestionIndex || 0
+    this.score = parsedState.score || 0
+    this.userAnswers = parsedState.userAnswers || []
+    this.activities = parsedState.activities || [] // Make sure activities are being loaded
+  }
+},
     removeQuiz(quizId) {
       this.quizzes = this.quizzes.filter((q) => q.id !== quizId)
     }

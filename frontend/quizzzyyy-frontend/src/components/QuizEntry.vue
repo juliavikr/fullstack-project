@@ -94,10 +94,11 @@ const deleteQuiz = async () => {
   height: 50px;
 
 }
-/* Responsiv design for mindre skjermer */
 @media (max-width: 768px) {
-  .quiz-entry {
-    flex-direction: column;
+
+  .play-button{
+    width: 100px;
+    height: 40px;
   }
 }
 </style>

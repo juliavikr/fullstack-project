@@ -6,9 +6,9 @@
       <h3>Quiz activity since logged in:</h3>
       <div class="scroll-box">
         <ul class="activity-list">
-          <li v-for="activity in activities" :key="activity.id">
-            {{ activity.quizTitle }}: {{ activity.score }}/{{ activity.totalQuestions }}
-          </li>
+          <li v-for="(activity, index) in activities" :key="index">
+        You scored {{ activity.score }} out of {{ activity.totalQuestions }} on the quiz "{{ activity.quizTitle }}" at {{ new Date(activity.timestamp).toLocaleString() }}
+      </li>
         </ul>
       </div>
     </div>
