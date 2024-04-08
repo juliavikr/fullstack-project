@@ -19,6 +19,11 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Class for testing QuestionController
+ * @version 1.0
+ * @Author Andrea Amundsen, Julia Vik Remøy
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class QuestionControllerTest {
@@ -32,6 +37,9 @@ public class QuestionControllerTest {
     private Question question1;
     private Question question2;
 
+    /**
+     * Method that sets up the test environment
+     */
     @BeforeEach
     public void setup() {
         question1 = new Question();
@@ -43,6 +51,10 @@ public class QuestionControllerTest {
         question2.setQuestion_text("Question 2");
     }
 
+    /**
+     * Method for testing get all questions
+     * @throws Exception if the test fails
+     */
     @Test
     @WithMockUser
     public void getAllQuestionsTest() throws Exception {
@@ -54,6 +66,10 @@ public class QuestionControllerTest {
                 .andExpect(status().isOk());
     }
 
+    /**
+     * Method for testing get question by ID
+     * @throws Exception if the test fails
+     */
   @Test
   @WithMockUser
 public void getQuestionByIdTest() throws Exception {
