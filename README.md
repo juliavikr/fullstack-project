@@ -128,6 +128,8 @@ npx cypress run
 
 ## Test database (optional)
 
+Use localhost:8081 client
+
 SQL schema to manually insert in the database:
 backend/quizbank/src/main/resources/sql/schema.sql
 
