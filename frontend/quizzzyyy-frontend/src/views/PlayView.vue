@@ -68,7 +68,7 @@ onMounted(() => {
   const savedIndex = localStorage.getItem('currentQuestionIndex');
   if (savedIndex !== null) {
     store.currentQuestionIndex = parseInt(savedIndex, 10);
-    // Vurder å hente spørsmålet basert på denne indeksen eller tilsvarende nødvendige oppdateringer.
+
   }
 })
 </script>
