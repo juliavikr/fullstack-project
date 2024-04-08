@@ -16,7 +16,16 @@
 </template>
 
 <script setup>
-// Script setup logikk kan være her om nødvendig
+import { onMounted } from 'vue'
+import { useQuizStore } from '@/stores/quizStore'
+
+// Bruk quizStore
+const quizStore = useQuizStore()
+
+// onMounted lifecycle hook for å laste tilstanden når komponenten monteres
+onMounted(() => {
+  quizStore.loadState()
+})
 </script>
 
 <style>
@@ -25,3 +34,4 @@
   color: #333; /* Standard tekstfarge */
 }
 </style>
+
