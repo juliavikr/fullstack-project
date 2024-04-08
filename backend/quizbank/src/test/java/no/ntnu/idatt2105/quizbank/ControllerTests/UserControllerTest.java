@@ -25,6 +25,11 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+/**
+ * Class for testing UserController
+ * @version 1.0
+ * @Author Andrea Amundsen, Julia Vik Remøy
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserControllerTest {
@@ -42,6 +47,9 @@ public class UserControllerTest {
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
 
+    /**
+     * Method that sets up the test environment
+     */
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
@@ -49,6 +57,10 @@ public class UserControllerTest {
         this.objectMapper = new ObjectMapper();
     }
 
+    /**
+     * Method for testing sign up
+     * @throws Exception if the test fails
+     */
     @Test
     public void givenUser_whenRegisterUser_thenStatus200() throws Exception {
         UserDTO userDTO = new UserDTO();

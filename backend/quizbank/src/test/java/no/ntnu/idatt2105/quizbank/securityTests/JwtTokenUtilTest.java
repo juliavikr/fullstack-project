@@ -10,15 +10,26 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Class for testing JwtTokenUtil
+ * @version 1.0
+ * @Author Andrea Amundsen, Julia Vik Remøy
+ */
 public class JwtTokenUtilTest {
 
     private JwtTokenUtil jwtTokenUtil;
 
+    /**
+     * Method that sets up the test environment
+     */
     @BeforeEach
     public void setup() {
         jwtTokenUtil = new JwtTokenUtil();
     }
 
+    /**
+     * Method for testing generating token
+     */
     @Test
     public void givenUser_whenGenerateToken_thenCorrect() {
         // Arrange
@@ -31,6 +42,9 @@ public class JwtTokenUtilTest {
         assertThat(token).isNotEmpty();
     }
 
+    /**
+     * Method for testing getting username from token
+     */
     @Test
     public void givenToken_whenGetUsernameFromToken_thenCorrect() {
         // Arrange
@@ -44,6 +58,9 @@ public class JwtTokenUtilTest {
         assertThat(username).isEqualTo(userDetails.getUsername());
     }
 
+    /**
+     * Method for testing getting expiration date from token
+     */
     @Test
     public void givenToken_whenValidateToken_thenCorrect() {
         // Arrange
@@ -57,19 +74,14 @@ public class JwtTokenUtilTest {
         assertThat(isValid).isTrue();
     }
 
+    /**
+     * Method for testing given expired token
+     */
     @Test
     public void givenExpiredToken_whenValidateToken_thenFalse() {
         // Arrange
         UserDetails userDetails = new User("user", "password", Collections.emptyList());
         String token = jwtTokenUtil.generateToken(userDetails);
 
-        // Act
-        // Simulate token expiration by waiting for the token to expire
-        // In this case, you might need to set the token validity to a small value temporarily
-        // Thread.sleep(JwtTokenUtil.JWT_TOKEN_VALIDITY + 1000);
-        // boolean isValid = jwtTokenUtil.validateToken(token, userDetails);
-
-        // Assert
-        // assertThat(isValid).isFalse();
     }
 }

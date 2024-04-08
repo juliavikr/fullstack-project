@@ -23,6 +23,11 @@ import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.openMocks;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Class for testing JwtRequestFilter
+ * @version 1.0
+ * @Author Andrea Amundsen, Julia Vik Remøy
+ */
 public class JwtRequestFilterTest {
 
   @Mock
@@ -43,11 +48,18 @@ public class JwtRequestFilterTest {
   @InjectMocks
   private JwtRequestFilter jwtRequestFilter;
 
+  /**
+   * Method that sets up the test environment
+   */
   @BeforeEach
   public void setup() {
     openMocks(this);
   }
 
+  /**
+   * Method for testing valid token
+   * @throws Exception if the test fails
+   */
   @Test
   public void givenValidToken_whenDoFilter_thenAuthenticate() throws Exception {
     // Arrange
@@ -70,6 +82,10 @@ public class JwtRequestFilterTest {
     assertThat(SecurityContextHolder.getContext().getAuthentication().isAuthenticated()).isTrue();
   }
 
+  /**
+   * Method for testing invalid token
+   * @throws Exception if the test fails
+   */
   @Test
   public void givenInvalidToken_whenDoFilter_thenDoNotAuthenticate() throws Exception {
     // Arrange
@@ -84,6 +100,10 @@ public class JwtRequestFilterTest {
     assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
   }
 
+  /**
+   * Method for testing expired token
+   * @throws Exception if the test fails
+   */
   @Test
   public void givenExpiredToken_whenDoFilter_thenDoNotAuthenticate() throws Exception {
     // Arrange
@@ -97,6 +117,4 @@ public class JwtRequestFilterTest {
     verify(chain, times(1)).doFilter(request, response);
     assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
   }
-
-  // Add more tests for other scenarios like null token, wrong format token, etc.
 }

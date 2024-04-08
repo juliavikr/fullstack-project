@@ -29,6 +29,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
+/**
+ * Class for testing QuizController
+ * @version 1.0
+ * @Author Andrea Amundsen, Julia Vik Remøy
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class QuizControllerTest {
@@ -41,7 +46,9 @@ public class QuizControllerTest {
 
     private List<Quiz> quizList;
 
-
+    /**
+     * Method that sets up the test environment
+     */
     @BeforeEach
     public void setup() {
         Quiz quiz1 = new Quiz();
@@ -59,6 +66,10 @@ public class QuizControllerTest {
         quizList = Arrays.asList(quiz1, quiz2);
     }
 
+    /**
+     * Method for updating a quiz
+     * @throws Exception if the test fails
+     */
 @Test
 public void updateQuizTest() throws Exception {
     Long id = 1L;
@@ -82,6 +93,10 @@ public void updateQuizTest() throws Exception {
             .andExpect(content().json("{'id': 1}"));
 }
 
+    /**
+     * Method for testing delete quiz by ID
+     * @throws Exception
+     */
   @Test
 public void deleteQuizByIdTest() throws Exception {
     Long id = 1L;
