@@ -47,43 +47,45 @@ export const useQuizStore = defineStore('quiz', {
     setCurrentQuiz(quiz) {
       console.log('Selected quiz:', quiz)
       this.currentQuiz = {
-    ...quiz,
-    totalQuestions: quiz.questions.length, // Legg til dette feltet
-    } // Set the current quiz
-      this.currentQuestionIndex = 0
-      this.score = 0
-      this.userAnswers = []
-      this.saveState() // Save state after setting the current quiz
-    },
+      ...quiz,
+      totalQuestions: quiz.questions.length, // Legg til dette feltet
+      } // Set the current quiz
+        this.currentQuestionIndex = 0
+        this.score = 0
+        this.userAnswers = []
+        this.saveState() // Save state after setting the current quiz
+      },
     submitAnswer(answer) {
-      const currentQuestion = this.currentQuestion
-      if (!currentQuestion) {
-        console.error('No current question available for submitting an answer.')
-        return
-      }
+    const currentQuestion = this.currentQuestion
+    if (!currentQuestion) {
+      console.error('No current question available for submitting an answer.')
+      return
+    }
 
-      console.log('Current question:', currentQuestion)
-      console.log('Submitted answer:', answer)
-      this.userAnswers.push({
-        questionId: currentQuestion.id,
-        answer,
-        isCorrect: answer.toLowerCase().trim() === currentQuestion.answer.toLowerCase().trim()
-      })
+    console.log('Current question:', currentQuestion)
+    console.log('Submitted answer:', answer)
+    const isCorrect = answer.toLowerCase().trim() === currentQuestion.answer.toLowerCase().trim()
+    this.userAnswers.push({
+      questionId: currentQuestion.id,
+      answer,
+      isCorrect
+    })
 
-      // Update the score immediately if the answer is correct
-      if (answer.toLowerCase().trim() === currentQuestion.answer.toLowerCase().trim()) {
-        this.score++
-      }
+  // Update the score immediately if the answer is correct
+    if (isCorrect) {
+      this.score++
+    }
 
-      if (this.isLastQuestion) {
-        this.recordActivity(this.currentQuiz.title, this.score)
-        this.endQuiz()
-      } else {
-        this.currentQuestionIndex++
-      }
+    if (this.isLastQuestion) {
+      this.recordActivity(this.currentQuiz.title, this.score)
+      this.endQuiz()
+    } else {
+      this.currentQuestionIndex++
+    }
 
-      this.saveState() // Save state after submitting an answer
-    },
+    this.saveState() // Save state after submitting an answer
+    return isCorrect // Return whether the answer is correct
+  },
 
     endQuiz() {
       console.log(`Quiz finished with score: ${this.score}`)

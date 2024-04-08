@@ -3,6 +3,7 @@
     <h2>Quiz Completed!</h2>
     <div class="score-card">
       <p>Your Score:</p>
+      <!-- Remove the .value from score and totalQuestions -->
       <p class="score">{{ score }} / {{ totalQuestions }}</p>
       <SmallButton @click="acknowledgeScore">Great</SmallButton>
     </div>
