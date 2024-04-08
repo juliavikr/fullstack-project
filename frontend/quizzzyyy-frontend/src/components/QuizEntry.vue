@@ -3,9 +3,8 @@
     <div class="right">
       <h3>{{ quiz.title }}</h3>
       <p>Category: {{ quiz.category }} - Difficulty: {{ quiz.difficulty }}</p>
-      <button class="primary-button action-button delete-button" @click="deleteQuiz">Delete</button>
     </div>
-    <div class="buttons">
+    <div class="buttons"><button class="primary-button action-button delete-button" @click="deleteQuiz">Delete</button>
       <button class="primary-button action-button play-button" @click="startQuiz">Play</button>
       <button class="primary-button preview-button" @click="toggleCheatSheet">show cheat sheet</button>
     </div>
@@ -100,37 +99,68 @@ button.modal{
   flex: 1;
   flex-direction: column;
 }
-
 .buttons {
   display: flex;
-  gap: 5px;
-  flex-direction: column;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.primary-button {
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
 }
 .delete-button {
-  top: 0;
-  right: 0;
   background-color: rgb(255, 105, 135);
-  border-radius: 10%;
-  align-items: center;
 }
+
 .delete-button:hover {
   background-color: rgb(226, 62, 62);
 }
-.action-button {
-  margin: 10px;
 
-}
 .play-button {
-  width: 200px;
-  margin-top: 50px;
-  height: 50px;
+   background-color: rgb(135, 255, 105);
 
 }
+
+.play-button:hover {
+  background-color: rgb(62, 62, 226);
+}
+
+.preview-button {
+  background-color: rgb(105, 135, 255);
+}
+
+.preview-button:hover {
+  background-color: rgb(62, 226, 62);
+}
+
 @media (max-width: 768px) {
 
-  .play-button{
-    width: 100px;
-    height: 40px;
+  .quiz-entry {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .buttons {
+    flex-direction: row; /* Endrer retningen til rad for å plassere knappene ved siden av hverandre */
+    justify-content: center; /* Sentrerer knappene horisontalt */
+    width: 100%; /* Setter bredden til å være hele kontainerens bredde */
+    padding: 10px 0; /* Tilføyer litt polstring over og under knappene for å gi plass */
+  }
+
+  .primary-button {
+    width: auto; /* Setter knappebredden til auto så de kan tilpasse seg innholdet sitt */
+    padding: 10px; /* Standard polstring for knappene for å holde dem lesbare og trykkbare */
+  }
+
+  .delete-button, .play-button, .preview-button {
+    flex-grow: 1; /* Gjør at knappene fordeler tilgjengelig plass mellom seg */
+    margin: 0 5px; /* Legger til margin mellom knappene */
   }
 }
 </style>
