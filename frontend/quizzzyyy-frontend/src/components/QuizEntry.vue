@@ -128,7 +128,7 @@ button.modal{
 }
 
 .play-button:hover {
-  background-color: rgb(62, 62, 226);
+  background-color: rgb(62, 226, 62);
 }
 
 .preview-button {
@@ -136,7 +136,8 @@ button.modal{
 }
 
 .preview-button:hover {
-  background-color: rgb(62, 226, 62);
+  background-color: rgb(62, 62, 226);
+
 }
 
 @media (max-width: 768px) {
@@ -147,20 +148,20 @@ button.modal{
   }
 
   .buttons {
-    flex-direction: row; /* Endrer retningen til rad for å plassere knappene ved siden av hverandre */
-    justify-content: center; /* Sentrerer knappene horisontalt */
-    width: 100%; /* Setter bredden til å være hele kontainerens bredde */
-    padding: 10px 0; /* Tilføyer litt polstring over og under knappene for å gi plass */
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 0;
   }
 
   .primary-button {
-    width: auto; /* Setter knappebredden til auto så de kan tilpasse seg innholdet sitt */
-    padding: 10px; /* Standard polstring for knappene for å holde dem lesbare og trykkbare */
+    width: auto;
+    padding: 10px;
   }
 
   .delete-button, .play-button, .preview-button {
-    flex-grow: 1; /* Gjør at knappene fordeler tilgjengelig plass mellom seg */
-    margin: 0 5px; /* Legger til margin mellom knappene */
+    flex-grow: 1;
+    margin: 0 5px;
   }
 }
 </style>
