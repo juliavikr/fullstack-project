@@ -7,11 +7,23 @@
     </div>
     <div class="buttons">
       <button class="primary-button action-button play-button" @click="startQuiz">Play</button>
+      <button class="primary-button preview-button" @click="toggleCheatSheet">show cheat sheet</button>
+    </div>
+    <div v-if="showCheatSheet" class="modal">
+      <h2>Cheat Sheet</h2>
+      <ul>
+        <li v-for="(question, index) in quiz.questions" :key="index">
+          <p>Question: {{ question.question_text }}</p>
+          <p>Answer: {{ question.answer }}</p>
+        </li>
+      </ul>
+      <button @click="toggleCheatSheet">Close</button>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import axios from 'axios'
 import { defineProps } from 'vue'
 import { useRouter } from 'vue-router'
@@ -26,6 +38,7 @@ const props = defineProps({
 
 const router = useRouter()
 const quizStore = useQuizStore()
+const showCheatSheet = ref(false)
 
 const startQuiz = () => {
   quizStore.setCurrentQuiz(props.quiz)
@@ -49,8 +62,11 @@ const deleteQuiz = async () => {
     await quizStore.fetchQuizzes()
   } catch (error) {
     console.error('Failed to delete quiz:', error)
-
   }
+}
+
+const toggleCheatSheet = () => {
+  showCheatSheet.value = !showCheatSheet.value
 }
 </script>
 
@@ -62,6 +78,22 @@ const deleteQuiz = async () => {
   border-radius: 4px;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 1em;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+button.modal{
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
 }
 
 .right {

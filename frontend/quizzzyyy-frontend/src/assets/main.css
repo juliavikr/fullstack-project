@@ -4,6 +4,7 @@ body {
   margin: 0; /* Fjerner standard margin */
   padding: 0; /* Fjerner standard polstring */
   background-color: #fff4f9; /* Lys rosa farge */
+  align-items: center;
 }
 html, body {
   font-family: 'Roboto', sans-serif;
