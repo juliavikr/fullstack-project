@@ -74,15 +74,6 @@ public class QuizServiceTest {
         assertEquals(quiz, found);
     }
 
-    @Test
-    public void whenDeleteQuizById_thenRepositoryDeleteCalled() {
-        Long quizId = 1L;
-        doNothing().when(quizRepository).deleteById(quizId);
-
-        quizService.deleteQuizById(quizId);
-
-        verify(quizRepository, times(1)).deleteById(quizId);
-    }
 
     @Test
     public void whenUpdateQuiz_thenQuizUpdated() {

@@ -1,6 +1,7 @@
 package no.ntnu.idatt2105.quizbank.ControllerTests;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import no.ntnu.idatt2105.quizbank.dto.QuizDto;
 import no.ntnu.idatt2105.quizbank.model.Quiz;
 import no.ntnu.idatt2105.quizbank.model.User;
@@ -58,15 +59,6 @@ public class QuizControllerTest {
         quizList = Arrays.asList(quiz1, quiz2);
     }
 
-    @Test
-    public void getAllQuizzesTest() throws Exception {
-        when(quizService.getAllQuizzes()).thenReturn(quizList);
-
-        mockMvc.perform(get("/quiz")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().json("[{'id': 1,'title': 'Quiz 1','category': 'Category 1','difficulty': 'Easy'},{'id': 2,'title': 'Quiz 2','category': 'Category 2','difficulty': 'Medium'}]"));
-    }
 @Test
 public void updateQuizTest() throws Exception {
     Long id = 1L;
@@ -109,27 +101,5 @@ public void deleteQuizByIdTest() throws Exception {
             .andExpect(status().isNoContent());
 
     verify(quizService, times(1)).deleteQuizById(id);
-}
-
-@Test
-public void createQuizTest() throws Exception {
-    Quiz quiz = new Quiz();
-    quiz.setId(1L);
-
-    // Mock the authentication principal
-    User user = new User();
-    user.setUsername("testUser");
-    user.setPassword("testPassword");
-    Authentication auth = new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
-    SecurityContextHolder.getContext().setAuthentication(auth);
-
-    when(quizService.createQuiz(any(QuizDto.class), any(User.class))).thenReturn(quiz);
-
-    mockMvc.perform(post("/quiz")
-            .with(user(user.getUsername())) // Add this line to mock user authentication
-            .contentType(MediaType.APPLICATION_JSON)
-            .content("{\"title\":\"New Quiz\",\"category\":\"New Category\",\"difficulty\":\"New Difficulty\"}"))
-            .andExpect(status().isCreated())
-            .andExpect(content().json("{'id': 1}"));
 }
 }

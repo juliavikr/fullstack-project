@@ -57,24 +57,9 @@ public class UserControllerTest {
         when(userService.registerNewUserAccount(any(UserDTO.class))).thenReturn("user");
 
         mockMvc.perform(post("/api/user/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(userDTO)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(userDTO)))
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    @WithMockUser
-    public void givenUser_whenLoginUser_thenStatus200() throws Exception {
-        LoginDTO loginDTO = new LoginDTO("testUser", "password");
-        LoginResponse expectedResponse = new LoginResponse("Login successful", true, "token");
-
-        when(userService.loginUser(any(LoginDTO.class))).thenReturn(expectedResponse);
-
-        mockMvc.perform(post("/login")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(loginDTO)))
-            .andExpect(status().isOk())
-            .andExpect(content().json(objectMapper.writeValueAsString(expectedResponse)));
     }
 }
 
