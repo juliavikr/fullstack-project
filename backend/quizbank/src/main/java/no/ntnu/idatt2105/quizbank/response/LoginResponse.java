@@ -3,7 +3,7 @@ package no.ntnu.idatt2105.quizbank.response;
 /**
  * Class representing the response for login
  * @version 1.0
- * @Author Ole Vik, Sigurd Aune, Jørgen Alvestad
+ * @Author Andrea Amundsen, Julia Vik Remøy
  */
 public class LoginResponse {
     private String message;
