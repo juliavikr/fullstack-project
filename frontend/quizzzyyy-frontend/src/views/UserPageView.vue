@@ -3,7 +3,7 @@
   <div class="user-page-container">
     <div class="user-info">
       <h2>Username: {{ username }}</h2>
-      <MediumButton type="primary-button log-out" @click="logout">Log out</MediumButton>
+      <Button class="primary-button log-out" @click="logout">Log out</Button>
     </div>
   </div>
 </template>
@@ -45,6 +45,7 @@ label {
   margin-bottom: 5px;
 }
 
+
 input[type='password'] {
   padding: 10px;
   margin-bottom: 10px;
@@ -58,7 +59,11 @@ input[type='password'] {
   align-items: center;
   justify-content: center;
 }
-
+.log-out {
+  margin-top: 20px;
+  width: 250px;
+  height: 50px;
+}
 input[type='text']:focus,
 input[type='password']:focus {
   outline: none;

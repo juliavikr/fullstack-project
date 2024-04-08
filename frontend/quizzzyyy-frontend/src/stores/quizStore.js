@@ -22,7 +22,7 @@ export const useQuizStore = defineStore('quiz', {
         return true
       }
       return state.currentQuestionIndex === state.currentQuiz.questions.length - 1
-    }
+    },
   },
   actions: {
     async fetchQuizzes() {

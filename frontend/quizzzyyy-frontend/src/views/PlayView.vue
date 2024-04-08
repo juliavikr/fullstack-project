@@ -1,5 +1,5 @@
 <template>
-  <div class="play-view">
+<div class="play-view">
     <h2>{{ quizTitle }}</h2>
 
     <div v-if="currentQuestion" class="question-card">
@@ -7,6 +7,7 @@
       <input type="text" placeholder="Your answer" v-model="userAnswer" :disabled="hasSubmitted" />
       <p v-if="isCorrectAnswer !== null">
         Your answer was <strong>{{ isCorrectAnswer ? 'correct' : 'incorrect' }}</strong>.
+        <span v-if="!isCorrectAnswer">| The correct answer is <strong> {{ currentCorrectAnswer }}</strong></span>
       </p>
       <div class="actions">
         <button class=" primary-button quizBtn" @click="submitAnswer" :disabled="userAnswer === '' || hasSubmitted">Submit</button>
@@ -36,6 +37,7 @@ const quizTitle = computed(() => store.currentQuiz?.title || '')
 const currentQuestion = computed(() => store.currentQuestion)
 
 const isLastQuestion = computed(() => store.isLastQuestion)
+const currentCorrectAnswer = computed(() => store.currentQuestion.answer)
 
 const submitAnswer = () => {
   console.log('Answer before submission:', userAnswer.value)
