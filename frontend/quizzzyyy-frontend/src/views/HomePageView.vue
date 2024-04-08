@@ -2,7 +2,7 @@
   <div class="home-container">
     <NavBar />
     <div class="action-buttons">
-        <p>Hello, {{ username }}</p>
+        <p>Hello, {{ username }}!</p>
       <BigButton to="/your-quizzes">Your quizzes</BigButton>
       <BigButton to="/create-quiz">Create a new quiz</BigButton>
     </div>
@@ -41,6 +41,10 @@ onMounted(() => {
   width: 100%;
   gap: 30px;
   margin-top: 150px;
+}
+
+p {
+  font-size: 1.5rem;
 }
 
 

@@ -42,6 +42,15 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
+.scroll-box {
+  max-height: 100px;
+  overflow-y: auto; 
+  overflow-x: hidden; 
+  margin: 10px 0; 
+  padding: 10px; 
+}
+
 .activity-section {
   max-height: 200px;
 }

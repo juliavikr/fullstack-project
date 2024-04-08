@@ -8,7 +8,6 @@
 import { useRouter } from 'vue-router'
 import { defineProps } from 'vue'
 
-// Definerer en prop for å motta rutebanen
 const props = defineProps({
   to: String,
   type: String
@@ -16,7 +15,6 @@ const props = defineProps({
 
 const router = useRouter()
 
-// Navigasjonsfunksjonen
 const navigate = () => {
   if (props.to) {
     router.push(props.to)
@@ -26,25 +24,24 @@ const navigate = () => {
 
 <style scoped>
 button {
-  padding: 10px 15px; /* Gir knappene størrelse og plass */
-  width: 500px; /* Standard bredde på knappene */
-  height: 100px; /* Standard høyde på knappene */
-  font-size: 1.2rem; /* Passende skriftstørrelse */
-  font-weight: bold;
-  border: none; /* Ingen ramme */
-  border-radius: 5px; /* Avrundede hjørner */
+  padding: 10px 15px;
+  width: 500px; 
+  height: 100px; 
+  font-size: 1.2rem; 
+  border: none; 
+  border-radius: 5px; 
 
-  margin: 0 5px; /* Liten margin mellom knappene */
-  text-align: center; /* Sentrerer tekst i knappen */
+  margin: 0 5px; 
+  text-align: center; 
 }
 
 
 @media (max-width: 768px) {
   button {
-    width: 300px; /* Mindre bredde på mobile enheter */
-    padding: 10px; /* Mindre polstring på mobile enheter */
-    font-size: 0.875rem; /* Mindre skriftstørrelse på mobile enheter */
-    margin: 10px 0; /* Litt større margin på mobile enheter */
+    width: 300px; 
+    padding: 10px; 
+    font-size: 0.875rem; 
+    margin: 10px 0; 
   }
 }
 </style>

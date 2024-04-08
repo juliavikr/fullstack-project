@@ -17,11 +17,9 @@
       </select>
       <input type="text" v-model="searchTerm" placeholder="Search your quizzes" />
     </div>
-    <!-- Message when no quizzes match the filter -->
     <div v-if="filteredQuizzes.length === 0" class="no-quizzes-message">
       No quizzes found. Try adjusting your search or filter criteria.
     </div>
-    <!-- Render the quizzes that match the filter criteria -->
     <QuizEntry v-for="quiz in filteredQuizzes" :key="quiz.id" :quiz="quiz" />
   </div>
 </template>
@@ -111,7 +109,6 @@ h2 {
   margin-bottom: 0.5rem;
 }
 
-/* Responsiv design for mindre skjermer */
 @media (max-width: 768px) {
   .filters {
     flex-direction: column;
