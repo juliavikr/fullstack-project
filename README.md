@@ -126,6 +126,10 @@ Cypress e2e tests:
 npx cypress run
 ```
 
+## Test database
+
+SQL schema
+
 
 
 
