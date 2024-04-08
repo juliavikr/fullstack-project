@@ -19,10 +19,6 @@ Get ready to explore, learn, and challenge yourself. It's time to quiz your way 
 ## Project Overview
 This project involves developing a full-stack web application designed to provide a comprehensive and user-friendly platform for creating and taking quizzes. It's aimed at educational, training, or entertainment purposes. The application will leverage a Vue.js frontend, Java and Spring Boot backend, and a MySQL and H2 database.
 
-## Team Composition
-- 2 students
-- Effort: 40 hours per student.
-
 ## Features
 - **User Authentication**: Secure registration and login management.
 - **Quiz Creation**: Tools for users to create quizzes (questions and answers).
@@ -57,7 +53,7 @@ Before you begin, ensure you have the following installed:
 ### Installation
 **Clone the repository**
 Start by cloning the repository to your local machine:
-git clone https://your-repository-link-here.git
+git clone (https://github.com/juliavikr/fullstack-project.git)
 
 ### Start the Backend
 
@@ -95,4 +91,42 @@ After installation, start the development server:
 npm run dev
 ```
 After completing these steps, the Quizzzyyy platform should be running locally on your machine, and you can access the frontend in your web browser.
+
+## Testing
+
+This section explains how to run the tests for this application.
+
+### Prerequisites for Testing
+
+Ensure that all dependencies are installed, as specified in the installation section.
+
+### Running Tests
+
+To run the tests and verify the system, follow these steps:
+
+**Backend Tests**
+
+Navigate to the backend directory where the `pom.xml` file is located, and use the following command to run the backend tests:
+```bash
+./mvnw test
+```
+This command will execute all the tests in the backend module and provide a report of the tests passed, failed, and the code coverage.
+
+**Frontend Tests**
+
+Navigate to the frontend directory where the `package.json` file is located, and use the following command to run the frontend tests:
+```bash
+npm run test:unit
+```
+
+**End-to-End Tests**
+
+Cypress e2e tests:
+```bash
+npx cypress run
+```
+
+
+
+
 
